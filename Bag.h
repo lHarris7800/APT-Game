@@ -1,7 +1,18 @@
+#include "Tile.h"
+#include "LinkedList.h"
 
-#ifndef ASSIGN2_LINKEDLIST_H
-#define ASSIGN2_LINKEDLIST_H
+class Bag {
+public:
 
+   Bag();
+   ~Bag();
 
+   Tile* getTile();
 
-#endif // ASSIGN2_LINKEDLIST_H
+   void replaceTile(Tile& tile);
+   
+
+private:
+   LinkedList* bag;
+
+};

@@ -12,11 +12,11 @@ public:
 
    int getSize();
 
-   void addFront(Node& node);
-   void addBack(Node& node);
+   void addFront(Tile& tile);
+   void addBack(Tile& tile);
    
-   Node* get(int i);
-   void remove(int i);
+   Tile* getAt(int i);
+   void removeAt(int i);
 
 private:
    Node* head;

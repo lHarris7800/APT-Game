@@ -13,30 +13,33 @@ int LinkedList::getSize(){
    return size;
 }
 
-void LinkedList::addFront(Node& newNode){
-   newNode.next = head;
-   head = &newNode;
+void LinkedList::addFront(Tile& tile){
+   Node* newNode = new Node(tile,head);
+   head = newNode;
    ++size;   
 
    //Updating tail if newNode is first node
-   if(newNode.next == nullptr)
-      tail = &newNode;
+   if(newNode->next == nullptr)
+      tail = newNode;
 }
 
-void LinkedList::addBack(Node& newNode){
+void LinkedList::addBack(Tile& tile){
+   Node* newNode = new Node(tile,nullptr);
+
    if(tail != nullptr){
-      tail->next = &newNode;
-      tail = &newNode;
+      //Update lastNode
+      tail->next = newNode;
    } else {
-      //Updating tail and head if newNode is first node
-      tail = &newNode;
-      head = &newNode;
+      // head if newNode is first node
+      head = newNode;
    }
+   //Updating tai
+   tail = newNode;
    ++size;
 
 }
 
-Node* LinkedList::get(int index){
+Tile* LinkedList::getAt(int index){
    Node* returnNode = head;
 
    if(index >= 0){
@@ -49,10 +52,10 @@ Node* LinkedList::get(int index){
    Current implementation returns a nullptr if index has no node
    Should an exception be thrown?
    */ 
-   return returnNode;
+   return returnNode->tile;
 }
 
-void LinkedList::remove(int index){
+void LinkedList::removeAt(int index){
    Node* current = head;
    Node* previous;
 

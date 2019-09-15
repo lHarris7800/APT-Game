@@ -12,6 +12,7 @@ class Tile {
 public:
    Tile(Colour,Shape);
 
+
    Colour colour;
    Shape  shape;
 };
