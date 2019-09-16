@@ -92,3 +92,34 @@ LinkedList::~LinkedList() {
       current = current->next;
    }
 }
+
+//may be used for random bag order
+Tile* LinkedList::getAndRemoveAt(int index){
+   Tile* returnTile = nullptr;
+   Node* current = head;
+   Node* previous;
+
+   //Finding node to remove
+   if(index > 0){
+      for(int i = 0; i < index && current != nullptr; i++){
+         previous = current;
+         current = current->next;
+      }
+
+      //Removing i'th node if it exists
+      if(current != nullptr){
+         previous->next = current->next;
+         returnTile = current->tile;
+         delete current;
+         --size;
+      }
+   } else if(index == 0 && current != nullptr){
+      //Removing first node if it exists
+      head = current->next;
+      returnTile = current->tile;
+      delete current;
+      --size;
+   }
+
+   return returnTile;
+}

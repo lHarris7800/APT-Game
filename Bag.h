@@ -10,6 +10,8 @@ public:
    Tile* getTile();
 
    void replaceTile(Tile& tile);
+
+   void printContents();
    
 
 private:

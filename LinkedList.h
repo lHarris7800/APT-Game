@@ -18,6 +18,8 @@ public:
    Tile* getAt(int i);
    void removeAt(int i);
 
+   Tile* getAndRemoveAt(int i);
+
 private:
    Node* head;
    Node* tail;
