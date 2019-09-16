@@ -30,13 +30,13 @@ public:
     std::string playerScore();
 
     std::string playerHand();
-    
+
     std::string toString();
 
 private:
     std::string playerName;
     int score;
-    LinkedList hand;
+    LinkedList* hand;
 };
 
 
