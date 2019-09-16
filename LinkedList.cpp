@@ -5,8 +5,21 @@ LinkedList::LinkedList() {
    head = nullptr;
    tail = nullptr;
    size = 0;
+}
 
-   // TODO
+LinkedList::~LinkedList() {
+    clear();
+}
+
+void LinkedList::clear() {
+    Node* current = head;
+    Node* previous;
+    
+    while(current != nullptr){
+        previous = current;
+        delete previous;
+        current = current->next;
+    }
 }
 
 int LinkedList::getSize(){
@@ -77,19 +90,6 @@ void LinkedList::removeAt(int index){
       head = current->next;
       delete current;
       --size;
-   }
-}
-
-
-LinkedList::~LinkedList() {
-   Node* current = head;
-   Node* previous;
-
-
-   while(current != nullptr){
-      previous = current;
-      delete previous;
-      current = current->next;
    }
 }
 

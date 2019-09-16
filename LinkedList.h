@@ -12,6 +12,8 @@ public:
 
    int getSize();
 
+   void clear();
+
    void addFront(Tile& tile);
    void addBack(Tile& tile);
    
