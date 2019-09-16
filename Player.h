@@ -6,6 +6,7 @@
 #define STARTER_CODE_PLAYER_H
 #include <string>
 #include "LinkedList.h"
+#define MAX_TILES 6
 
 class Player {
 
@@ -23,7 +24,7 @@ public:
 
     void addScore();
 
-    bool addTile(Tile* tile);
+    bool addTile(Tile& tile);
 
     Tile placeTile(std::string tileName);
 

@@ -33,9 +33,14 @@ void Player::addScore(){
     this->score += score;
 }
 
-//Linklist needs to be done first
-bool Player::addTile(Tile* tile){
+bool Player::addTile(Tile& tile){
+    bool added = false;
 
+    if (hand->getSize() < MAX_TILES) {
+        hand->addBack(tile);
+        return true;
+    }
+    return added;
 }
 
 //Linklist needs to be done first
@@ -47,8 +52,19 @@ std::string Player::playerScore(){
 
 }
 
-//Linklist needs to be done first
 std::string Player::playerHand(){
+    std::string build = std::string("");
+
+    int handSize = hand->getSize();
+    for (int i = 0; i < handSize; i++) {
+        build.append(hand->get(i)->getTileName());
+
+        if (i != handSize - 1) {
+            build.append(",");
+        }
+    }
+
+    return build;
 
 }
 
@@ -56,6 +72,6 @@ std::string Player::toString(){
     std::string build;
     build.append(this->getName() + "\n");
     build.append(std::to_string(this->getScore()) + "\n");
-    //add the hand here
+    build.append(this->playerHand());
     return build;
 }
