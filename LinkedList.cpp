@@ -14,12 +14,26 @@ LinkedList::~LinkedList() {
 void LinkedList::clear() {
     Node* current = head;
     Node* previous;
-    
+
     while(current != nullptr){
         previous = current;
         delete previous;
         current = current->next;
     }
+}
+
+Tile *LinkedList::get(int i) {
+    Tile *tile = nullptr;
+
+    if (head != nullptr) {
+        Node *currNode = head;
+        for (int j = 0; j < i; ++j) {
+            currNode = currNode->next;
+        }
+        tile = currNode->tile;
+    }
+
+    return tile;
 }
 
 int LinkedList::getSize(){
