@@ -22,20 +22,6 @@ void LinkedList::clear() {
     }
 }
 
-Tile *LinkedList::get(int i) {
-    Tile *tile = nullptr;
-
-    if (head != nullptr) {
-        Node *currNode = head;
-        for (int j = 0; j < i; ++j) {
-            currNode = currNode->next;
-        }
-        tile = currNode->tile;
-    }
-
-    return tile;
-}
-
 int LinkedList::getSize(){
    return size;
 }
@@ -67,19 +53,17 @@ void LinkedList::addBack(Tile& tile){
 }
 
 Tile* LinkedList::getAt(int index){
-   Node* returnNode = head;
+    Tile *tile = nullptr;
 
-   if(index >= 0){
-      for(int i = 0; i < index && returnNode != nullptr; i++){
-         returnNode = returnNode->next;
-      }
-   }
+    if (head != nullptr) {
+        Node *currNode = head;
+        for (int j = 0; j < index; ++j) {
+            currNode = currNode->next;
+        }
+        tile = currNode->tile;
+    }
 
-   /*TODO bad index handling,
-   Current implementation returns a nullptr if index has no node
-   Should an exception be thrown?
-   */ 
-   return returnNode->tile;
+    return tile;
 }
 
 void LinkedList::removeAt(int index){
