@@ -52,6 +52,7 @@ void LinkedList::addBack(Tile& tile){
 
 }
 
+//Gets an element 
 Tile* LinkedList::getAt(int index){
     Tile *tile = nullptr;
 

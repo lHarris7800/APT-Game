@@ -10,7 +10,7 @@ Player::Player(std::string playerName){
     hand = new LinkedList();
 
 }
-//for loading from a save file
+//For loading from a save file
 Player::Player(std::string playerName, int score, LinkedList hand){
     playerName = playerName;
     score = score;
@@ -29,10 +29,12 @@ int Player::getScore(){
     return score;
 }
 
+//Changes the score (sets the score)
 void Player::addScore(){
     this->score += score;
 }
 
+//Adds a tile in player's hand. returns true if successful
 bool Player::addTile(Tile& tile){
     bool added = false;
 
@@ -43,7 +45,6 @@ bool Player::addTile(Tile& tile){
     return added;
 }
 
-//Linklist needs to be done first
 Tile Player::placeTile(std::string tileName){
 
 }
@@ -52,6 +53,7 @@ std::string Player::playerScore(){
 
 }
 
+//Displays players hand in the game
 std::string Player::playerHand(){
     std::string build = std::string("");
 
@@ -66,6 +68,7 @@ std::string Player::playerHand(){
     return build;
 }
 
+//Gets the string representation of a player for saving
 std::string Player::toString(){
     std::string build;
     build.append(this->getName() + "\n");
