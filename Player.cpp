@@ -57,15 +57,13 @@ std::string Player::playerHand(){
 
     int handSize = hand->getSize();
     for (int i = 0; i < handSize; i++) {
-        build.append(hand->get(i)->getTileName());
+        build.append(hand->getAt(i)->getTileName());
 
         if (i != handSize - 1) {
             build.append(",");
         }
     }
-
     return build;
-
 }
 
 std::string Player::toString(){
