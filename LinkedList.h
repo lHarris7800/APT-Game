@@ -17,7 +17,10 @@ public:
    void addFront(Tile& tile);
    void addBack(Tile& tile);
 
-    Tile* getAt(int i);
+   void removeFront();
+   void removeBack();
+
+   Tile* getAt(int i);
    void removeAt(int i);
 
    Tile* getAndRemoveAt(int i);
@@ -26,6 +29,8 @@ private:
    Node* head;
    Node* tail;
    int size;
+
+   Node* getNodeAt(int i);
 };
 
 #endif // ASSIGN2_LINKEDLIST_H
