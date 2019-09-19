@@ -45,10 +45,6 @@ bool Player::addTile(Tile& tile){
     return added;
 }
 
-Tile Player::placeTile(std::string tileName){
-
-}
-
 std::string Player::playerScore(){
 
 }

@@ -26,8 +26,6 @@ public:
 
     bool addTile(Tile& tile);
 
-    Tile placeTile(std::string tileName);
-
     std::string playerScore();
 
     std::string playerHand();
