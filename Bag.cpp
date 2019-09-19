@@ -12,12 +12,12 @@ Bag::Bag(){
     for (int i = 0; i < 2; i++)
     {
         //Add all tiles
-        tileSet->addFront(*(new Tile(RED,CIRCLE)));
-        tileSet->addFront(*(new Tile(RED,STAR_4)));
-        tileSet->addFront(*(new Tile(RED,DIAMOND)));
-        tileSet->addFront(*(new Tile(RED,SQUARE)));
-        tileSet->addFront(*(new Tile(RED,STAR_6)));
-        tileSet->addFront(*(new Tile(RED,CLOVER)));
+        tileSet->addFront(new Tile(RED,CIRCLE));
+        tileSet->addFront(new Tile(RED,STAR_4));
+        tileSet->addFront(new Tile(RED,DIAMOND));
+        tileSet->addFront(new Tile(RED,SQUARE));
+        tileSet->addFront(new Tile(RED,STAR_6));
+        tileSet->addFront(new Tile(RED,CLOVER));
     }
     
     //Seeding random numbers
@@ -25,7 +25,7 @@ Bag::Bag(){
     int tilesLeft;
     //Adding tiles to bag from set of tiles to bag in random order
     while ((tilesLeft = tileSet->getSize()) != 0)
-        bag->addFront(*(tileSet->getAndRemoveAt(rand() % tilesLeft)));
+        bag->addFront(tileSet->getAndRemoveAt(rand() % tilesLeft));
     
     
 }
@@ -40,7 +40,7 @@ Tile* Bag::getTile(){
     return returnTile;
 }
 
-void Bag::replaceTile(Tile& tile){
+void Bag::replaceTile(Tile* tile){
     //TODO adding back to bag randomly?
     bag->addBack(tile);
 }

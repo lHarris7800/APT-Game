@@ -17,9 +17,9 @@ public:
 
    int searchTile(std::string tileName);
 
-   void addFront(Tile& tile);
+   void addFront(Tile* tile);
 
-   void addBack(Tile& tile);
+   void addBack(Tile* tile);
 
    Tile* getAt(int i);
 

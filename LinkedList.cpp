@@ -40,7 +40,7 @@ int LinkedList::searchTile(std::string tileName) {
     return -1;
 }
 
-void LinkedList::addFront(Tile& tile){
+void LinkedList::addFront(Tile* tile){
     Node* newNode = new Node(tile,head);
     if(head == nullptr){
         head = newNode;
@@ -54,7 +54,7 @@ void LinkedList::addFront(Tile& tile){
     ++size;
 }
 
-void LinkedList::addBack(Tile& tile){
+void LinkedList::addBack(Tile* tile){
     Node* newNode = new Node(tile,nullptr);
 
     if(head == nullptr){

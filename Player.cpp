@@ -35,7 +35,7 @@ void Player::addScore(){
 }
 
 //Adds a tile in player's hand. returns true if successful
-bool Player::addTile(Tile& tile){
+bool Player::addTile(Tile* tile){
     bool added = false;
 
     if (hand->getSize() < MAX_TILES) {
@@ -46,7 +46,7 @@ bool Player::addTile(Tile& tile){
 }
 
 //Removes the tile from player's hand
-void Player::removeTile(Tile& tile){
+void Player::removeTile(Tile* tile){
     int position = hand->searchTile(tile.getTileName());
     if(position != -1){
         hand->removeAt(position);

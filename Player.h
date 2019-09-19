@@ -24,9 +24,9 @@ public:
 
     void addScore();
 
-    bool addTile(Tile& tile);
+    bool addTile(Tile* tile);
 
-    void removeTile(Tile& tile);
+    void removeTile(Tile* tile);
 
     std::string playerScore();
 
