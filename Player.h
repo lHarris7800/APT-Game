@@ -26,6 +26,8 @@ public:
 
     bool addTile(Tile& tile);
 
+    void removeTile(Tile& tile);
+
     std::string playerScore();
 
     std::string playerHand();
