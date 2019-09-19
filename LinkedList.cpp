@@ -17,8 +17,8 @@ void LinkedList::clear() {
 
     while(current != nullptr){
         previous = current;
-        delete previous;
         current = current->next;
+        delete previous;
     }
 }
 
@@ -31,7 +31,7 @@ int LinkedList::searchTile(std::string tileName) {
     Node *current = head;
     int index = 0;
     while(current != nullptr){
-        if(current->tile->getTileName().compare(tileName)==0){
+        if(current->tile->getTileName().compare(tileName) == 0){
             return index;
         }
         index++;
@@ -41,29 +41,32 @@ int LinkedList::searchTile(std::string tileName) {
 }
 
 void LinkedList::addFront(Tile& tile){
-   Node* newNode = new Node(tile,head);
-   head = newNode;
-   ++size;   
-
-   //Updating tail if newNode is first node
-   if(newNode->next == nullptr)
-      tail = newNode;
+    Node* newNode = new Node(tile,head);
+    if(head == nullptr){
+        head = newNode;
+        tail = newNode;
+    }
+    //if head wasn't null, then set the new node as the head.
+    else{
+        newNode->next = head;
+        head = newNode;
+    }
+    ++size;
 }
 
 void LinkedList::addBack(Tile& tile){
-   Node* newNode = new Node(tile,nullptr);
+    Node* newNode = new Node(tile,nullptr);
 
-   if(tail != nullptr){
-      //Update lastNode
-      tail->next = newNode;
-   } else {
-      // head if newNode is first node
-      head = newNode;
-   }
-   //Updating tai
-   tail = newNode;
-   ++size;
-
+    if(head == nullptr){
+        head = newNode;
+        tail = newNode;
+    }
+    //if head wasn't null, then set the new node as the tail
+    else{
+        tail->next = newNode;
+        tail = newNode;
+    }
+    ++size;
 }
 
 //Gets an element 
@@ -77,7 +80,6 @@ Tile* LinkedList::getAt(int index){
         }
         tile = currNode->tile;
     }
-
     return tile;
 }
 
@@ -98,7 +100,9 @@ void LinkedList::removeAt(int index){
          delete current;
          --size;
       }
-   } else if(index == 0 && current != nullptr){
+   }
+
+   else if(index == 0 && current != nullptr){
       //Removing first node if it exists
       head = current->next;
       delete current;
@@ -126,7 +130,9 @@ Tile* LinkedList::getAndRemoveAt(int index){
          delete current;
          --size;
       }
-   } else if(index == 0 && current != nullptr){
+   }
+
+   else if(index == 0 && current != nullptr){
       //Removing first node if it exists
       head = current->next;
       returnTile = current->tile;
