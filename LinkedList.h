@@ -21,8 +21,6 @@ public:
 
    void addBack(Tile* tile);
 
-   Tile* getAt(int i);
-
    void removeFront();
    void removeBack();
 

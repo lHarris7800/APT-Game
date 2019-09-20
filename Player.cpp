@@ -47,7 +47,7 @@ bool Player::addTile(Tile* tile){
 
 //Removes the tile from player's hand
 void Player::removeTile(Tile* tile){
-    int position = hand->searchTile(tile.getTileName());
+    int position = hand->searchTile(tile->getTileName());
     if(position != -1){
         hand->removeAt(position);
     }

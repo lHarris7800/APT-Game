@@ -29,7 +29,7 @@ int LinkedList::getSize(){
    return size;
 }
 
-void LinkedList::addFront(Tile& tile){
+void LinkedList::addFront(Tile* tile){
    Node* newNode = new Node(tile,head,nullptr);
    head = newNode;
    size++;
@@ -43,7 +43,7 @@ void LinkedList::addFront(Tile& tile){
       
 }
 
-void LinkedList::addBack(Tile& tile){
+void LinkedList::addBack(Tile* tile){
    Node* newNode = new Node(tile,nullptr,tail);
 
    if(tail != nullptr){
@@ -91,18 +91,6 @@ Tile* LinkedList::getAt(int index){
    }
 
    return tile;
-
-   /*
-    if (head != nullptr) {
-        Node *currNode = head;
-        for (int j = 0; j < index; ++j) {
-            currNode = currNode->next;
-        }
-        tile = currNode->tile;
-    }
-    return tile;
-   */
-    
 }
 
 void LinkedList::removeFront(){
@@ -167,31 +155,6 @@ void LinkedList::removeAt(int index){
    }else{
       //throw std::runtime_error("invalid index");
    }
-
-   /*
-   Node* current = head;
-   Node* previous;
-
-   //Finding node to remove
-   if(index > 0){
-      for(int i = 0; i < index && current != nullptr; i++){
-         previous = current;
-         current = current->next;
-      }
-
-      //Removing i'th node if it exists
-      if(current != nullptr){
-         previous->next = current->next;
-         delete current;
-         --size;
-      }
-   } else if(index == 0 && current != nullptr){
-      //Removing first node if it exists
-      head = current->next;
-      delete current;
-      --size;
-   }
-   */
 }
 
 //may be used for random bag order
