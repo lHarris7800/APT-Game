@@ -12,6 +12,8 @@ public:
    void replaceTile(Tile* tile);
 
    void printContents();
+
+   std::string toString();
    
 
 private:

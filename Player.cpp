@@ -40,7 +40,7 @@ bool Player::addTile(Tile* tile){
 
     if (hand->getSize() < MAX_TILES) {
         hand->addBack(tile);
-        return true;
+        added = true;
     }
     return added;
 }
@@ -59,17 +59,7 @@ std::string Player::playerScore(){
 
 //Displays players hand in the game
 std::string Player::playerHand(){
-    std::string build = std::string("");
-
-    int handSize = hand->getSize();
-    for (int i = 0; i < handSize; i++) {
-        build.append(hand->getAt(i)->getTileName());
-
-        if (i != handSize - 1) {
-            build.append(",");
-        }
-    }
-    return build;
+    return hand->toString();
 }
 
 //Gets the string representation of a player for saving

@@ -175,3 +175,19 @@ Tile* LinkedList::getAndRemoveAt(int index){
 
    return returnTile;
 }
+
+//Used by bag,player
+//Returns tiles in linkedlist
+std::string LinkedList::toString(){
+   std::string build = std::string("");
+
+   Node* current = head;
+   build.append(current->tile->getTileName());
+
+   for (int i = 0; i < size; i++) {
+      current = current->next;
+      build.append(",");
+      build.append(current->tile->getTileName());      
+   }
+   return build;
+}

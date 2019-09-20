@@ -59,3 +59,7 @@ void Bag::printContents(){
             currentTile->shape << std::endl;
     }
 }
+
+std::string Bag::toString(){
+    return bag->toString();
+}

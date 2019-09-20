@@ -29,6 +29,8 @@ public:
 
    Tile* getAndRemoveAt(int i);
 
+   std::string toString();
+
 private:
    Node* head;
    Node* tail;
