@@ -5,16 +5,16 @@
 #include "Player.h"
 
 Player::Player(std::string playerName){
-    playerName = playerName;
+    this->playerName = playerName;
     score = 0;
     hand = new LinkedList();
 
 }
 //For loading from a save file
-Player::Player(std::string playerName, int score, LinkedList hand){
+Player::Player(std::string playerName, int score, LinkedList* hand){
     playerName = playerName;
-    score = score;
-    hand = hand;
+    this->score = score;
+    this->hand = hand;
 }
 
 Player::~Player(){
