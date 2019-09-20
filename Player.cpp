@@ -53,10 +53,6 @@ void Player::removeTile(Tile* tile){
     }
 }
 
-std::string Player::playerScore(){
-
-}
-
 //Displays players hand in the game
 std::string Player::playerHand(){
     return hand->toString();

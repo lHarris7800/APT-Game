@@ -28,8 +28,6 @@ public:
 
     void removeTile(Tile* tile);
 
-    std::string playerScore();
-
     std::string playerHand();
 
     std::string toString();

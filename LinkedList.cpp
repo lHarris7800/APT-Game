@@ -29,6 +29,20 @@ int LinkedList::getSize(){
    return size;
 }
 
+//This method is to look at player's hand
+int LinkedList::searchTile(std::string tileName) {
+    Node *current = head;
+    int index = 0;
+    while(current != nullptr){
+        if(current->tile->getTileName().compare(tileName)==0){
+            return index;
+        }
+        index++;
+        current = current->next;
+    }
+    return -1;
+}
+
 void LinkedList::addFront(Tile* tile){
    Node* newNode = new Node(tile,head,nullptr);
    head = newNode;
