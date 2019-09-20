@@ -11,7 +11,7 @@ public:
     void placePiece(Tile piece, std::string pos);
     std::string displayBoard();
     std::string saveBoard();
-    bool canPieceBePlaced();
+    bool canPieceBePlaced(Tile piece, std::string pos);
     int rowToInt(char c);
 
 private:
