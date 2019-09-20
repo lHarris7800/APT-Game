@@ -9,7 +9,7 @@ public:
 
    Tile* getTile();
 
-   void replaceTile(Tile& tile);
+   void replaceTile(Tile* tile);
 
    void printContents();
    

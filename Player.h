@@ -14,7 +14,7 @@ public:
 
     Player(std::string playerName);
 
-    Player(std::string playerName, int score, LinkedList hand);
+    Player(std::string playerName, int score, LinkedList* hand);
 
     ~Player();
 
@@ -24,7 +24,9 @@ public:
 
     void addScore();
 
-    bool addTile(Tile& tile);
+    bool addTile(Tile* tile);
+
+    void removeTile(Tile* tile);
 
     std::string playerScore();
 

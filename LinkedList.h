@@ -8,14 +8,20 @@ class LinkedList {
 public:
 
    LinkedList();
+
    ~LinkedList();
 
    int getSize();
 
    void clear();
 
-   void addFront(Tile& tile);
-   void addBack(Tile& tile);
+   int searchTile(std::string tileName);
+
+   void addFront(Tile* tile);
+
+   void addBack(Tile* tile);
+
+   Tile* getAt(int i);
 
    void removeFront();
    void removeBack();
