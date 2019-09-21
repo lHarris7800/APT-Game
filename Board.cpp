@@ -34,7 +34,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
     return result;
 }
 
-std::string Board::displayBoard(){
+void Board::displayBoard(){
     std::cout << "\n   ";
     for (int i = 0; i < MAX_SIZE; i++) {
         std::cout << "| " << (char) (65 + i) << " ";
@@ -61,6 +61,6 @@ std::string Board::displayBoard(){
 //  }
 //}
 
-std::string Board::saveBoard(){
-
-}
+//std::string Board::saveBoard(){
+//
+//}

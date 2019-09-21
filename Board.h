@@ -13,9 +13,9 @@ public:
 
 //    void placePiece(Tile* piece, std::string pos);
 
-    std::string displayBoard();
+    void displayBoard();
 
-    std::string saveBoard();
+//    std::string saveBoard();
 
     bool canPieceBePlaced(Tile* piece, std::string pos);
 
