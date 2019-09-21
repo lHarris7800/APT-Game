@@ -34,13 +34,24 @@ Bag::~Bag(){
     delete bag;
 }
 
-Tile* Bag::getTile(){
+Tile* Bag::getFront(){
     Tile* returnTile = bag->getAt(0);
     bag->removeAt(0);
     return returnTile;
 }
 
-void Bag::replaceTile(Tile* tile){
+Tile* Bag::getBack(){
+    int lastTile = bag->getSize() - 1;
+    Tile* returnTile = bag->getAt(lastTile);
+    bag->removeAt(lastTile);
+    return returnTile;
+}
+
+void Bag::replaceFront(Tile* tile){
+    bag->addFront(tile);
+}
+
+void Bag::replaceBack(Tile* tile){
     //TODO adding back to bag randomly?
     bag->addBack(tile);
 }

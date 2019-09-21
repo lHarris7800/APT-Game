@@ -7,9 +7,11 @@ public:
    Bag();
    ~Bag();
 
-   Tile* getTile();
+   Tile* getFront();
+   Tile* getBack();
 
-   void replaceTile(Tile* tile);
+   void replaceFront(Tile* tile);
+   void replaceBack(Tile* tile);
 
    void printContents();
 
