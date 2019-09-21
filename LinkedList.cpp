@@ -13,16 +13,14 @@ LinkedList::~LinkedList() {
 }
 
 void LinkedList::clear() {
-    Node* current = head->next;
+    Node* current = head;
+    Node* previous;
 
     while(current != nullptr){
-        delete current->prev;
+        previous = current;
         current = current->next;
+        delete previous;
     }
-    delete tail;
-
-    head = nullptr;
-    tail = nullptr;
 }
 
 int LinkedList::getSize(){
