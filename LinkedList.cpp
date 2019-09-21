@@ -13,20 +13,32 @@ LinkedList::~LinkedList() {
 }
 
 void LinkedList::clear() {
-    Node* current = head->next;
+    Node* current = head;
+    Node* previous;
 
     while(current != nullptr){
-        delete current->prev;
+        previous = current;
         current = current->next;
+        delete previous;
     }
-    delete tail;
-
-    head = nullptr;
-    tail = nullptr;
 }
 
 int LinkedList::getSize(){
    return size;
+}
+
+//This method is to look at player's hand
+int LinkedList::searchTile(std::string tileName) {
+    Node *current = head;
+    int index = 0;
+    while(current != nullptr){
+        if(current->tile->getTileName().compare(tileName)==0){
+            return index;
+        }
+        index++;
+        current = current->next;
+    }
+    return -1;
 }
 
 void LinkedList::addFront(Tile* tile){

@@ -22,9 +22,11 @@ public:
    void addBack(Tile* tile);
 
    void removeFront();
+
    void removeBack();
 
    Tile* getAt(int i);
+
    void removeAt(int i);
 
    Tile* getAndRemoveAt(int i);

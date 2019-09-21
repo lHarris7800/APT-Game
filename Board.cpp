@@ -1,81 +1,66 @@
 #include "Board.h"
-#include <iostream>
-#include <cstdio>
+#include <iomanip>
 
-Board::Board()
-{
-  gridSize = 26;
-  for (int row = 0; row < gridSize; row++)
-  {
-      for (int column = 0; column < gridSize; column++)
-      {
-          board[row][column] = EMPTY_TILE;
-      }
-  }
-}
-bool Board::canPieceBePlaced(Tile piece, std::string pos)
-{
-  if(board[rowToInt(pos[0])][pos[1]] != EMPTY_TILE )
-  {
-    return false;
-  } else
-  {
-    return true;
-  }
+Board::Board(){
 
 }
 
-std::string Board::displayBoard()
-{
-  char cRow = 'A';
-  int cCol = 0;
-  std::string board;
+Board::~Board() {
 
-  board += ((char)32);
-  for(int i = 0; i < gridSize; i++)
-  {
-    // Print x-axis labels
-    board += ((char)32);
-    board += std::to_string(cCol);
-    cCol++;
-  }
-  board += ('\n');
-    for (int row = 0; row < gridSize; row++) {
-      // Print y-axis labels
-      board += (cRow);
-      cRow++;
-        for (int column = 0; column <= gridSize; column++) {
-            board += ('|');
-            board += (array[row][column]);
-        }
-        board += ('\n');
+}
+
+bool Board::canPieceBePlaced(Tile* piece, std::string pos){
+    int row, column;
+    bool result = false;
+
+    row = pos[0]-65; //shows 1,2,3,....
+
+    //Converting Strings to Integers
+    column = stoi(pos.substr(1)); // shows A,B,C,...
+
+    if(row >= MAX_SIZE || column >= MAX_SIZE ){
+      std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position";
     }
-    std::cout << board << '\n';
-    return board;
+
+    else if(board[column][row].compare("") == 0){
+      board[column][row] = piece->getTileName();
+      result = true;
+    }
+
+    else{
+      std::cout << "There is a tile already in that position";
+    }
+
+    return result;
 }
 
-void Board::placePiece(Tile piece, std::string pos)
-{
-  if (canPieceBePlaced(piece, pos))
-  {
-    board[rowToInt(pos[0])][pos[1]] = piece;
-  }
+void Board::displayBoard(){
+    std::cout << "\n   ";
+    for (int i = 0; i < MAX_SIZE; i++) {
+        std::cout << "| " << (char) (65 + i) << " ";
+    }
+
+    std::cout << "|\n";
+    for (int i = 0; i < MAX_SIZE; i++) {
+        //Sets the field width
+        std::cout << std::setw(2) << i << " ";
+
+        for (int j = 0; j < MAX_SIZE; j++) {
+            if (board[i][j].compare("") == 0)
+                std::cout << "|   ";
+            else
+                std::cout << "| " << board[i][j];
+        }
+        std::cout << "|\n";
+    }
 }
 
-std::string Board::saveBoard()
-{
+//void Board::placePiece(Tile* piece, std::string pos){
+//  if (canPieceBePlaced(piece, pos)){
+//    board[rowToInt(pos[0])][pos[1]] = piece;
+//  }
+//}
 
-}
-
-int rowToInt(char c)
-{
-  int row;
-  if((int)c > 64 && c < 97)
-  {
-    row = (int)c - 65;
-  } else
-  {
-    row = (int)c - 97;
-  }
-  return row;
-}
+//std::string Board::saveBoard(){
+//
+//}

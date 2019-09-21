@@ -1,4 +1,4 @@
-#include "bag.h"
+#include "Bag.h"
 #include "TileCodes.h"
 #include <iostream>
 #include <stdlib.h>
