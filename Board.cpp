@@ -1,6 +1,8 @@
 #include "Board.h"
 #include <iomanip>
 
+#define EMPTY_TILE  ""
+
 Board::Board(){
 
 }
@@ -55,11 +57,25 @@ void Board::displayBoard(){
     }
 }
 
-//void Board::placePiece(Tile* piece, std::string pos){
-//  if (canPieceBePlaced(piece, pos)){
-//    board[rowToInt(pos[0])][pos[1]] = piece;
-//  }
-//}
+void Board::placeTile(Tile* piece, std::string pos){
+  //Parsing pos to row and column
+  int row, column;
+  row = pos[0]-65;
+  column = stoi(pos.substr(1));
+
+  if (canPieceBePlaced(piece, pos)){
+    board[column][row] = piece->getTileName();
+  }
+}
+
+void Board::removeTile(std::string pos){
+  //Parsing pos to row and column
+  int row, column;
+  row = pos[0]-65;
+  column = stoi(pos.substr(1));
+
+  board[column][row] = EMPTY_TILE;
+}
 
 //std::string Board::saveBoard(){
 //

@@ -11,7 +11,9 @@ public:
 
     ~Board();
 
-//    void placePiece(Tile* piece, std::string pos);
+    void placeTile(Tile* piece, std::string pos);
+
+    void removeTile(std::string pos);
 
     void displayBoard();
 
