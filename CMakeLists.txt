@@ -14,4 +14,4 @@ add_executable(APT_A2
         qwirkle.cpp
         Tile.cpp
         Tile.h
-        TileCodes.h)
+        TileCodes.h MainMenu.cpp MainMenu.h)
