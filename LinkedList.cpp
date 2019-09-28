@@ -8,9 +8,31 @@ LinkedList::LinkedList() {
    size = 0;
 }
 
+LinkedList::LinkedList(LinkedList& original){
+   Tile* originalCurr;
+   Node* copyCurr;
+
+   if(original.getSize() > 0){
+      //Adding first node to head
+      originalCurr = original.getAt(0);
+      copyCurr = new Node(new Tile(*originalCurr),nullptr,nullptr);
+      head = copyCurr;
+
+      for(int i = 1; i <original.getSize();i++){
+         originalCurr = original.getAt(i);
+         copyCurr = new Node(originalCurr,nullptr,copyCurr);
+         copyCurr->prev->next = copyCurr;
+      }
+      tail = copyCurr;
+      size = original.getSize();
+   }
+}
+
 LinkedList::~LinkedList() {
     clear();
 }
+
+
 
 void LinkedList::clear() {
     Node* current = head;

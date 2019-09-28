@@ -30,6 +30,10 @@ Bag::Bag(){
     
 }
 
+Bag::Bag(Bag& original){
+    bag = new LinkedList(*original.getBag());
+}
+
 Bag::~Bag(){
     delete bag;
 }
@@ -45,6 +49,10 @@ Tile* Bag::getBack(){
     Tile* returnTile = bag->getAt(lastTile);
     bag->removeAt(lastTile);
     return returnTile;
+}
+
+LinkedList* Bag::getBag(){
+    return bag;
 }
 
 void Bag::replaceFront(Tile* tile){

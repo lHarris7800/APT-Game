@@ -12,15 +12,21 @@ class Player {
 
 public:
 
+    Player();
+
     Player(std::string playerName);
 
     Player(std::string playerName, int score, LinkedList* hand);
+
+    Player(Player& original);
 
     ~Player();
 
     std::string getName();
 
     int getScore();
+
+    LinkedList* getHand();
 
     void addScore();
 

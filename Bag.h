@@ -5,6 +5,7 @@ class Bag {
 public:
 
    Bag();
+   Bag(Bag& original);
    ~Bag();
 
    Tile* getFront();
@@ -12,6 +13,8 @@ public:
 
    void replaceFront(Tile* tile);
    void replaceBack(Tile* tile);
+
+   LinkedList* getBag();
 
    void printContents();
 

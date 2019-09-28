@@ -4,11 +4,18 @@
 
 #include "Player.h"
 
+Player::Player(){}
+
 Player::Player(std::string playerName){
     this->playerName = playerName;
     score = 0;
     hand = new LinkedList();
+}
 
+Player::Player(Player& original){
+    playerName = original.getName();
+    score = original.getScore();
+    hand = new LinkedList(*original.getHand());
 }
 //For loading from a save file
 Player::Player(std::string playerName, int score, LinkedList* hand){
@@ -27,6 +34,10 @@ std::string Player::getName(){
 
 int Player::getScore(){
     return score;
+}
+
+LinkedList* Player::getHand(){
+    return hand;
 }
 
 //Changes the score (sets the score)
