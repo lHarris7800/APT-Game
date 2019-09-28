@@ -1,22 +1,26 @@
 #include "Player.h"
 #include "Board.h"
 #include "Bag.h"
+#include "Tile.h"
+#include "GameHistory.h"
 
 class Controller {
 public:
 
-   Controller();
+   Controller(Player* one, Player* two);
 
    ~Controller();
 
 
 
 private:
-    Player playerOne;
-    Player playerTwo;
-    Board board;
-    Bag bag;
+    GameHistory* gameHistory;
 
-    void placeTile(/*Arguments to be determined*/);
-    void replaceTile(/*Arguments to be determined*/);
+    Player* playerOne;
+    Player* playerTwo;
+    Board* board;
+    Bag* bag;
+
+    void placeTile(PlayerNum playerNum, Tile* playedTile, std::string boardLocation);
+    void replaceTile(PlayerNum playerNum, Tile* replacedTile);
 };
