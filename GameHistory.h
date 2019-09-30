@@ -1,6 +1,6 @@
+#ifndef APT_THE_SCREAM_A2_GAMEHISTORY_H
+#define APT_THE_SCREAM_A2_GAMEHISTORY_H
 
-#ifndef ASSIGN2_GAMEHOSTORY_H
-#define ASSIGN2_GAMEHISTORY_H
 #include "ActionNode.h"
 
 class GameHistory{
@@ -30,5 +30,4 @@ private:
     Bag* iBag;
 */
 };
-
-#endif // ASSIGN2_GAMEHISTORY_H
+#endif

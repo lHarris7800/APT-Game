@@ -1,5 +1,4 @@
-#include "gameHistory.h"
-#include "ActionNode.h"
+#include "GameHistory.h"
 
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
