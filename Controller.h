@@ -8,10 +8,11 @@ class Controller {
 public:
 
    Controller(Player* one, Player* two);
-
    ~Controller();
 
+   bool validPlaceTile(Tile* playedTile, std::string boardLocation);
 
+   bool validReplaceTile(Tile* replacedTile);
 
 private:
     GameHistory* gameHistory;

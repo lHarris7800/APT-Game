@@ -21,7 +21,6 @@ public:
 
     bool canPieceBePlaced(Tile* piece, std::string pos);
 
-private:
     std::string board[MAX_SIZE][MAX_SIZE];
 };
 
