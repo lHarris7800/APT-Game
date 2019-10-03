@@ -22,7 +22,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     row = boardLocation[0]-65; //shows 1,2,3,....
     column = stoi(boardLocation.substr(1)); // shows A,B,C,...
     if(row >= MAX_SIZE || column >= MAX_SIZE){
-        std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position";
+        std::cout << "There are no more than 25 rows, Therefore you cannot add the tile in this position";
     }
 
     else if (board->board[column][row].compare("") == 0){
@@ -35,7 +35,18 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
 }
 
 bool Controller::validReplaceTile(Tile* replacedTile){
-    return true;
+    bool result = false;
+    int position = playerOne->getHand()->searchTile(replacedTile->getTileName());
+
+    if(position != -1){
+        playerOne->getHand()->removeAt(position);
+        result = true;
+    }
+    else{
+        std::cout << "The tile you want to replace doesn't exist in your hand.";
+    }
+
+    return result;
 }
 
 //Updates bag, board, players with new move and add move to history
