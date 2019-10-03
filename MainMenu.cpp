@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
+#include <vector>
+#include <algorithm>
 
 #include "MainMenu.h"
 #include "Controller.h"
@@ -18,11 +20,12 @@ MainMenu::~MainMenu(){
 }
 
 int UserInput(){
+    bool inputComplete = false;
     int selection;
     std::cout << ">";
     std::cin >> selection;
     //Input validation
-    while(1){
+    while(!inputComplete){
         if(std::cin.fail()){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<int>::max());
@@ -31,7 +34,7 @@ int UserInput(){
             std::cin >> selection;
         }
         if(!std::cin.fail())
-            break;
+            inputComplete = true;
     }
     return selection;
 };
@@ -86,12 +89,10 @@ void MainMenu::NewGame(){
 
     std::string playerOneName, playerTwoName;
     std::cout << "Enter a name for player 1 (uppercase characters only)" << std::endl;
-    std::cout << ">";
-    std::cin >> playerOneName;
+    PlayerNameInput() >> playerOneName;
     std::cout << "You have entered " + playerOneName << std::endl;
     std::cout << "Enter a name for player 2 (uppercase characters only)" << std::endl;
-    std::cout << ">";
-    std::cin >> playerTwoName;
+    PlayerNameInput() >> playerTwoName;
     std::cout << "You have entered " + playerTwoName << std::endl;
     std::cout << "Let's Play!" << std::endl;
 
@@ -104,6 +105,31 @@ void MainMenu::NewGame(){
 
     std::cout << "Game over" << std::endl;
     //END Game
+}
+
+std::string MainMenu::PlayerNameInput(){
+    bool inputComplete = false;
+    std::string playerName;
+    std::cout << ">";
+    std::cin >> playerName;
+    //Input validation
+    while(!inputComplete){
+        if(std::cin.fail()){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max());
+            std::cout << "\n";
+            std::cout << "Invalid input, please try again" << std::endl;
+            std::cin >> playerName;
+        }
+        if(!std::all_of(playerName.begin(), playerName.end(), &::isupper)) {
+            std::cout << "Please type your name in ALL-CAPS" << std::endl;
+        }
+        if(!std::cin.fail()){
+            inputComplete = true;
+    }
+    return playerName;
+};
+
 }
 
 void MainMenu::LoadGame(){

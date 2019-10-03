@@ -33,6 +33,8 @@ private:
     void LoadGame();
 
     void StudentInfo();
+
+    std::string PlayerNameInput();
 };
 
 #endif //APT_A2_MAINMENU_H
