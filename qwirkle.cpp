@@ -11,8 +11,8 @@ int main(void) {
 
     std::cout << "Welcome to Qwirkle!\n-------------------" << std::endl;
 
-    MainMenu mainMenu;
-    mainMenu.MenuDisplay();
+    MainMenu* mainMenu = new MainMenu();
+    mainMenu->MenuAction();
 
     return EXIT_SUCCESS;
 }

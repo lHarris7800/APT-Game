@@ -2,23 +2,145 @@
 // Created by Koder on 20/09/2019.
 //
 #include <iostream>
+#include <fstream>
+#include <limits>
 
 #include "MainMenu.h"
+#include "Controller.h"
+#include "Player.h"
 
 MainMenu::MainMenu(){
 
-};
+}
+
 MainMenu::~MainMenu(){
 
 }
+
 int UserInput(){
     int selection;
+    std::cout << ">";
     std::cin >> selection;
+    //Input validation
+    while(1){
+        if(std::cin.fail()){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<int>::max());
+            std::cout << "\n";
+            std::cout << "Invalid input, please try again" << std::endl;
+            std::cin >> selection;
+        }
+        if(!std::cin.fail())
+            break;
+    }
     return selection;
+};
+
+MenuOption MainMenu::MenuDisplay(){
+    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information(?)\n4. Quit\n" << std::endl;
+    menuChoice = UserInput();
+    if (menuChoice == 1) {
+        return NEW_GAME;
+    } else if (menuChoice == 2) {
+        return LOAD_GAME;
+    } else if (menuChoice == 3) {
+        return STUDENT_INFO;
+    } else if (menuChoice == 4) {
+        return QUIT_GAME;
+    } else {
+        return INVALID_OPTION;
+    }
+};
+
+void MainMenu::MenuAction(){
+
+    MenuOption userOption;
+
+    do {
+        userOption = MenuDisplay();
+
+        if (userOption == NEW_GAME) {
+            std::cout << "\nStarting a New Game" << std::endl;
+            NewGame();
+        }
+        if (userOption == LOAD_GAME) {
+            std::cout << "Selected Load Game" << std::endl;
+            LoadGame();
+        }
+        if (userOption == STUDENT_INFO) {
+            std::cout << "Selected Student Information" << std::endl;
+            StudentInfo();
+        }
+        if (userOption == QUIT_GAME) {
+            std::cout << "Goodbye" << std::endl;
+        }
+        if (userOption == INVALID_OPTION){
+            std::cout << "Please enter a valid option" << std::endl;
+        }
+    }
+    while (userOption != QUIT_GAME);
+};
+
+void MainMenu::NewGame(){
+    //BEGIN New Game
+
+    std::string playerOneName, playerTwoName;
+    std::cout << "Enter a name for player 1 (uppercase characters only)" << std::endl;
+    std::cout << ">";
+    std::cin >> playerOneName;
+    std::cout << "You have entered " + playerOneName << std::endl;
+    std::cout << "Enter a name for player 2 (uppercase characters only)" << std::endl;
+    std::cout << ">";
+    std::cin >> playerTwoName;
+    std::cout << "You have entered " + playerTwoName << std::endl;
+    std::cout << "Let's Play!" << std::endl;
+
+    Player* playerOne = new Player(playerOneName);
+    Player* playerTwo = new Player(playerTwoName);
+
+    //Begin playing
+    //TODO: Fix Player and Controller initialization
+    Controller * controller = new Controller(playerOne, playerTwo);
+
+    std::cout << "Game over" << std::endl;
+    //END Game
 }
 
-void MainMenu::MenuDisplay()
-{
-    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information(?)\n4. Quit" << std::endl;
+void MainMenu::LoadGame(){
+    std::string fileName, line;
 
+    std::cout << "Enter the filename from which to load a game" << std::endl;
+    std::cout << ">";
+    std::cin >> fileName; //input name of previously saved file
+    std::ifstream saveFile (fileName);
+    //Reads file into the console
+    //TODO: read file into controller instead
+    if (saveFile.is_open()){
+        while (getline (saveFile,line)){
+            std::cout << line << "\n";
+        }
+        saveFile.close();
+    }
+    else std::cout << "File not found";
+}
+
+void MainMenu::StudentInfo(){
+    std::cout <<
+    "----------------------------------\n"
+    "Name: Shahrzad Rafezi\n"
+    "Student ID: s3656798\n"
+    "Email: s3656798@student.rmit.edu.au\n"
+    "\n"
+    "Name: Luke Harris\n"
+    "Student ID: s3725331\n"
+    "Email: s3725331@student.rmit.edu.au\n"
+    "\n"
+    "Name: Adnan Boru\n"
+    "Student ID: s3721108\n"
+    "Email: s3721108@student.rmit.edu.au\n"
+    "\n"
+    "Name: Benjamin Koder\n"
+    "Student ID: s3774343\n"
+    "Email: s3774343@student.rmit.edu.au\n"
+    "----------------------------------" << std::endl;
 }
