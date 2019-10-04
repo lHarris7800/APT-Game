@@ -42,17 +42,18 @@ int UserInput(){
 MenuOption MainMenu::MenuDisplay(){
     std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information(?)\n4. Quit\n" << std::endl;
     menuChoice = UserInput();
+    MenuOption menuOption = INVALID_OPTION;
     if (menuChoice == 1) {
-        return NEW_GAME;
+        menuOption = NEW_GAME;
     } else if (menuChoice == 2) {
-        return LOAD_GAME;
+        menuOption = LOAD_GAME;
     } else if (menuChoice == 3) {
-        return STUDENT_INFO;
+        menuOption = STUDENT_INFO;
     } else if (menuChoice == 4) {
-        return QUIT_GAME;
-    } else {
-        return INVALID_OPTION;
+        menuOption = QUIT_GAME;
     }
+
+    return menuOption;
 };
 
 void MainMenu::MenuAction(){
