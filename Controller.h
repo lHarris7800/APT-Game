@@ -14,6 +14,8 @@ public:
 
    bool validReplaceTile(Tile* replacedTile);
 
+   void gameplay();
+
 private:
     GameHistory* gameHistory;
 
@@ -24,4 +26,5 @@ private:
 
     void placeTile(PlayerNum playerNum, Tile* playedTile, std::string boardLocation);
     void replaceTile(PlayerNum playerNum, Tile* replacedTile);
+
 };

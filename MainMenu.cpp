@@ -98,8 +98,7 @@ void MainMenu::NewGame(){
     //Begin playing
     //TODO: Fix Player and Controller initialization
     Controller * controller = new Controller(playerOne, playerTwo);
-
-    std::cout << "Game over" << std::endl;
+    controller->gameplay();
     //END Game
 }
 
@@ -110,13 +109,6 @@ std::string MainMenu::PlayerNameInput(){
     std::cin >> playerName;
     //Input validation
     while(!inputComplete){
-        if(std::cin.fail()){
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max());
-            std::cout << "Invalid input, please try again" << std::endl;
-            std::cout << ">";
-            std::cin >> playerName;
-        }
         if(!std::all_of(playerName.begin(), playerName.end(), &::isupper)) {
             std::cout << "Please type your name in ALL-CAPS" << std::endl;
             std::cin.clear();
@@ -145,7 +137,7 @@ void MainMenu::LoadGame(){
         }
         saveFile.close();
     }
-    else std::cout << "File not found";
+    else std::cout << "File not found" << std::endl;
 }
 
 void MainMenu::StudentInfo(){
@@ -159,12 +151,12 @@ void MainMenu::StudentInfo(){
     "Student ID: s3725331\n"
     "Email: s3725331@student.rmit.edu.au\n"
     "\n"
-    "Name: Adnan Boru\n"
-    "Student ID: s3721108\n"
-    "Email: s3721108@student.rmit.edu.au\n"
-    "\n"
     "Name: Benjamin Koder\n"
     "Student ID: s3774343\n"
     "Email: s3774343@student.rmit.edu.au\n"
+    "\n"
+    "Name: Adnan Boru\n"
+    "Student ID: s3721108\n"
+    "Email: s3721108@student.rmit.edu.au\n"
     "----------------------------------" << std::endl;
 }

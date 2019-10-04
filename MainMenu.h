@@ -35,6 +35,8 @@ private:
     void StudentInfo();
 
     std::string PlayerNameInput();
+
+    void GamePlay();
 };
 
 #endif //APT_A2_MAINMENU_H

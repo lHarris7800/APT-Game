@@ -16,6 +16,32 @@ Controller::~Controller(){
 
 }
 
+void Controller::gameplay(){
+/*PSEUDOCODE
+BEGIN
+WHILE GAME HAS NOT ENDED DO{
+    <<PlayerOneName //Player one's turn
+    <<Score for Player One
+    <<Score for Player Two
+    <<
+    <<PRINT GAME BOARD
+    <<
+    <<Player One's hand
+    <<
+        Do {
+        >>player input //Use Regex101.com
+        **Choices: place x at y, replace z with tile from bag, save, forfiet, help
+        VALIDATE INPUT (must share attribute and be connected with another tile)
+            IF (input is invalid) << Please input from following options: ... lists options
+        } while (input is invalid)
+
+    <<PlayerTwoName //Player Two's turn
+    <<...
+    }
+END*/
+
+}
+
 bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     int row, column;
     bool result = false;
