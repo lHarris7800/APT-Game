@@ -26,7 +26,6 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     }
 
     else if (board->board[column][row].compare("") == 0){
-        board->board[column][row] = playedTile->getTileName();
         result = true;
     }
     else
@@ -39,7 +38,6 @@ bool Controller::validReplaceTile(Tile* replacedTile){
     int position = playerOne->getHand()->searchTile(replacedTile->getTileName());
 
     if(position != -1){
-        playerOne->getHand()->removeAt(position);
         result = true;
     }
     else{
