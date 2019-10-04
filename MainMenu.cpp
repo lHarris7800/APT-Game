@@ -90,10 +90,10 @@ void MainMenu::NewGame(){
 
     std::string playerOneName, playerTwoName;
     std::cout << "Enter a name for player 1 (uppercase characters only)" << std::endl;
-    PlayerNameInput() >> playerOneName;
+    playerOneName = PlayerNameInput();
     std::cout << "You have entered " + playerOneName << std::endl;
     std::cout << "Enter a name for player 2 (uppercase characters only)" << std::endl;
-    PlayerNameInput() >> playerTwoName;
+    playerTwoName = PlayerNameInput();
     std::cout << "You have entered " + playerTwoName << std::endl;
     std::cout << "Let's Play!" << std::endl;
 
@@ -125,13 +125,12 @@ std::string MainMenu::PlayerNameInput(){
         if(!std::all_of(playerName.begin(), playerName.end(), &::isupper)) {
             std::cout << "Please type your name in ALL-CAPS" << std::endl;
         }
-        if(!std::cin.fail()){
+        if(!std::cin.fail()) {
             inputComplete = true;
+        }
     }
     return playerName;
 };
-
-}
 
 void MainMenu::LoadGame(){
     std::string fileName, line;
