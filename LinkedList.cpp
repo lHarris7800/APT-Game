@@ -29,20 +29,23 @@ LinkedList::LinkedList(LinkedList& original){
 }
 
 LinkedList::~LinkedList() {
+    std::cout << "LinkedList delete" << std::endl;
     clear();
 }
 
 
 
 void LinkedList::clear() {
-    Node* current = head;
-    Node* previous;
+   if(head!= nullptr){
+      Node* current = head->next;
 
-    while(current != nullptr){
-        previous = current;
-        current = current->next;
-        delete previous;
-    }
+      while(current != nullptr){
+         delete current->prev;
+         current = current->next;
+      }
+
+      delete tail;
+   }
 }
 
 int LinkedList::getSize(){
@@ -194,7 +197,7 @@ void LinkedList::removeAt(int index){
 //may be used for random bag order
 Tile* LinkedList::getAndRemoveAt(int index){
    Node* node = getNodeAt(index);
-   Tile* returnTile = node->tile;
+   Tile* returnTile = new Tile(*node->tile);
 
    if(node == head){
       removeFront();
