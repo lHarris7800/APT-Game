@@ -4,15 +4,38 @@
 #define PLAYER_TWO  2
 #define UNDO_TURNS  3
 
-GameHistory::GameHistory(Bag* bag, Board* board, Player* p1, Player* p2){
+GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
+    std::cout << "Post" << std::endl;
     head = nullptr;
     tail = nullptr;
     size = 0;
 
-    iBag = *bag;
-    iBoard = *board;
-    iPlayerOne = *p1;
-    iPlayerTwo = *p2;
+    iBag = new Bag(*bag);
+    iPlayerOne = new Player(*p1);
+    iPlayerTwo = new Player(*p2);
+}
+
+GameHistory::~GameHistory(){
+    std::cout << "GameHistory delete" << std::endl;
+    delete iPlayerOne;
+    delete iPlayerTwo;
+    delete iBag;
+
+    clear();
+}
+
+void GameHistory::clear() {
+    
+    if(head != nullptr){
+        ActionNode* current = head->next;
+    
+        while(current != nullptr){
+            delete current->prev;
+            current = current->next;
+        }
+    }
+
+    delete tail;
 }
 
 void GameHistory::addAction(Action* action,PlayerNum playerNum){
@@ -32,10 +55,10 @@ void GameHistory::addAction(Action* action,PlayerNum playerNum){
 }
 
 void GameHistory::replay(){
-    Player* playerOne = new Player(iPlayerOne);
-    Player* playerTwo = new Player(iPlayerTwo);
+    Player* playerOne = new Player(*iPlayerOne);
+    Player* playerTwo = new Player(*iPlayerTwo);
 
-    Bag* bag = new Bag(iBag);
+    Bag* bag = new Bag(*iBag);
 
     Board* board = new Board();
 
@@ -52,6 +75,11 @@ void GameHistory::replay(){
         currAction = currAction->next;
         board->displayBoard();
     }
+
+    delete playerOne;
+    delete playerTwo;
+    delete bag;
+    delete board;
 }
 
 void GameHistory::undo(Bag* bag, Board* board, Player* playerOne, Player* playerTwo){

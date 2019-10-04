@@ -14,11 +14,13 @@ class Tile {
 public:
    Tile(Colour,Shape);
 
-    Colour getColour() const;
+   Tile(Tile& original);
 
-    Shape getShape() const;
+   Colour getColour() const;
 
-    std::string getTileName();
+   Shape getShape() const;
+
+   std::string getTileName();
 
    Colour colour;
    Shape  shape;

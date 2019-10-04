@@ -5,8 +5,10 @@
 
 class GameHistory{
 public:
-    GameHistory(Bag* bag, Board* board, Player* p1, Player* p2);
+    GameHistory(Bag* bag, Player* p1, Player* p2);
     ~GameHistory();
+
+    void clear();
 
     void addAction(Action* action, PlayerNum playerNum);
 
@@ -19,10 +21,9 @@ private:
     ActionNode* tail;
     int size;
 
-    Bag iBag;
-    Board iBoard;
-    Player iPlayerOne;
-    Player iPlayerTwo;
+    Bag* iBag;
+    Player* iPlayerOne;
+    Player* iPlayerTwo;
 
     /*
     Player* iPlayerOne;

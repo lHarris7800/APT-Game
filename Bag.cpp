@@ -25,7 +25,7 @@ Bag::Bag(){
     int tilesLeft;
     //Adding tiles to bag from set of tiles to bag in random order
     while ((tilesLeft = tileSet->getSize()) != 0)
-        bag->addFront(tileSet->getAndRemoveAt(rand() % tilesLeft));
+        bag->addFront(new Tile(*tileSet->getAndRemoveAt(rand() % tilesLeft)));
     
     
 }
@@ -39,14 +39,14 @@ Bag::~Bag(){
 }
 
 Tile* Bag::getFront(){
-    Tile* returnTile = bag->getAt(0);
+    Tile* returnTile = new Tile(*bag->getAt(0));
     bag->removeAt(0);
     return returnTile;
 }
 
 Tile* Bag::getBack(){
     int lastTile = bag->getSize() - 1;
-    Tile* returnTile = bag->getAt(lastTile);
+    Tile* returnTile = new Tile(*bag->getAt(lastTile));
     bag->removeAt(lastTile);
     return returnTile;
 }
@@ -67,15 +67,13 @@ void Bag::replaceBack(Tile* tile){
 void Bag::printContents(){
     Tile* currentTile = bag->getAt(0);
     std::cout << 0 << std::endl <<
-        currentTile->colour << ", " <<
-        currentTile->shape << std::endl;
+        currentTile->getTileName() << std::endl;
 
     for(int i = 1;i<bag->getSize();i++){
         currentTile = bag->getAt(i);
 
         std::cout << i << std::endl <<
-            currentTile->colour << ", " <<
-            currentTile->shape << std::endl;
+            currentTile->getTileName() << std::endl;
     }
 }
 

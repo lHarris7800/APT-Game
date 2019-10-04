@@ -7,7 +7,8 @@ PlaceTileAction::PlaceTileAction(Tile* playedTile, std::string boardLocation):Ac
 }
 
 PlaceTileAction::~PlaceTileAction(){
-
+    if(newTile != nullptr)
+        delete newTile;
 }
 
 //***No validation*** expects a correct and legal move
@@ -18,14 +19,14 @@ void PlaceTileAction::doAction(Bag* bag, Board* board,Player* player){
 
     //Getting new tile from bag and adding to players hand
     newTile = bag->getFront();
-    player->addTile(newTile);
+    player->addTile(new Tile(*newTile));
 }
 
 //***No validation*** excpects bag,player,board to be in the state left by doAction 
 void PlaceTileAction::undoAction(Bag* bag, Board* board,Player* player){
     //Remove new tile from players hand and replacing it in bag
     player->removeTile(newTile);
-    bag->replaceFront(newTile);
+    bag->replaceFront(new Tile(*newTile));
 
     //Removing tile from board and replacing into players hand
     board->removeTile(boardLocation);
