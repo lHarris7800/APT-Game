@@ -20,21 +20,16 @@ MainMenu::~MainMenu(){
 }
 
 int UserInput(){
-    bool inputComplete = false;
     int selection;
     std::cout << ">";
     std::cin >> selection;
-    //Input validation
-    while(!inputComplete){
-        if(std::cin.fail()){
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<int>::max());
-            std::cout << "\n";
-            std::cout << "Invalid input, please try again" << std::endl;
-            std::cin >> selection;
-        }
-        if(!std::cin.fail())
-            inputComplete = true;
+    //Input validation checking for integers only
+    while(!std::cin) {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Invalid input, please try again" << std::endl;
+        std::cout << ">";
+        std::cin >> selection;
     }
     return selection;
 };
@@ -118,14 +113,17 @@ std::string MainMenu::PlayerNameInput(){
         if(std::cin.fail()){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max());
-            std::cout << "\n";
             std::cout << "Invalid input, please try again" << std::endl;
+            std::cout << ">";
             std::cin >> playerName;
         }
         if(!std::all_of(playerName.begin(), playerName.end(), &::isupper)) {
             std::cout << "Please type your name in ALL-CAPS" << std::endl;
+            std::cin.clear();
+            std::cout << ">";
+            std::cin >> playerName;
         }
-        if(!std::cin.fail()) {
+        else if(!std::cin.fail()) {
             inputComplete = true;
         }
     }
