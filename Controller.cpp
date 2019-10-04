@@ -9,7 +9,7 @@ Controller::Controller(Player* playerOne, Player* playerTwo){
     this->playerTwo = playerTwo;
     bag = new Bag();
     board = new Board();
-    gameHistory = new GameHistory(bag,playerOne,playerTwo);
+    gameHistory = new GameHistory(bag,board,playerOne,playerTwo);
 }
 
 Controller::~Controller(){
