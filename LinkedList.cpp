@@ -20,7 +20,7 @@ LinkedList::LinkedList(LinkedList& original){
 
       for(int i = 1; i <original.getSize();i++){
          originalCurr = original.getAt(i);
-         copyCurr = new Node(originalCurr,nullptr,copyCurr);
+         copyCurr = new Node(new Tile(*originalCurr),nullptr,copyCurr);
          copyCurr->prev->next = copyCurr;
       }
       tail = copyCurr;
@@ -228,3 +228,5 @@ std::string LinkedList::toString(){
    }
    return build;
 }
+
+
