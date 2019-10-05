@@ -11,6 +11,11 @@ Tile::Tile(Tile& original){
     shape = original.shape;
 }
 
+Tile::Tile(std::string tileName){
+    colour = tileName[0];
+    shape = (int) tileName[1];
+}
+
 Colour Tile::getColour() const {
     return colour;
 }

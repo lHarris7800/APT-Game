@@ -9,6 +9,7 @@ public:
 
    LinkedList();
    LinkedList(LinkedList& original);
+   LinkedList(std::string data);
 
    ~LinkedList();
 
