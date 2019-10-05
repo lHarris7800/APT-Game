@@ -1,8 +1,5 @@
-#include <iostream>
 
 #include "Controller.h"
-#include "ReplaceTileAction.h"
-#include "PlaceTileAction.h"
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
 

@@ -2,10 +2,14 @@
 #include "Board.h"
 #include "Tile.h"
 #include "GameHistory.h"
+#include "ReplaceTileAction.h"
+#include "PlaceTileAction.h"
+#include <iostream>
 #define UP 1
 #define DOWN 2
 #define LEFT 3
 #define RIGHT 4
+
 
 class Controller {
 public:
