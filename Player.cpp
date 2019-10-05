@@ -3,13 +3,18 @@
 //
 
 #include "Player.h"
+#define HAND_SIZE   7
 
 Player::Player(){}
 
-Player::Player(std::string playerName){
+Player::Player(std::string playerName, Bag* bag){
     this->playerName = playerName;
     score = 0;
+    //TODO not implemented
     hand = new LinkedList();
+    for(int i = 0; i < HAND_SIZE;i++){
+        hand->addBack(bag->getFront());
+    }
 }
 
 Player::Player(Player& original){
