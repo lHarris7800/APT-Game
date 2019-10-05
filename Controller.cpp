@@ -47,28 +47,31 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     bool result = false;
     row = boardLocation[0]-65; //shows 1,2,3,....
     column = stoi(boardLocation.substr(1)); // shows A,B,C,...
-    if(row >= MAX_SIZE || column >= MAX_SIZE){
-        std::cout << "There are no more than 25 rows, Therefore you cannot add the tile in this position";
-    }
 
-    else if (board->board[column][row].compare("") == 0){
+    //checks if the tile you want to place is out of bounds
+    if(row >= MAX_SIZE || column >= MAX_SIZE)
+        std::cout << "There are no more than 25 rows, Therefore you cannot add the tile in this position";
+
+    //checks if the position of the board is empty
+    else if (board->board[column][row].compare("") == 0)
         result = true;
-    }
     else
         std::cout << "There is a tile already in that position";
+
     return result;
 }
 
 bool Controller::validReplaceTile(Tile* replacedTile){
     bool result = false;
+
+    //searches the position of the tile in player's hand
     int position = playerOne->getHand()->searchTile(replacedTile->getTileName());
 
-    if(position != -1){
+    //checks to see if that tile exist in player's hand
+    if(position != -1)
         result = true;
-    }
-    else{
+    else
         std::cout << "The tile you want to replace doesn't exist in your hand.";
-    }
 
     return result;
 }
