@@ -1,6 +1,7 @@
 
 #include "LinkedList.h"
 #include <iostream>
+#include <sstream>
 
 LinkedList::LinkedList() {
    head = nullptr;
@@ -28,8 +29,32 @@ LinkedList::LinkedList(LinkedList& original){
    }
 }
 
+LinkedList::LinkedList(std::string data){
+   size = 0;
+
+   std::istringstream delimitedData (data);
+   
+   std::string tileData;
+   Node* current = head;
+
+   std::getline(delimitedData,tileData,',');
+
+   if(!delimitedData.eof()){
+      current = new Node(new Tile(tileData),nullptr,nullptr);
+      size++;
+      std::getline(delimitedData,tileData,',');
+   }
+
+   while(!delimitedData.eof()){
+      current->next = new Node(new Tile(tileData),nullptr,current);
+      size++;
+      std::getline(delimitedData,tileData,',');
+   }
+   
+   tail = current;
+}
+
 LinkedList::~LinkedList() {
-    std::cout << "LinkedList delete" << std::endl;
     clear();
 }
 
@@ -216,7 +241,7 @@ Tile* LinkedList::getAndRemoveAt(int index){
 //Used by bag,player
 //Returns tiles in linkedlist
 std::string LinkedList::toString(){
-   std::string build = std::string("");
+   std::string build;
    
    Node* current = head;
    build.append(current->tile->getTileName());
@@ -224,9 +249,7 @@ std::string LinkedList::toString(){
    for (int i = 1; i < size; i++) {
       current = current->next;
       build.append(",");
-      build.append(current->tile->getTileName());      
+      build.append(current->tile->getTileName());
    }
    return build;
 }
-
-

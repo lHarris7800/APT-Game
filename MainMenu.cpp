@@ -140,6 +140,37 @@ void MainMenu::LoadGame(){
     else std::cout << "File not found" << std::endl;
 }
 
+void MainMenu::saveGame(std::string filename) {
+
+    if (!filename.empty()) {
+        // Opens the file
+        std::ofstream out(filename);
+
+        if (out.is_open()) {
+
+            //TODO:saves player's toString
+
+            //TODO:saves board's toString
+
+            //TODO:saves bag's toString
+            out << this->bag->toString() << std::endl;
+            
+            //TODO:saves current Player's name
+
+
+            // Closes the file
+            out.flush();
+            out.close();
+        }
+        std::cout << "Game successfully saved" << std::endl
+                  << std::endl;
+    }
+    else {
+        std::cout << "Error: Please enter a filename to save" << std::endl;
+    }
+
+}
+
 void MainMenu::StudentInfo(){
     std::cout <<
     "----------------------------------\n"

@@ -5,6 +5,8 @@
 #ifndef APT_A2_MAINMENU_H
 #define APT_A2_MAINMENU_H
 
+#include "Bag.h"
+
 enum MenuOption {
     NEW_GAME,
     LOAD_GAME,
@@ -28,9 +30,13 @@ public:
 private:
     int menuChoice = 0;
 
+    Bag *bag;
+
     void NewGame();
 
     void LoadGame();
+
+    void saveGame(std::string filename);
 
     void StudentInfo();
 

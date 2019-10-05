@@ -6,6 +6,7 @@
 #define STARTER_CODE_PLAYER_H
 #include <string>
 #include "LinkedList.h"
+#include "Bag.h"
 #define MAX_TILES 6
 
 class Player {
@@ -14,7 +15,7 @@ public:
 
     Player();
 
-    Player(std::string playerName);
+    Player(std::string playerName, Bag* bag);
 
     Player(std::string playerName, int score, LinkedList* hand);
 

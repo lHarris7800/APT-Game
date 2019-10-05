@@ -3,13 +3,18 @@
 //
 
 #include "Player.h"
+#define HAND_SIZE   7
 
 Player::Player(){}
 
-Player::Player(std::string playerName){
+Player::Player(std::string playerName, Bag* bag){
     this->playerName = playerName;
     score = 0;
+    //TODO not implemented
     hand = new LinkedList();
+    for(int i = 0; i < HAND_SIZE;i++){
+        hand->addBack(bag->getFront());
+    }
 }
 
 Player::Player(Player& original){
@@ -56,7 +61,7 @@ bool Player::addTile(Tile* tile){
     return added;
 }
 
-//Removes the tile from player's hand
+//Removes a tile from player's hand
 void Player::removeTile(Tile* tile){
     int position = hand->searchTile(tile->getTileName());
     if(position != -1){

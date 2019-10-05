@@ -34,6 +34,10 @@ Bag::Bag(Bag& original){
     bag = new LinkedList(*original.getBag());
 }
 
+Bag::Bag(LinkedList* bag){
+    this->bag = bag;
+}
+
 Bag::~Bag(){
     delete bag;
 }
