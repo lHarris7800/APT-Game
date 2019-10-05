@@ -88,7 +88,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
 
     //checks if the tile that we are placing is inside of bounds, otherwise return false
     if(row >= MAX_SIZE || column >= MAX_SIZE ){
-        std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position";
+        std::cout << "There are no more than 25 rows and columns, therefore you cannot add the tile in this position";
         result = false;
     }
 
