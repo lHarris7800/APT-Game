@@ -4,11 +4,9 @@
 #define EMPTY_TILE  ""
 
 Board::Board(){
-
 }
 
 Board::~Board() {
-    std::cout << "Board delete" << std::endl;
 }
 
 bool Board::canPieceBePlaced(Tile* piece, std::string pos){
