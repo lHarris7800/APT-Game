@@ -4,6 +4,11 @@
 #define EMPTY_TILE  ""
 
 Board::Board(){
+  		for (int row = 0; row < MAX_SIZE; row++) {
+				for (int column = 0; column < MAX_SIZE; column++) {
+						board[row][column] = "  ";
+				}
+		}
 }
 
 Board::~Board() {
@@ -35,24 +40,32 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
 }
 
 void Board::displayBoard(){
-    std::cout << "\n   ";
-    for (int i = 0; i < MAX_SIZE; i++) {
-        std::cout << "| " << (char) (65 + i) << " ";
-    }
+std::cout << std::setw(4);
+	  for(int col = 0; col < MAX_SIZE; col++) {
+	    if(col % 2 == 0) {
+	      std::cout << col << "    ";
+	    }
+	  }
+	  std::cout << std::endl;
 
-    std::cout << "|\n";
-    for (int i = 0; i < MAX_SIZE; i++) {
-        //Sets the field width
-        std::cout << std::setw(2) << i << " ";
-
-        for (int j = 0; j < MAX_SIZE; j++) {
-            if (board[i][j].compare("") == 0)
-                std::cout << "|   ";
-            else
-                std::cout << "| " << board[i][j];
-        }
-        std::cout << "|\n";
-    }
+	  for (int row = 0; row < MAX_SIZE; row++) {
+	      std::cout << (char) (65 + row) << " ";
+	      for (int column = 0; column <= MAX_SIZE; column++) {
+	        if(row % 2 == 0 && column % 2 == 0) {
+	          std::cout << "|";
+	        } else if(row % 2 != 0 && column % 2 != 0){
+	          std::cout << "|";
+	        }
+	          std::cout << board[row][column];
+	      }
+	      std::cout << std::endl;
+	  }
+	  std::cout << std::setw(7);
+	  for(int col = 0; col < MAX_SIZE; col++) {
+	    if(col % 2 != 0) {
+	      std::cout << col << "    ";
+	    }
+	  }
 }
 
 void Board::placeTile(Tile* piece, std::string pos){
