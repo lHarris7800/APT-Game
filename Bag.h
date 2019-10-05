@@ -1,3 +1,7 @@
+
+#ifndef STARTER_CODE_BAG_H
+#define STARTER_CODE_BAG_H
+
 #include "Tile.h"
 #include "LinkedList.h"
 
@@ -6,6 +10,8 @@ public:
 
    Bag();
    Bag(Bag& original);
+   Bag(LinkedList* bag);
+
    ~Bag();
 
    Tile* getFront();
@@ -25,3 +31,6 @@ private:
    LinkedList* bag;
 
 };
+
+
+#endif //STARTER_CODE_BAG_H
