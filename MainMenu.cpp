@@ -84,13 +84,13 @@ void MainMenu::NewGame(){
     //BEGIN New Game
 
     std::string playerOneName, playerTwoName;
-    std::cout << "Enter a name for player 1 (uppercase characters only)" << std::endl;
+    std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     playerOneName = PlayerNameInput();
     std::cout << "You have entered " + playerOneName << std::endl;
-    std::cout << "Enter a name for player 2 (uppercase characters only)" << std::endl;
+    std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     playerTwoName = PlayerNameInput();
     std::cout << "You have entered " + playerTwoName << std::endl;
-    std::cout << "Let's Play!" << std::endl;
+    std::cout << "Let's Play!\n" << std::endl;
 
     Player* playerOne = new Player(playerOneName);
     Player* playerTwo = new Player(playerTwoName);
