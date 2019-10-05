@@ -6,6 +6,14 @@
 #define APT_A2_MAINMENU_H
 
 #include "Bag.h"
+#include "Board.h"
+#include "Player.h"
+#include "Controller.h"
+#include <iostream>
+#include <fstream>
+#include <limits>
+#include <vector>
+#include <algorithm>
 
 enum MenuOption {
     NEW_GAME,
@@ -31,6 +39,11 @@ private:
     int menuChoice = 0;
 
     Bag *bag;
+
+    Board *board;
+
+    Player* playerOne;
+    Player* playerTwo;
 
     void NewGame();
 

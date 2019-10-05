@@ -17,7 +17,7 @@ public:
 
     void displayBoard();
 
-//    std::string saveBoard();
+    std::string toString();
 
     bool canPieceBePlaced(Tile* piece, std::string pos);
 

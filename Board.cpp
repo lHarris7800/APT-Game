@@ -4,11 +4,11 @@
 #define EMPTY_TILE  ""
 
 Board::Board(){
-  		for (int row = 0; row < MAX_SIZE; row++) {
-				for (int column = 0; column < MAX_SIZE; column++) {
-						board[row][column] = "  ";
-				}
-		}
+    for (int row = 0; row < MAX_SIZE; row++) {
+        for (int column = 0; column < MAX_SIZE; column++) {
+            board[row][column] = "  ";
+        }
+    }
 }
 
 Board::~Board() {
@@ -88,6 +88,7 @@ void Board::removeTile(std::string pos){
   board[column][row] = EMPTY_TILE;
 }
 
-//std::string Board::saveBoard(){
-//
-//}
+// TODO: To be implemented
+std::string Board::toString(){
+
+}
