@@ -18,6 +18,42 @@ Bag::Bag(){
         tileSet->addFront(new Tile(RED,SQUARE));
         tileSet->addFront(new Tile(RED,STAR_6));
         tileSet->addFront(new Tile(RED,CLOVER));
+
+        tileSet->addFront(new Tile(ORANGE,CIRCLE));
+        tileSet->addFront(new Tile(ORANGE,STAR_4));
+        tileSet->addFront(new Tile(ORANGE,DIAMOND));
+        tileSet->addFront(new Tile(ORANGE,SQUARE));
+        tileSet->addFront(new Tile(ORANGE,STAR_6));
+        tileSet->addFront(new Tile(ORANGE,CLOVER));
+        
+        tileSet->addFront(new Tile(YELLOW,CIRCLE));
+        tileSet->addFront(new Tile(YELLOW,STAR_4));
+        tileSet->addFront(new Tile(YELLOW,DIAMOND));
+        tileSet->addFront(new Tile(YELLOW,SQUARE));
+        tileSet->addFront(new Tile(YELLOW,STAR_6));
+        tileSet->addFront(new Tile(YELLOW,CLOVER));
+        
+        tileSet->addFront(new Tile(GREEN,CIRCLE));
+        tileSet->addFront(new Tile(GREEN,STAR_4));
+        tileSet->addFront(new Tile(GREEN,DIAMOND));
+        tileSet->addFront(new Tile(GREEN,SQUARE));
+        tileSet->addFront(new Tile(GREEN,STAR_6));
+        tileSet->addFront(new Tile(GREEN,CLOVER));
+
+        tileSet->addFront(new Tile(BLUE,CIRCLE));
+        tileSet->addFront(new Tile(BLUE,STAR_4));
+        tileSet->addFront(new Tile(BLUE,DIAMOND));
+        tileSet->addFront(new Tile(BLUE,SQUARE));
+        tileSet->addFront(new Tile(BLUE,STAR_6));
+        tileSet->addFront(new Tile(BLUE,CLOVER));
+
+        tileSet->addFront(new Tile(PURPLE,CIRCLE));
+        tileSet->addFront(new Tile(PURPLE,DIAMOND));
+        tileSet->addFront(new Tile(PURPLE,STAR_4));
+        tileSet->addFront(new Tile(PURPLE,DIAMOND));
+        tileSet->addFront(new Tile(PURPLE,SQUARE));
+        tileSet->addFront(new Tile(PURPLE,STAR_6));
+        tileSet->addFront(new Tile(PURPLE,CLOVER));
     }
     
     //Seeding random numbers
