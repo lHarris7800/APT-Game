@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Controller.h"
 #include "ReplaceTileAction.h"
 #include "PlaceTileAction.h"
@@ -13,10 +15,9 @@ Controller::Controller(Player* playerOne, Player* playerTwo){
 }
 
 Controller::~Controller(){
-
 }
 
-void Controller::gameplay(){
+void Controller::gameplay() {
 /*PSEUDOCODE
 BEGIN
 WHILE GAME HAS NOT ENDED DO{
@@ -30,7 +31,7 @@ WHILE GAME HAS NOT ENDED DO{
     <<
         Do {
         >>player input //Use Regex101.com
-        **Choices: place x at y, replace z with tile from bag, save, forfiet, help
+        **Choices: place x at y, replace z with tile from bag, save, forfeit, help
         VALIDATE INPUT (must share attribute and be connected with another tile)
             IF (input is invalid) << Please input from following options: ... lists options
         } while (input is invalid)
@@ -39,7 +40,43 @@ WHILE GAME HAS NOT ENDED DO{
     <<...
     }
 END*/
+    bool playerOnesTurn = true;
+    bool endgame = false;
+    do {
+        turn(playerOnesTurn);
+    } while (!endgame);
+};
 
+
+bool Controller::turn(bool playerOnesTurn){
+    bool endTurn = false;
+    if (playerOnesTurn) {
+        std::cout << playerOne->getName() << ", it's your turn" << std::endl;
+        displayScoreAndBoard();
+        std::cout << "Your hand is\n" << playerOne->playerHand() << std::endl; //TODO fix player hand
+        playerOnesTurn = false; //ends Player One's turn
+    }
+    if (!playerOnesTurn) {
+        std::cout << playerTwo->getName() << ", it's your turn" << std::endl;
+        displayScoreAndBoard();
+        std::cout << "Your hand is\n" << playerTwo->playerHand() << std::endl; //TODO fix player hand
+        playerOnesTurn = true; //ends Player Two's turn
+    } else {
+        std::cout << "Something has gone terribly wrong..." << std::endl;
+        endTurn = true;
+    }
+    return endTurn;
+};
+
+void Controller::displayScoreAndBoard(){
+    std::cout << "Score for " << playerOne->getName() << ": " << playerOne->getScore() << std::endl;
+    std::cout << "Score for " << playerTwo->getName() << ": " << playerTwo->getScore() << std::endl;
+    board->displayBoard();
+}
+
+void Controller::playerChoice(){
+    //todo "place" "replace" input and validation, save & quit.
+    //todo figure out how to do this. enumerator?
 }
 
 bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){

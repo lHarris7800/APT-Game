@@ -26,5 +26,8 @@ private:
 
     void placeTile(PlayerNum playerNum, Tile* playedTile, std::string boardLocation);
     void replaceTile(PlayerNum playerNum, Tile* replacedTile);
+    void playerChoice();
+    bool turn(bool playerOnesTurn);
 
+    void displayScoreAndBoard();
 };
