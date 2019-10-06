@@ -1,9 +1,22 @@
 #include "ReplaceTileAction.h"
 #include "Action.h"
+#include <sstream>
 
 ReplaceTileAction::ReplaceTileAction(Tile* replacedTile):Action(){
         this->replacedTile = replacedTile;
         newTile = nullptr;
+}
+
+ReplaceTileAction::ReplaceTileAction(std::string data){
+    std::istringstream delimitedData (data);
+   
+    std::string replacedTileData,newTileData;
+
+    std::getline(delimitedData,replacedTileData,',');
+    std::getline(delimitedData,newTileData,',');
+
+    replacedTile = new Tile(replacedTileData);
+    newTile = new Tile(newTileData);
 }
 
 ReplaceTileAction::~ReplaceTileAction(){
@@ -34,7 +47,7 @@ void ReplaceTileAction::undoAction(Bag* bag, Board* board,Player* player){
 }
 
 std::string ReplaceTileAction::toString(){
-    std::string build = "ReplaceTile,";
+    std::string build = "ReplaceTile\n";
     build.append(replacedTile->getTileName() + ",");
     build.append(newTile->getTileName());
     

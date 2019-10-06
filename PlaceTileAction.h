@@ -5,6 +5,7 @@ class PlaceTileAction : public Action{
 public:
 
     PlaceTileAction(Tile* playedTile, std::string boardLocation);
+    PlaceTileAction(std::string data);
 
     ~PlaceTileAction();
 

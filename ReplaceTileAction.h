@@ -5,6 +5,7 @@ class ReplaceTileAction : public Action{
 public:
 
     ReplaceTileAction(Tile* replacedTile);
+    ReplaceTileAction(std::string data);
 
     ~ReplaceTileAction();
 

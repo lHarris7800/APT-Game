@@ -1,9 +1,24 @@
 #include "PlaceTileAction.h"
+#include <sstream>
 
 PlaceTileAction::PlaceTileAction(Tile* playedTile, std::string boardLocation):Action(){
     this->playedTile = playedTile;
     this->boardLocation = boardLocation;
     newTile = nullptr;
+}
+
+PlaceTileAction::PlaceTileAction(std::string data){
+    std::istringstream delimitedData (data);
+   
+    std::string playedTileData,boardLocationData,newTileData;
+
+    std::getline(delimitedData,playedTileData,',');
+    std::getline(delimitedData,boardLocationData,',');
+    std::getline(delimitedData,newTileData,',');
+
+    playedTile = new Tile(playedTileData);
+    boardLocation = boardLocationData;
+    newTile = new Tile(newTileData); 
 }
 
 PlaceTileAction::~PlaceTileAction(){
@@ -34,7 +49,7 @@ void PlaceTileAction::undoAction(Bag* bag, Board* board,Player* player){
 }
 
 std::string PlaceTileAction::toString(){
-    std::string build = "PlaceTile,";
+    std::string build = "PlaceTile\n";
     build.append(playedTile->getTileName() + ",");
     build.append(boardLocation + ",");
     build.append(newTile->getTileName());
