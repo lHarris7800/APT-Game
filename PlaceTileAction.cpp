@@ -32,3 +32,12 @@ void PlaceTileAction::undoAction(Bag* bag, Board* board,Player* player){
     board->removeTile(boardLocation);
     player->addTile(playedTile);
 }
+
+std::string PlaceTileAction::toString(){
+    std::string build = "PlaceTile,";
+    build.append(playedTile->getTileName() + ",");
+    build.append(boardLocation + ",");
+    build.append(newTile->getTileName());
+
+    return build;
+}

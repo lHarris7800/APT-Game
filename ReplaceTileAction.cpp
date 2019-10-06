@@ -32,3 +32,11 @@ void ReplaceTileAction::undoAction(Bag* bag, Board* board,Player* player){
     //Removing tile from back of bag and returning back to players hand
     player->addTile(new Tile(*bag->getBack()));
 }
+
+std::string ReplaceTileAction::toString(){
+    std::string build = "ReplaceTile,";
+    build.append(replacedTile->getTileName() + ",");
+    build.append(newTile->getTileName());
+    
+    return build;
+}

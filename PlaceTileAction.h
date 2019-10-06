@@ -11,6 +11,8 @@ public:
     void doAction(Bag* bag, Board* board,Player* player);
     void undoAction(Bag* bag, Board* board,Player* player);
 
+    std::string toString();
+
 private:
     Tile* playedTile;
     Tile* newTile;

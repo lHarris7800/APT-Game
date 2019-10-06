@@ -10,6 +10,8 @@ public:
     virtual ~Action() = default;
     virtual void doAction(Bag* bag, Board* board,Player* player)=0;
     virtual void undoAction(Bag* bag, Board* board,Player* player)=0;
+
+    virtual std::string toString() = 0;
 };
 
 #endif // ASSIGN2_ACTION_H
