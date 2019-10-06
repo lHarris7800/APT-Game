@@ -6,10 +6,7 @@
 
 
 Board::Board(){
-    board = new std::string*[MAX_SIZE];
-
     for (int column = 0; column < MAX_SIZE; column++) {
-        board[column] = new std::string[MAX_SIZE];
         for (int row = 0; row < MAX_SIZE; row++) {
             board[column][row] = EMPTY_TILE;
         }
