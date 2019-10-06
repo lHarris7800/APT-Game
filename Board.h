@@ -3,7 +3,6 @@
 #include<iostream>
 #include <string>
 #include "Tile.h"
-#define  MAX_SIZE 26
 
 class Board {
 public:
@@ -15,13 +14,13 @@ public:
 
     void removeTile(std::string pos);
 
-    void displayBoard();
+    std::string displayBoard();
 
 //    std::string toString();
 
     bool canPieceBePlaced(Tile* piece, std::string pos);
 
-    std::string board[MAX_SIZE][MAX_SIZE];
+    std::string** board;
 };
 
 #endif //APT_THE_SCREAM_A2_BOARD_H

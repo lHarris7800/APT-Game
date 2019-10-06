@@ -1,12 +1,16 @@
 #include "Board.h"
 #include <iomanip>
 
-#define EMPTY_TILE  ""
+#define EMPTY_TILE  "  "
+#define  MAX_SIZE 26
 
 Board::Board(){
-    for (int row = 0; row < MAX_SIZE; row++) {
-        for (int column = 0; column < MAX_SIZE; column++) {
-            board[row][column] = "  ";
+    board = new std::string*[MAX_SIZE];
+
+    for (int column = 0; column < MAX_SIZE; column++) {
+        board[column] = new std::string[MAX_SIZE];
+        for (int row = 0; row < MAX_SIZE; row++) {
+            board[column][row] = EMPTY_TILE;
         }
     }
 }
@@ -26,7 +30,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
       std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position" << std::endl;
     }
 
-    else if(board[column][row].compare("  ") == 0){
+    else if(board[column][row].compare(EMPTY_TILE) == 0){
       board[column][row] = piece->getTileName();
       result = true;
     }
@@ -38,65 +42,59 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
     return result;
 }
 
-void Board::displayBoard(){
-    std::cout << std::endl;
+std::string Board::displayBoard(){
+  std::string build = "      ";
 
-    //Displays the top column numbers(0,2,4,...)
-    std::cout << std::setw(7);
-    for(int col = 0; col < MAX_SIZE; col++) {
-        if(col % 2 == 0) {
+  //Displays the top column numbers(0,2,4,...)
+  for(int col = 0; col < MAX_SIZE; col++) {
+      if(col % 2 == 0) {
+        build.append(std::to_string(col));
+        if(col < 10)
+          build.append("    ");
+        else
+          build.append("   ");
+      }
+  }
+  build.append("\n    ---------------------------------------------------------------------\n");
+
+  for (int row = 0; row < MAX_SIZE; row++) {
+
+    //Displays A, B, C, D, ... in each row
+    build.append(std::string(1,65 + row) + "   ");
+    
+    if(row % 2 == 0)
+      build.append("| ");
+    else
+      build.append("  ");
+    
+    //structures the board according to assignment specs
+    for (int column = 0; column < MAX_SIZE; column++) {
+        if(row % 2 == column % 2 )
+          build.append(board[column][row]);
+        else
+          build.append(" | ");
+    }
+
+    if(row % 2 != 0)
+      build.append(" |");
+    else
+      build.append("  ");
+
+    build.append("\n");
+  }
+
+  //Displays the bottom column numbers(1,3,5,...)
+  build.append("          ");
+  for(int col = 0; col < MAX_SIZE; col++) {
+      if(col % 2 != 0) {
+          build.append(std::to_string(col));
           if(col < 10)
-            std::cout << col << "    ";
-          else
-            std::cout << col << "   ";
-        }
-    }
-    std::cout << std::endl;
-
-    for (int row = 0; row < MAX_SIZE; row++) {
-
-        //Displays A, B, C, D, ... in each row
-        std::cout << char(65 + row) << "   ";
-        
-        if(row % 2 == 0)
-          std::cout << "| ";
-        else
-          std::cout << "  ";
-        
-        
-        std::cout.flush();
-
-        //structures the board according to assignment specs
-        for (int column = 0; column < MAX_SIZE; column++) {
-            if(row % 2 == column % 2 ){
-              std::cout << board[row][column];
-            }else
-            {
-              std::cout << " | ";
-            }
-            
-             
-        }
-
-        if(row % 2 != 0)
-          std::cout << " |";
-        else
-          std::cout << "  ";
-        std::cout << std::endl;
-        
-    }
-
-    //Displays the bottom column numbers(1,3,5,...)
-    std::cout << std::setw(11);
-    for(int col = 0; col < MAX_SIZE; col++) {
-        if(col % 2 != 0) {
-            if(col < 10)
-              std::cout << col << "    ";
-            else 
-              std::cout << col << "   ";
-        }
-    }
-    std::cout << std::endl;
+            build.append("    ");
+          else 
+            build.append("   ");
+      }
+  }
+  return build;
 }
 
 void Board::placeTile(Tile* piece, std::string pos){
@@ -104,9 +102,7 @@ void Board::placeTile(Tile* piece, std::string pos){
   int row = pos[0]-65;
   int column = stoi(pos.substr(1));
 
-  if (canPieceBePlaced(piece, pos)){
-    board[column][row] = piece->getTileName();
-  }
+  board[column][row] = piece->getTileName();
 }
 
 void Board::removeTile(std::string pos){
