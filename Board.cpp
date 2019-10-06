@@ -2,6 +2,7 @@
 #include <iomanip>
 
 #define EMPTY_TILE  "  "
+#define MAX_SIZE  26
 
 
 Board::Board(){
@@ -44,7 +45,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
 }
 
 std::string Board::displayBoard(){
-    std::string build = "      ";
+    std::string build = "       ";
 
     //Displays the top column numbers(0,2,4,...)
     for(int col = 0; col < MAX_SIZE; col++) {
@@ -53,48 +54,45 @@ std::string Board::displayBoard(){
             if(col < 10)
                 build.append("    ");
             else
-                std::cout << "  ";
-
-            for (int row = 0; row < MAX_SIZE; row++) {
-
-                //Displays A, B, C, D, ... in each row
-                std::cout << char(65 + row) << "   ";
-
-                if(row % 2 == 0)
-                    std::cout << "| ";
-                else
-                    std::cout << "  ";
-
-            std::cout.flush();
-
-            //structures the board according to assignment specs
-            for (int column = 0; column < MAX_SIZE; column++) {
-                if(row % 2 == column % 2 ){
-                    std::cout << board[row][column];
-                }else
-                {
-                    std::cout << " | ";
-                }
-            }
-
-            if(row % 2 != 0)
-                std::cout << " |";
-            else
-                std::cout << "  ";
-            std::cout << std::endl;
+                build.append("   ");
 
         }
-        //Right boarder
-        if(row % 2 != 0)
-            build.append(" |");
+    }
+    //Top boarder
+    build.append("\n     ---------------------------------------------------------------------\n");
+
+    for (int row = 0; row < MAX_SIZE; row++) {
+
+        //Displays A, B, C, D, ... in each row
+        build.append(std::string(1,65 + row) + "    ");
+
+        if(row % 2 == 0)
+            build.append("| ");
         else
             build.append("  ");
 
-        build.append("\n");
+      //structures the board according to assignment specs
+      for (int column = 0; column < MAX_SIZE; column++) {
+        if(row % 2 == column % 2 ){
+            build.append(board[row][column]);
+        }else
+        {
+            build.append(" | ");
+        }
+      }
+
+      //Right boarder
+      if(row % 2 != 0)
+          build.append(" |");
+      else
+          build.append("  ");
+
+      build.append("\n");
     }
 
+
     //Bottom boarder
-    build.append("    ---------------------------------------------------------------------\n");
+    build.append("     ---------------------------------------------------------------------\n");
 
     //Displays the bottom column numbers(1,3,5,...)
     build.append("          ");
