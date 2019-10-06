@@ -45,7 +45,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
 }
 
 std::string Board::displayBoard(){
-    std::string build = "       ";
+    std::string build = "      ";
 
     //Displays the top column numbers(0,2,4,...)
     for(int col = 0; col < MAX_SIZE; col++) {
@@ -59,12 +59,12 @@ std::string Board::displayBoard(){
         }
     }
     //Top boarder
-    build.append("\n     ---------------------------------------------------------------------\n");
+    build.append("\n    ---------------------------------------------------------------------\n");
 
     for (int row = 0; row < MAX_SIZE; row++) {
 
         //Displays A, B, C, D, ... in each row
-        build.append(std::string(1,65 + row) + "    ");
+        build.append(std::string(1,65 + row) + "   ");
 
         if(row % 2 == 0)
             build.append("| ");
@@ -92,7 +92,7 @@ std::string Board::displayBoard(){
 
 
     //Bottom boarder
-    build.append("     ---------------------------------------------------------------------\n");
+    build.append("    ---------------------------------------------------------------------\n");
 
     //Displays the bottom column numbers(1,3,5,...)
     build.append("          ");
