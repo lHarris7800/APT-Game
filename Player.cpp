@@ -24,7 +24,7 @@ Player::Player(Player& original){
 }
 //For loading from a save file
 Player::Player(std::string playerName, int score, LinkedList* hand){
-    playerName = playerName;
+    this->playerName = playerName;
     this->score = score;
     this->hand = new LinkedList(*hand);
 }
@@ -77,8 +77,8 @@ std::string Player::playerHand(){
 //Gets the string representation of a player for saving
 std::string Player::toString(){
     std::string build;
-    build.append(this->getName() + "\n");
-    build.append(std::to_string(this->getScore()) + "\n");
-    build.append(this->playerHand());
+    build.append(playerName + "\n");
+    build.append(std::to_string(score) + "\n");
+    build.append(hand->toString());
     return build;
 }
