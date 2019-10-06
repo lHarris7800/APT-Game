@@ -5,7 +5,6 @@
 #define UNDO_TURNS  3
 
 GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
-    std::cout << "Post" << std::endl;
     head = nullptr;
     tail = nullptr;
     size = 0;
@@ -16,7 +15,6 @@ GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
 }
 
 GameHistory::~GameHistory(){
-    std::cout << "GameHistory delete" << std::endl;
     delete iPlayerOne;
     delete iPlayerTwo;
     delete iBag;
@@ -64,14 +62,11 @@ void GameHistory::replay(){
 
     ActionNode* currAction = head;
     while(currAction != nullptr){
-        std::cout << "up here" << std::endl;
         if(currAction->playerNum == PLAYER_ONE)
             currAction->action->doAction(bag,board,playerOne);
         else{
             currAction->action->doAction(bag,board,playerTwo);
-            std::cout << "out" << std::endl;
         }
-        std::cout << "here" << std::endl;
         currAction = currAction->next;
         board->displayBoard();
     }
@@ -97,4 +92,20 @@ void GameHistory::undo(Bag* bag, Board* board, Player* playerOne, Player* player
             head = nullptr;
         }
     }
+}
+
+std::string GameHistory::toString(){
+    std::string build;
+    build.append(iPlayerOne->toString() + "\n");
+    build.append(iPlayerTwo->toString() + "\n");
+    build.append(iBag->toString() + "\n");
+
+    ActionNode* currAction = head;
+    while(currAction != nullptr){
+        build.append(currAction->playerNum + "\n");
+        build.append(currAction->action->toString() + "\n");
+        currAction = currAction->next;
+    }
+
+    return build;
 }

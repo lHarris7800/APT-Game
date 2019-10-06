@@ -16,6 +16,8 @@ public:
     void undo(Bag* bag, Board* board, Player* playerOne, Player* playerTwo);
 
 
+    std::string toString();
+
 private:
     ActionNode* head;
     ActionNode* tail;
