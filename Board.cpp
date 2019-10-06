@@ -55,6 +55,7 @@ std::string Board::displayBoard(){
           build.append("   ");
       }
   }
+  //Top boarder
   build.append("\n    ---------------------------------------------------------------------\n");
 
   for (int row = 0; row < MAX_SIZE; row++) {
@@ -62,6 +63,7 @@ std::string Board::displayBoard(){
     //Displays A, B, C, D, ... in each row
     build.append(std::string(1,65 + row) + "   ");
     
+    //Left boarder
     if(row % 2 == 0)
       build.append("| ");
     else
@@ -75,6 +77,7 @@ std::string Board::displayBoard(){
           build.append(" | ");
     }
 
+    //Right boarder
     if(row % 2 != 0)
       build.append(" |");
     else
@@ -82,6 +85,9 @@ std::string Board::displayBoard(){
 
     build.append("\n");
   }
+  
+  //Bottom boarder
+  build.append("    ---------------------------------------------------------------------\n");
 
   //Displays the bottom column numbers(1,3,5,...)
   build.append("          ");
