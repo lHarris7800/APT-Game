@@ -102,7 +102,7 @@ std::string GameHistory::toString(){
 
     ActionNode* currAction = head;
     while(currAction != nullptr){
-        build.append(currAction->playerNum + "\n");
+        build.append(std::to_string(currAction->playerNum) + "\n");
         build.append(currAction->action->toString() + "\n");
         currAction = currAction->next;
     }
