@@ -2,10 +2,10 @@
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
 
-Controller::Controller(Player* playerOne, Player* playerTwo){
+Controller::Controller(Player* playerOne, Player* playerTwo,Bag* bag){
     this->playerOne = playerOne;
     this->playerTwo = playerTwo;
-    bag = new Bag();
+    this->bag = bag;
     board = new Board();
     gameHistory = new GameHistory(bag,playerOne,playerTwo);
 }
@@ -66,9 +66,9 @@ bool Controller::turn(bool playerOnesTurn){
 };
 
 void Controller::displayScoreAndBoard(){
-    std::cout << "Score for " << playerOne->getName() << ": " << playerOne->getScore() << std::endl;
-    std::cout << "Score for " << playerTwo->getName() << ": " << playerTwo->getScore() << std::endl;
-    board->displayBoard();
+    std::cout << "Score for " << playerOne->getName() << ": " << playerOne->getScore() << std::endl
+    << "Score for " << playerTwo->getName() << ": " << playerTwo->getScore() << std::endl
+    << board->toString() << std::endl;
 }
 
 void Controller::playerChoice(){

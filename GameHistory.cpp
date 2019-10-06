@@ -68,7 +68,7 @@ void GameHistory::replay(){
             currAction->action->doAction(bag,board,playerTwo);
         }
         currAction = currAction->next;
-        board->displayBoard();
+        std::cout << board->toString() << std::endl;
     }
 
     delete playerOne;

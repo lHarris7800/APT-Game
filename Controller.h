@@ -14,7 +14,7 @@
 class Controller {
 public:
 
-   Controller(Player* one, Player* two);
+   Controller(Player* one, Player* two, Bag* bag);
    ~Controller();
 
    bool validPlaceTile(Tile* playedTile, std::string boardLocation);

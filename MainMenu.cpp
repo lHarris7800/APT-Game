@@ -83,12 +83,13 @@ void MainMenu::NewGame(){
     std::cout << "You have entered " + playerTwoName << std::endl;
     std::cout << "Let's Play!\n" << std::endl;
 
-    playerOne = new Player(playerOneName);
-    playerTwo = new Player(playerTwoName);
+    Bag* bag = new Bag();
+
+    playerOne = new Player(playerOneName,bag);
+    playerTwo = new Player(playerTwoName,bag);
 
     //Begin playing
-    //TODO: Fix Player and Controller initialization
-    Controller * controller = new Controller(playerOne, playerTwo);
+    Controller * controller = new Controller(playerOne, playerTwo,bag);
     controller->gameplay();
     //END Game
 }
