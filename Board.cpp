@@ -44,7 +44,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
     return result;
 }
 
-std::string Board::displayBoard(){
+std::string Board::toString(){
     std::string build = "      ";
 
     //Displays the top column numbers(0,2,4,...)
