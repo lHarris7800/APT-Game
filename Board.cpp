@@ -44,62 +44,70 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
 }
 
 std::string Board::displayBoard(){
-  std::string build = "      ";
+    std::string build = "      ";
 
-  //Displays the top column numbers(0,2,4,...)
-  for(int col = 0; col < MAX_SIZE; col++) {
-      if(col % 2 == 0) {
-        build.append(std::to_string(col));
-        if(col < 10)
-          build.append("    ");
-        else
-          std::cout << "  ";
-        
-        
-        std::cout.flush();
+    //Displays the top column numbers(0,2,4,...)
+    for(int col = 0; col < MAX_SIZE; col++) {
+        if(col % 2 == 0) {
+            build.append(std::to_string(col));
+            if(col < 10)
+                build.append("    ");
+            else
+                std::cout << "  ";
 
-        //structures the board according to assignment specs
-        for (int column = 0; column < MAX_SIZE; column++) {
-            if(int row % 2 == column % 2 ){
-              std::cout << board[row][column];
-            }else
-            {
-              std::cout << " | ";
+            for (int row = 0; row < MAX_SIZE; row++) {
+
+                //Displays A, B, C, D, ... in each row
+                std::cout << char(65 + row) << "   ";
+
+                if(row % 2 == 0)
+                    std::cout << "| ";
+                else
+                    std::cout << "  ";
+
+            std::cout.flush();
+
+            //structures the board according to assignment specs
+            for (int column = 0; column < MAX_SIZE; column++) {
+                if(row % 2 == column % 2 ){
+                    std::cout << board[row][column];
+                }else
+                {
+                    std::cout << " | ";
+                }
             }
-        }
 
+            if(row % 2 != 0)
+                std::cout << " |";
+            else
+                std::cout << "  ";
+            std::cout << std::endl;
+
+        }
+        //Right boarder
         if(row % 2 != 0)
-          std::cout << " |";
+            build.append(" |");
         else
-          std::cout << "  ";
-        std::cout << std::endl;
-        
+            build.append("  ");
+
+        build.append("\n");
     }
 
-    //Right boarder
-    if(row % 2 != 0)
-      build.append(" |");
-    else
-      build.append("  ");
+    //Bottom boarder
+    build.append("    ---------------------------------------------------------------------\n");
 
-    build.append("\n");
-  }
-  
-  //Bottom boarder
-  build.append("    ---------------------------------------------------------------------\n");
-
-  //Displays the bottom column numbers(1,3,5,...)
-  build.append("          ");
-  for(int col = 0; col < MAX_SIZE; col++) {
-      if(col % 2 != 0) {
-          build.append(std::to_string(col));
-          if(col < 10)
-            build.append("    ");
-          else 
-            build.append("   ");
-      }
-  }
-  return build;
+    //Displays the bottom column numbers(1,3,5,...)
+    build.append("          ");
+    for(int col = 0; col < MAX_SIZE; col++) {
+        if(col % 2 != 0) {
+            build.append(std::to_string(col));
+            if(col < 10)
+                build.append("    ");
+            else
+                build.append("   ");
+        }
+    }
+    return build;
 }
 
 void Board::placeTile(Tile* piece, std::string pos){
