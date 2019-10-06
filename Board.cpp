@@ -4,8 +4,8 @@
 #define EMPTY_TILE  ""
 
 Board::Board(){
-    for (int row = 0; row < MAX_SIZE; row++) {
-        for (int column = 0; column < MAX_SIZE; column++) {
+    for (row = 0; row < MAX_SIZE; row++) {
+        for (column = 0; column < MAX_SIZE; column++) {
             board[row][column] = "  ";
         }
     }
@@ -15,7 +15,6 @@ Board::~Board() {
 }
 
 bool Board::canPieceBePlaced(Tile* piece, std::string pos){
-    int row, column;
     bool result = false;
 
     row = pos[0]-65; //shows 1,2,3,....
@@ -24,7 +23,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
     column = stoi(pos.substr(1)); // shows A,B,C,...
 
     if(row >= MAX_SIZE || column >= MAX_SIZE ){
-      std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position";
+      std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position" << std::endl;
     }
 
     else if(board[column][row].compare("") == 0){
@@ -33,7 +32,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
     }
 
     else{
-      std::cout << "There is a tile already in that position";
+      std::cout << "There is a tile already in that position" << std::endl;;
     }
 
     return result;
@@ -48,9 +47,9 @@ std::cout << std::setw(4);
 	  }
 	  std::cout << std::endl;
 
-	  for (int row = 0; row < MAX_SIZE; row++) {
+	  for (row = 0; row < MAX_SIZE; row++) {
 	      std::cout << (char) (65 + row) << " ";
-	      for (int column = 0; column <= MAX_SIZE; column++) {
+	      for (column = 0; column <= MAX_SIZE; column++) {
 	        if(row % 2 == 0 && column % 2 == 0) {
 	          std::cout << "|";
 	        } else if(row % 2 != 0 && column % 2 != 0){
@@ -66,11 +65,11 @@ std::cout << std::setw(4);
 	      std::cout << col << "    ";
 	    }
 	  }
+    std::cout << std::endl;
 }
 
 void Board::placeTile(Tile* piece, std::string pos){
   //Parsing pos to row and column
-  int row, column;
   row = pos[0]-65;
   column = stoi(pos.substr(1));
 
@@ -81,7 +80,6 @@ void Board::placeTile(Tile* piece, std::string pos){
 
 void Board::removeTile(std::string pos){
   //Parsing pos to row and column
-  int row, column;
   row = pos[0]-65;
   column = stoi(pos.substr(1));
 

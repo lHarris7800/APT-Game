@@ -22,6 +22,8 @@ public:
     bool canPieceBePlaced(Tile* piece, std::string pos);
 
     std::string board[MAX_SIZE][MAX_SIZE];
+private:
+    int row,column;
 };
 
 #endif //APT_THE_SCREAM_A2_BOARD_H
