@@ -15,6 +15,7 @@ class Controller {
 public:
 
    Controller(Player* one, Player* two, Bag* bag);
+   Controller(Player* one, Player* two, Bag* bag, GameHistory* history);
    ~Controller();
 
    bool validPlaceTile(Tile* playedTile, std::string boardLocation);
@@ -22,6 +23,8 @@ public:
    bool validReplaceTile(Tile* replacedTile);
 
    void gameplay();
+
+   void save(std::string filename);
 
 private:
     GameHistory* gameHistory;

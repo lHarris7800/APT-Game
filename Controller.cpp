@@ -10,6 +10,15 @@ Controller::Controller(Player* playerOne, Player* playerTwo,Bag* bag){
     gameHistory = new GameHistory(bag,playerOne,playerTwo);
 }
 
+
+Controller::Controller(Player* one, Player* two, Bag* bag, GameHistory* history){
+    this->playerOne = playerOne;
+    this->playerTwo = playerTwo;
+    this->bag = bag;
+    board = new Board();
+    gameHistory = history;
+}
+
 Controller::~Controller(){
 }
 
@@ -74,6 +83,20 @@ void Controller::displayScoreAndBoard(){
 void Controller::playerChoice(){
     //todo "place" "replace" input and validation, save & quit.
     //todo figure out how to do this. enumerator?
+}
+
+void Controller::save(std::string filename){
+    std::ofstream saveFile;
+
+    saveFile.open(filename);
+
+    saveFile << playerOne->toString() << std::endl;
+    saveFile << playerTwo->toString() << std::endl;
+    saveFile << board->toString() << std::endl;
+    saveFile << bag->toString() << std::endl;
+    saveFile << gameHistory->toString() << std::endl;
+
+    saveFile.close();
 }
 
 
