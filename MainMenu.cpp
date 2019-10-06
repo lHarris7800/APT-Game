@@ -124,10 +124,71 @@ void MainMenu::LoadGame(){
     //Reads file into the console
     //TODO: read file into controller instead
     if (saveFile.is_open()){
-        while (getline (saveFile,line)){
-            std::cout << line << "\n";
+        //Read data for player one and two
+        for(int i = 0; i < 2; i++){
+            std::string playerName,playerScore,playerHand;
+
+            getline(saveFile,playerName);
+            getline(saveFile,playerScore);
+            getline(saveFile,playerHand);
+
+            if(i == 0)
+                playerOne = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
+            else
+                playerTwo = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
+        }
+
+        //TODO implement read in for board
+        for(int i = 0; i < 30;i++){
+            std::string string;
+            getline(saveFile,string);
+        }
+
+        //read data for bag
+        std::string bagData;
+        getline(saveFile,bagData);
+        bag = new Bag(new LinkedList(bagData));
+
+        //read data for game history
+        //read initial player data
+        Player* iPlayer1,* iPlayer2;
+        for(int i = 0; i < 2; i++){
+            std::string playerName,playerScore,playerHand;
+
+            getline(saveFile,playerName);
+            getline(saveFile,playerScore);
+            getline(saveFile,playerHand);
+
+            if(i == 0)
+                iPlayer1 = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
+            else
+                iPlayer2 = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
+        }
+
+        //read initial bag
+        std::string iBagData;
+        getline(saveFile,iBagData);
+        Bag* iBag = new Bag(new LinkedList(iBagData));
+        
+
+        GameHistory* history = new GameHistory(iBag,iPlayer1,iPlayer2);
+
+        //read actions
+        while(!saveFile.eof()){
+            std::string playerNum,actionType, actionData;
+
+            getline(saveFile,playerNum);
+            getline(saveFile,actionType);
+            getline(saveFile,actionData);
+
+            if(actionType.compare("PlaceTile"))
+                history->addAction(new PlaceTileAction(actionData),std::stoi(playerNum));
+            else 
+                history->addAction(new ReplaceTileAction(actionData),std::stoi(playerNum));
         }
         saveFile.close();
+
+        Controller* controller = new Controller(playerOne,playerTwo,bag,history);
     }
     else std::cout << "File not found" << std::endl;
 }
