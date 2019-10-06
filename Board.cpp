@@ -42,10 +42,13 @@ void Board::displayBoard(){
     std::cout << std::endl;
 
     //Displays the top column numbers(0,2,4,...)
-    std::cout << std::setw(6);
+    std::cout << std::setw(7);
     for(int col = 0; col < MAX_SIZE; col++) {
         if(col % 2 == 0) {
-            std::cout << col << "     ";
+          if(col < 10)
+            std::cout << col << "    ";
+          else
+            std::cout << col << "   ";
         }
     }
     std::cout << std::endl;
@@ -53,25 +56,44 @@ void Board::displayBoard(){
     for (int row = 0; row < MAX_SIZE; row++) {
 
         //Displays A, B, C, D, ... in each row
-        std::cout << (char) (65 + row) << " ";
+        std::cout << char(65 + row) << "   ";
+        
+        if(row % 2 == 0)
+          std::cout << "| ";
+        else
+          std::cout << "  ";
+        
+        
+        std::cout.flush();
 
         //structures the board according to assignment specs
-        for (int column = 0; column <= MAX_SIZE; column++) {
-            if(row % 2 == 0 && column % 2 == 0) {
-                std::cout << "| ";
-            } else if(row % 2 != 0 && column % 2 != 0){
-                std::cout << " |";
+        for (int column = 0; column < MAX_SIZE; column++) {
+            if(row % 2 == column % 2 ){
+              std::cout << board[row][column];
+            }else
+            {
+              std::cout << " | ";
             }
-            std::cout << board[row][column];
+            
+             
         }
+
+        if(row % 2 != 0)
+          std::cout << " |";
+        else
+          std::cout << "  ";
         std::cout << std::endl;
+        
     }
 
     //Displays the bottom column numbers(1,3,5,...)
-    std::cout << std::setw(4);
+    std::cout << std::setw(11);
     for(int col = 0; col < MAX_SIZE; col++) {
         if(col % 2 != 0) {
-            std::cout << col << "     ";
+            if(col < 10)
+              std::cout << col << "    ";
+            else 
+              std::cout << col << "   ";
         }
     }
     std::cout << std::endl;
