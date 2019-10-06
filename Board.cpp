@@ -26,7 +26,7 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
       std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position" << std::endl;
     }
 
-    else if(board[column][row].compare("") == 0){
+    else if(board[column][row].compare("  ") == 0){
       board[column][row] = piece->getTileName();
       result = true;
     }
