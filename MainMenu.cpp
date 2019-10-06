@@ -1,22 +1,13 @@
 //
 // Created by Koder on 20/09/2019.
 //
-#include <iostream>
-#include <fstream>
-#include <limits>
-#include <vector>
-#include <algorithm>
 
 #include "MainMenu.h"
-#include "Controller.h"
-#include "Player.h"
 
 MainMenu::MainMenu(){
-
 }
 
 MainMenu::~MainMenu(){
-
 }
 
 int UserInput(){
@@ -92,8 +83,8 @@ void MainMenu::NewGame(){
     std::cout << "You have entered " + playerTwoName << std::endl;
     std::cout << "Let's Play!\n" << std::endl;
 
-    Player* playerOne = new Player(playerOneName);
-    Player* playerTwo = new Player(playerTwoName);
+    playerOne = new Player(playerOneName);
+    playerTwo = new Player(playerTwoName);
 
     //Begin playing
     //TODO: Fix Player and Controller initialization
@@ -149,8 +140,11 @@ void MainMenu::saveGame(std::string filename) {
         if (out.is_open()) {
 
             //TODO:saves player's toString
+            out << playerOne->toString() << std::endl;
+            out << playerTwo->toString() << std::endl;
 
             //TODO:saves board's toString
+            out << this->board->toString() << std::endl;
 
             //TODO:saves bag's toString
             out << this->bag->toString() << std::endl;

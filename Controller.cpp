@@ -1,8 +1,5 @@
-#include <iostream>
 
 #include "Controller.h"
-#include "ReplaceTileAction.h"
-#include "PlaceTileAction.h"
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
 
@@ -61,7 +58,8 @@ bool Controller::turn(bool playerOnesTurn){
         displayScoreAndBoard();
         std::cout << "Your hand is\n" << playerTwo->playerHand() << std::endl; //TODO fix player hand
         playerOnesTurn = true; //ends Player Two's turn
-    } else {
+    }
+    else {
         std::cout << "Something has gone terribly wrong..." << std::endl;
         endTurn = true;
     }
@@ -79,18 +77,56 @@ void Controller::playerChoice(){
     //todo figure out how to do this. enumerator?
 }
 
+
 bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     int row, column;
     bool result = false;
-    row = boardLocation[0]-65; //shows 1,2,3,....
-    column = stoi(boardLocation.substr(1)); // shows A,B,C,...
 
-    //checks if the tile you want to place is out of bounds
-    if(row >= MAX_SIZE || column >= MAX_SIZE)
-        std::cout << "There are no more than 25 rows, Therefore you cannot add the tile in this position";
+    column = boardLocation[0]-65; // shows A,B,C,...
 
-    //checks if the position of the board is empty
-    else if (board->board[column][row].compare("") == 0)
+    //Converting Strings to Integers
+    row = stoi(boardLocation.substr(1));  //shows 1,2,3,...
+
+    //checks if the tile that we are placing is inside of bounds, otherwise return false
+    if(row >= MAX_SIZE || column >= MAX_SIZE ){
+        std::cout << "There are no more than 25 rows and columns, therefore you cannot add the tile in this position";
+        result = false;
+    }
+
+    int blankNeighbour = 0;
+    int newRow, newCol;
+
+    //checks the surroundings of the tile
+    for(int dir = 1; dir <= 4; dir++){
+        newRow = row;
+        newCol = column;
+
+        if(dir == UP)
+            newCol++;
+
+        else if(dir == DOWN)
+            newCol--;
+
+        else if(dir == LEFT)
+            newRow--;
+
+        else
+            newRow++;
+
+        //Looks at the size of the board
+        if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
+            //looks at all 4 sides to see if the position is empty. if true, then add 1 to blank neighbour
+            if(board->board[newCol][newRow].compare("  ")==0)
+                blankNeighbour++;
+
+            //This is to check if the tile has the same shape or colour as the tile that's already in the board
+            else if(playedTile->getTileName()[0] == board->board[newCol][newRow][0] || playedTile->getTileName()[1] == board->board[newCol][newRow][1])
+                result = true;
+        }
+    }
+
+    //if all four tile's neighbour is empty, then place the tile.
+    if(blankNeighbour == 4)
         result = true;
     else
         std::cout << "There is a tile already in that position";
