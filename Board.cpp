@@ -1,7 +1,5 @@
 #include "Board.h"
 
-
-
 Board::Board(){
     for (int column = 0; column < MAX_SIZE; column++) {
         for (int row = 0; row < MAX_SIZE; row++) {
@@ -38,6 +36,22 @@ bool Board::canPieceBePlaced(Tile* piece, std::string pos){
     return result;
 }
 
+void Board::placeTile(Tile* piece, std::string pos){
+  //Parsing pos to row and column
+  int column = pos[0]-65;
+  int row = stoi(pos.substr(1));
+
+  board[column][row] = piece->getTileName();
+}
+
+void Board::removeTile(std::string pos){
+  //Parsing pos to row and column
+  int row = pos[0]-65;
+  int column = stoi(pos.substr(1));
+
+  board[column][row] = EMPTY_TILE;
+}
+
 std::string Board::toString(){
     std::string build = "      ";
 
@@ -49,7 +63,6 @@ std::string Board::toString(){
                 build.append("    ");
             else
                 build.append("   ");
-
         }
     }
     //Top boarder
@@ -65,25 +78,24 @@ std::string Board::toString(){
         else
             build.append("  ");
 
-      //structures the board according to assignment specs
-      for (int column = 0; column < MAX_SIZE; column++) {
-        if(row % 2 == column % 2 ){
-            build.append(board[row][column]);
-        }else
-        {
-            build.append(" | ");
+        //structures the board according to assignment specs
+        for (int column = 0; column < MAX_SIZE; column++) {
+            if(row % 2 == column % 2 ){
+                build.append(board[row][column]);
+            }
+            else{
+                build.append(" | ");
+            }
         }
-      }
 
-      //Right boarder
-      if(row % 2 != 0)
-          build.append(" |");
-      else
-          build.append("  ");
+        //Right boarder
+        if(row % 2 != 0)
+            build.append(" |");
+        else
+            build.append("  ");
 
-      build.append("\n");
+        build.append("\n");
     }
-
 
     //Bottom boarder
     build.append("    ---------------------------------------------------------------------\n");
@@ -102,23 +114,3 @@ std::string Board::toString(){
     return build;
 }
 
-void Board::placeTile(Tile* piece, std::string pos){
-  //Parsing pos to row and column
-  int column = pos[0]-65;
-  int row = stoi(pos.substr(1));
-
-  board[column][row] = piece->getTileName();
-}
-
-void Board::removeTile(std::string pos){
-  //Parsing pos to row and column
-  int row = pos[0]-65;
-  int column = stoi(pos.substr(1));
-
-  board[column][row] = EMPTY_TILE;
-}
-
-// TODO: To be implemented
-//std::string Board::toString(){
-//
-//}
