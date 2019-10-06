@@ -58,7 +58,8 @@ bool Controller::turn(bool playerOnesTurn){
         displayScoreAndBoard();
         std::cout << "Your hand is\n" << playerTwo->playerHand() << std::endl; //TODO fix player hand
         playerOnesTurn = true; //ends Player Two's turn
-    } else {
+    }
+    else {
         std::cout << "Something has gone terribly wrong..." << std::endl;
         endTurn = true;
     }
@@ -81,10 +82,10 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     int row, column;
     bool result = false;
 
-    row = boardLocation[0]-65; //shows 1,2,3,....
+    column = boardLocation[0]-65; // shows A,B,C,...
 
     //Converting Strings to Integers
-    column = stoi(boardLocation.substr(1)); // shows A,B,C,...
+    row = stoi(boardLocation.substr(1));  //shows 1,2,3,...
 
     //checks if the tile that we are placing is inside of bounds, otherwise return false
     if(row >= MAX_SIZE || column >= MAX_SIZE ){
@@ -115,10 +116,10 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
         //Looks at the size of the board
         if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
             //looks at all 4 sides to see if the position is empty. if true, then add 1 to blank neighbour
-            if(board->board[newCol][newRow].compare("")==0)
+            if(board->board[newCol][newRow].compare("  ")==0)
                 blankNeighbour++;
 
-                //This is to check if the tile has the same shape or colour as the tile that's already in the board
+            //This is to check if the tile has the same shape or colour as the tile that's already in the board
             else if(playedTile->getTileName()[0] == board->board[newCol][newRow][0] || playedTile->getTileName()[1] == board->board[newCol][newRow][1])
                 result = true;
         }
