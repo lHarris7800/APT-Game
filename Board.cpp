@@ -1,8 +1,5 @@
 #include "Board.h"
-#include <iomanip>
 
-#define EMPTY_TILE  "  "
-#define MAX_SIZE  26
 
 
 Board::Board(){

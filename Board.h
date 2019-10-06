@@ -3,7 +3,9 @@
 #include<iostream>
 #include <string>
 #include "Tile.h"
-#define  MAX_SIZE 26
+#include <iomanip>
+#define EMPTY_TILE  "  "
+#define MAX_SIZE  26
 
 class Board {
 public:

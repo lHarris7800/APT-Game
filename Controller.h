@@ -5,6 +5,7 @@
 #include "ReplaceTileAction.h"
 #include "PlaceTileAction.h"
 #include <iostream>
+#include <fstream>
 #define UP 1
 #define DOWN 2
 #define LEFT 3

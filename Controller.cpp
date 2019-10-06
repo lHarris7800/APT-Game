@@ -138,7 +138,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
         //Looks at the size of the board
         if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
             //looks at all 4 sides to see if the position is empty. if true, then add 1 to blank neighbour
-            if(board->board[newCol][newRow].compare("  ")==0)
+            if(board->board[newCol][newRow].compare(EMPTY_TILE)==0)
                 blankNeighbour++;
 
             //This is to check if the tile has the same shape or colour as the tile that's already in the board
