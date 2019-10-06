@@ -1,4 +1,3 @@
-
 #include "Controller.h"
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
@@ -126,8 +125,13 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     }
 
     //if all four tile's neighbour is empty, then place the tile.
-    if(blankNeighbour == 4)
-        result = true;
+    if(blankNeighbour == 4){
+        if((row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0))
+            result= true;
+        else
+            std::cout << "\n You can't place a tile there" << std::endl;
+    }
+
     else
         std::cout << "There is a tile already in that position";
 

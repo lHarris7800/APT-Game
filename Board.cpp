@@ -2,7 +2,7 @@
 #include <iomanip>
 
 #define EMPTY_TILE  "  "
-#define  MAX_SIZE 26
+
 
 Board::Board(){
     board = new std::string*[MAX_SIZE];
@@ -21,23 +21,24 @@ Board::~Board() {
 bool Board::canPieceBePlaced(Tile* piece, std::string pos){
     bool result = false;
 
-    int column = pos[0]-65; //shows 1,2,3,....
+    int row = (pos[0]-65); //shows 1,2,3,....
 
     //Converting Strings to Integers
-    int row = stoi(pos.substr(1)); // shows A,B,C,...
+    int column = stoi(pos.substr(1)); // shows A,B,C,...
 
-    if(row >= MAX_SIZE || column >= MAX_SIZE ){
+    if(row >= MAX_SIZE || column >= MAX_SIZE){
       std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position" << std::endl;
+      result = false;
     }
-
     else if(board[column][row].compare(EMPTY_TILE) == 0){
-      board[column][row] = piece->getTileName();
-      result = true;
+        if((row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0))
+            result= true;
+        else
+            std::cout << "\n You can't place a tile there" << std::endl;
     }
 
-    else{
-      std::cout << "\n There is a tile already in that position" << std::endl;;
-    }
+    else
+      std::cout << "\n There is a tile already in that position" << std::endl;
 
     return result;
 }
@@ -52,29 +53,27 @@ std::string Board::displayBoard(){
         if(col < 10)
           build.append("    ");
         else
-          build.append("   ");
-      }
-  }
-  //Top boarder
-  build.append("\n    ---------------------------------------------------------------------\n");
+          std::cout << "  ";
+        
+        
+        std::cout.flush();
 
-  for (int row = 0; row < MAX_SIZE; row++) {
+        //structures the board according to assignment specs
+        for (int column = 0; column < MAX_SIZE; column++) {
+            if(int row % 2 == column % 2 ){
+              std::cout << board[row][column];
+            }else
+            {
+              std::cout << " | ";
+            }
+        }
 
-    //Displays A, B, C, D, ... in each row
-    build.append(std::string(1,65 + row) + "   ");
-    
-    //Left boarder
-    if(row % 2 == 0)
-      build.append("| ");
-    else
-      build.append("  ");
-    
-    //structures the board according to assignment specs
-    for (int column = 0; column < MAX_SIZE; column++) {
-        if(row % 2 == column % 2 )
-          build.append(board[column][row]);
+        if(row % 2 != 0)
+          std::cout << " |";
         else
-          build.append(" | ");
+          std::cout << "  ";
+        std::cout << std::endl;
+        
     }
 
     //Right boarder
@@ -105,8 +104,8 @@ std::string Board::displayBoard(){
 
 void Board::placeTile(Tile* piece, std::string pos){
   //Parsing pos to row and column
-  int row = pos[0]-65;
-  int column = stoi(pos.substr(1));
+  int column = pos[0]-65;
+  int row = stoi(pos.substr(1));
 
   board[column][row] = piece->getTileName();
 }
