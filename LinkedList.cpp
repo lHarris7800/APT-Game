@@ -35,21 +35,23 @@ LinkedList::LinkedList(std::string data){
    std::istringstream delimitedData (data);
    
    std::string tileData;
-   Node* current = head;
 
    std::getline(delimitedData,tileData,',');
 
    if(!delimitedData.eof()){
-      current = new Node(new Tile(tileData),nullptr,nullptr);
+      head = new Node(new Tile(tileData),nullptr,nullptr);
       size++;
-      std::getline(delimitedData,tileData,',');
    }
 
+   Node* current = head;
+
    while(!delimitedData.eof()){
-      current->next = new Node(new Tile(tileData),nullptr,current);
-      size++;
       std::getline(delimitedData,tileData,',');
+      current->next = new Node(new Tile(tileData),nullptr,current);
+      current = current->next;
+      size++;
    }
+   
    
    tail = current;
 }
