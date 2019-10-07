@@ -1,4 +1,3 @@
-
 #include "Tile.h"
 
 Tile::Tile (Colour colour, Shape shape){
@@ -13,7 +12,7 @@ Tile::Tile(Tile& original){
 
 Tile::Tile(std::string tileName){
     colour = tileName[0];
-    shape = (int) tileName[1];
+    shape = tileName[1]-'0';
 }
 
 Colour Tile::getColour() const {
