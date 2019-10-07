@@ -26,7 +26,7 @@ int UserInput(){
 };
 
 MenuOption MainMenu::MenuDisplay(){
-    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information(?)\n4. Quit\n" << std::endl;
+    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information\n4. Quit\n" << std::endl;
     menuChoice = UserInput();
     MenuOption menuOption = INVALID_OPTION;
     if (menuChoice == 1) {
