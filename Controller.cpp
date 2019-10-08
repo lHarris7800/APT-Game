@@ -161,7 +161,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     int newRow, newCol;
 
     //checks the surroundings of the tile
-    for(int dir = 1; dir <= 6; dir++){
+    for(int dir = 1; dir <= 4; dir++){
         newRow = row;
         newCol = column;
 
@@ -183,10 +183,6 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
             newCol--;
             newRow--;
         }
-        else if(dir == LEFT)
-            newRow -=2;
-        else
-            newRow +=2 ;
 
         //Looks at the size of the board
         if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
@@ -204,7 +200,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     }
 
     //if all four tile's neighbour is empty, then place the tile.
-    if(blankNeighbour == 6){
+    if(blankNeighbour == 4){
         if((row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0))
             result = true;
         else

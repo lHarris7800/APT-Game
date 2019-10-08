@@ -10,9 +10,6 @@
 #define UPLEFT 2
 #define DOWNRIGHT 3
 #define DOWNLEFT 4
-#define LEFT 5
-#define RIGHT 6
-
 
 class Controller {
 public:

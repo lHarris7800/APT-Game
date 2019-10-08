@@ -15,14 +15,6 @@ Tile::Tile(std::string tileName){
     shape = tileName[1]-'0';
 }
 
-Colour Tile::getColour() const {
-    return colour;
-}
-
-Shape Tile::getShape() const {
-    return shape;
-}
-
 std::string Tile::getTileName() {
     return std::string(colour + std::to_string(shape));
 }

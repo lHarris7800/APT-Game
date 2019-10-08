@@ -17,11 +17,7 @@ public:
    Tile(Tile& original);
 
    Tile(std::string name);
-
-   Colour getColour() const;
-
-   Shape getShape() const;
-
+   
    std::string getTileName();
 
    Colour colour;
