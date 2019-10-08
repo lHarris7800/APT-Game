@@ -26,6 +26,7 @@ Controller::~Controller(){
 void Controller::gameplay() {
     int playersTurn = PLAYER_ONE;
     bool quitGame = false;
+    bool firstMove = true;
     do { //while 'quit' is not selected
         bool endTurn = false;
         do { //while still player's turn
@@ -57,11 +58,10 @@ void Controller::gameplay() {
                     std::string boardLocation = input.substr(12, 3);
                     Tile *requestedTile = new Tile(tileName);
                     if (tileInHand(playersTurn, tileName)) {
-
-                        //***********TODO*************** work out if this is the first move, and call with correct firstMove attribute
-                        if (validPlaceTile(requestedTile, boardLocation,false)) {
+                        if (validPlaceTile(requestedTile, boardLocation, firstMove)) {
                             validInput = true;
                             placeTile(playersTurn, requestedTile, boardLocation, calcScore(requestedTile, boardLocation));
+                            firstMove = false;
                             endTurn = true;
                         }
                     }
