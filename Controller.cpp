@@ -171,17 +171,15 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
             newRow = row;
             newCol = column;
 
-            //name variable is confusing, this should go down
             if(dir == DOWNRIGHT){
                 newCol++;
                 newRow++;
             }
-            else if(dir == UPRIGHT){
+            else if(dir == DOWNLEFT){
                 newCol++;
                 newRow--;
             }
-            //name variable is confusing, this should go up
-            else if(dir == DOWNLEFT){
+            else if(dir == UPRIGHT){
                 newCol--;
                 newRow++;
             }
@@ -210,12 +208,9 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
                                 badNeighbour = true;
                                 std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
                             }
-
-                            newRow+=offsetRow;
-                            newCol+=offsetCol;
-
-                        } 
-                            
+                            newRow += offsetRow;
+                            newCol += offsetCol;
+                        }
                         goodNeighbour = true;
                     }
 
@@ -224,8 +219,8 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
                         int offsetRow = newRow - row;
                         int offsetCol = newCol - column;
 
-                        newRow+=offsetRow;
-                        newCol+=offsetCol;
+                        newRow += offsetRow;
+                        newCol += offsetCol;
                         
                         //Goes through line of tiles insuring they all share the same shape
                         while(newRow >= 0 && newRow < MAX_SIZE && 
@@ -236,12 +231,9 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
                                 badNeighbour = true;
                                 std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
                             }
-
-                            newRow+=offsetRow;
-                            newCol+=offsetCol;
-
-                        } 
-
+                            newRow += offsetRow;
+                            newCol += offsetCol;
+                        }
                         goodNeighbour = true;
                     }
                     else{
@@ -250,9 +242,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
                     }
                 }
             }
-        }   
-    
-
+        }
         //if all four tile's neighbour is empty, then place the tile.
         if(!badNeighbour){
             if(goodNeighbour)
@@ -272,7 +262,6 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
     //Converting Strings to Integers
     row = stoi(boardLocation.substr(1));
 
-
     //number of tiles in \ diagonal
     int numTilesBackDiagonal = 0;
     //number of tiles in / diagonal
@@ -282,24 +271,24 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
     for(int dir = 1; dir <= 4; dir++){
 
         if(dir == DOWNRIGHT){
-            offsetCol=1;
-            offsetRow=1;
+            offsetCol = 1;
+            offsetRow = 1;
         }
         else if(dir == UPRIGHT){
-            offsetCol=1;
-            offsetRow=-1;
+            offsetCol = 1;
+            offsetRow = -1;
         }
         else if(dir == DOWNLEFT){
-            offsetCol=-1;
-            offsetRow=1;
+            offsetCol =- 1;
+            offsetRow = 1;
         }
-        else{
+        else {
             offsetCol=-1;
             offsetRow=-1;
         }
 
-        int newRow = row+offsetRow;
-        int newCol = col+offsetCol;
+        int newRow = row + offsetRow;
+        int newCol = col + offsetCol;
 
         while(newRow >= 0 && newRow < MAX_SIZE && 
                     newCol >= 0 && newCol < MAX_SIZE &&
@@ -310,8 +299,8 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
             else 
                 numTilesForwardDiagonal++;
             
-            newRow+=offsetRow;
-            newCol+=offsetCol;
+            newRow += offsetRow;
+            newCol += offsetCol;
         } 
     }
 
@@ -322,10 +311,10 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
         returnScore++;
     
     //Adding bonus 6 points if a qwirkle is score in either direction
-    if(numTilesForwardDiagonal==5)
-        returnScore+=6;
-    if(numTilesBackDiagonal==5)
-        returnScore+=6;
+    if(numTilesForwardDiagonal == 5)
+        returnScore += 6;
+    if(numTilesBackDiagonal == 5)
+        returnScore += 6;
 
     return returnScore;
 }
@@ -339,7 +328,6 @@ bool Controller::validReplaceTile(Tile* replacedTile, int playerNum){
         position = playerOne->getHand()->searchTile(replacedTile->getTileName());
     else 
         position = playerTwo->getHand()->searchTile(replacedTile->getTileName());
-    
 
     //checks to see if that tile exist in player's hand
     if(position != -1)
@@ -352,7 +340,6 @@ bool Controller::validReplaceTile(Tile* replacedTile, int playerNum){
 
 //Updates bag, board, players with new move and add move to history
 //Validation to be implemented before calling this method
-
 void Controller::placeTile(PlayerNum playerNum, Tile* playedTile, std::string boardLocation,int score){
     Action* newAction = new PlaceTileAction(playedTile, boardLocation,score);
     if(playerNum == PLAYER_ONE)
@@ -365,7 +352,6 @@ void Controller::placeTile(PlayerNum playerNum, Tile* playedTile, std::string bo
 
 //Updates bag, board, players with new move and add move to history
 //Validation to be implemented before calling this method
-
 void Controller::replaceTile(PlayerNum playerNum, Tile* replacedTile){
     Action* newAction = new ReplaceTileAction(replacedTile);
      if(playerNum == PLAYER_ONE)
