@@ -18,7 +18,7 @@ public:
    Controller(Player* one, Player* two, Bag* bag, Board* board, GameHistory* history);
    ~Controller();
 
-   bool validPlaceTile(Tile* playedTile, std::string boardLocation);
+   bool validPlaceTile(Tile* playedTile, std::string boardLocation, bool firstTile);
 
    bool validReplaceTile(Tile* replacedTile);
 

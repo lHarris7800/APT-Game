@@ -57,7 +57,9 @@ void Controller::gameplay() {
                     std::string boardLocation = input.substr(12, 3);
                     Tile *requestedTile = new Tile(tileName);
                     if (tileInHand(playersTurn, tileName)) {
-                        if (validPlaceTile(requestedTile, boardLocation)) {
+
+                        //TODO work out if this is the first move, and call with correct firstMove attribute
+                        if (validPlaceTile(requestedTile, boardLocation,false)) {
                             validInput = true;
                             placeTile(playersTurn, requestedTile, boardLocation);
                             endTurn = true;
@@ -142,7 +144,7 @@ bool Controller::tileInHand(PlayerNum playerNum, std::string tileName){
     return foundTile;
 }
 
-bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
+bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, bool firstTile){
     int row, column;
     bool result = false;
 
@@ -152,64 +154,67 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     row = stoi(boardLocation.substr(1));  //shows 1,2,3,...
 
     //checks if the tile that we are placing is inside of bounds, otherwise return false
-    if(row >= MAX_SIZE || column >= MAX_SIZE ){
+    if(row >= MAX_SIZE || column >= MAX_SIZE )
         std::cout << "There are no more than 25 rows and columns, therefore you cannot add the tile in this position";
-        result = false;
-    }
+    else if(row % 2 != column % 2)
+        std::cout << "\n You can't place a tile there" << std::endl;
+    else if(board->board[column][row].compare(EMPTY_TILE) != 0)
+        std::cout << "\n There is a tile already in that position" << std::endl;
+    else if(!firstTile){
+        int newRow, newCol;
 
-    int blankNeighbour = 0;
-    int newRow, newCol;
+        bool badNeighbour = false;
+        bool goodNeighbour = false;
 
-    //checks the surroundings of the tile
-    for(int dir = 1; dir <= 4; dir++){
-        newRow = row;
-        newCol = column;
+        //checks the surroundings of the tile
+        for(int dir = 1; dir <= 4 && !badNeighbour; dir++){
+            newRow = row;
+            newCol = column;
 
-        //name variable is confusing, this should go down
-        if(dir == UPRIGHT){
-            newCol++;
-            newRow++;
-        }
-        else if(dir == UPLEFT){
-            newCol++;
-            newRow--;
-        }
-        //name variable is confusing, this should go up
-        else if(dir == DOWNRIGHT){
-            newCol--;
-            newRow++;
-        }
-        else if(dir == DOWNLEFT){
-            newCol--;
-            newRow--;
-        }
+            //name variable is confusing, this should go down
+            if(dir == UPRIGHT){
+                newCol++;
+                newRow++;
+            }
+            else if(dir == UPLEFT){
+                newCol++;
+                newRow--;
+            }
+            //name variable is confusing, this should go up
+            else if(dir == DOWNRIGHT){
+                newCol--;
+                newRow++;
+            }
+            else if(dir == DOWNLEFT){
+                newCol--;
+                newRow--;
+            }
 
-        //Looks at the size of the board
-        if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
-            //looks at all 4 sides to see if the position is empty. if true, then add 1 to blank neighbour
-            if(board->board[newCol][newRow].compare(EMPTY_TILE) == 0)
-                blankNeighbour++;
-            //This is to check if the tile has the same shape or colour as the tile that's already in the board
-            else if(playedTile->getTileName()[0] == board->board[newCol][newRow][0] || playedTile->getTileName()[1] == board->board[newCol][newRow][1])
+            //only checks adjacent tiles in bounds of board
+            if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
+                //looks at all 4 sides to see if the position is empty. 
+                if(board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
+                    //This is to check if the tile has the same shape or colour as the tile that's already in the board
+                    if(playedTile->getTileName()[0] == board->board[newCol][newRow][0] || 
+                            playedTile->getTileName()[1] == board->board[newCol][newRow][1])
+                        goodNeighbour = true;
+                    else{
+                        std::cout << "\n You can only place a tile if it has the same colour or shape as adjacent tiles." << std::endl;
+                        badNeighbour = true;
+                    }
+                }
+            }
+        }   
+    
+
+        //if all four tile's neighbour is empty, then place the tile.
+        if(!badNeighbour){
+            if(goodNeighbour)
                 result = true;
             else
-                std::cout << "\n You can place a tile if the tile has the same colour or shape." << std::endl;
+                std::cout << "\n You can only place a tile if it is adjacent to at least one other tile." << std::endl;
         }
-        else
-            blankNeighbour++;
     }
-
-    //if all four tile's neighbour is empty, then place the tile.
-    if(blankNeighbour == 4){
-        if((row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0))
-            result = true;
-        else
-            std::cout << "\n You can't place a tile there" << std::endl;
-    }
-
-    else
-        std::cout << "\n There is a tile already in that position" << std::endl;
-
     return result;
 }
 
