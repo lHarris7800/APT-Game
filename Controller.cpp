@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include <regex>
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
 
@@ -23,67 +24,89 @@ Controller::~Controller(){
 }
 
 void Controller::gameplay() {
-/*PSEUDOCODE
-BEGIN
-WHILE GAME HAS NOT ENDED DO{
-    <<PlayerOneName //Player one's turn
-    <<Score for Player One
-    <<Score for Player Two
-    <<
-    <<PRINT GAME BOARD
-    <<
-    <<Player One's hand
-    <<
-        Do {
-        >>player input //Use Regex101.com
-        **Choices: place x at y, replace z with tile from bag, save, forfeit, help
-        VALIDATE INPUT (must share attribute and be connected with another tile)
-            IF (input is invalid) << Please input from following options: ... lists options
-        } while (input is invalid)
+    int playersTurn = PLAYER_ONE;
+    bool quitGame = false;
+    do { //while 'quit' is not selected
+        bool endTurn = false;
+        do { //while still player's turn
+            if (playersTurn == PLAYER_ONE) {
+                std::cout << playerOne->getName() << ", it's your turn" << std::endl;
+                displayScoreAndBoard();
+                std::cout << "Your hand is\n" << playerOne->playerHand() << std::endl;
+            }
+            else {
+                std::cout << playerTwo->getName() << ", it's your turn" << std::endl;
+                displayScoreAndBoard();
+                std::cout << "Your hand is\n" << playerTwo->playerHand() << std::endl;
+            }
 
-    <<PlayerTwoName //Player Two's turn
-    <<...
-    }
-END*/
-    bool playerOnesTurn = true;
-    bool endgame = false;
-    do {
-        turn(playerOnesTurn);
-    } while (!endgame);
-};
-
-
-bool Controller::turn(bool playerOnesTurn){
-    bool endTurn = false;
-    if (playerOnesTurn) {
-        std::cout << playerOne->getName() << ", it's your turn" << std::endl;
-        displayScoreAndBoard();
-        std::cout << "Your hand is\n" << playerOne->playerHand() << std::endl; //TODO fix player hand
-        playerOnesTurn = false; //ends Player One's turn
-    }
-    if (!playerOnesTurn) {
-        std::cout << playerTwo->getName() << ", it's your turn" << std::endl;
-        displayScoreAndBoard();
-        std::cout << "Your hand is\n" << playerTwo->playerHand() << std::endl; //TODO fix player hand
-        playerOnesTurn = true; //ends Player Two's turn
-    }
-    else {
-        std::cout << "Something has gone terribly wrong..." << std::endl;
-        endTurn = true;
-    }
-    return endTurn;
+            std::cout << "What would you like to do?" << std::endl;
+            std::string input; //For user input
+            bool validInput = false; //Ensures user won't exit the loop until a valid input is registered
+            std::smatch match;
+            std::regex placeInputValid(R"(place [ROYGBP][1-6] at [A-Z](\d\d|\d))");
+            std::regex replaceInputValid("replace [ROYGBP][1-6]");
+            std::regex saveFileNameValid("\\w{1,}");
+            do { //while input is valid
+                std::cout << ">";
+                std::cin >> std::ws;
+                getline(std::cin, input);
+                //Place Tile
+                if (std::regex_match(input, match, placeInputValid)) {
+                    std::string tileName = input.substr(6, 2);
+                    std::string boardLocation = input.substr(12, 3);
+                    Tile *requestedTile = new Tile(tileName);
+                    if (tileInHand(playersTurn, tileName)) {
+                        if (validPlaceTile(requestedTile, boardLocation)) {
+                            validInput = true;
+                            placeTile(playersTurn, requestedTile, boardLocation);
+                            endTurn = true;
+                        }
+                    }
+                    //Replace Tile
+                } else if (std::regex_match(input, match, replaceInputValid)) {
+                    std::string tileName = input.substr(8,2);
+                    std::cout << "User wants to replace " << tileName << std::endl;
+                    Tile *requestedTile = new Tile(tileName);
+                    if (tileInHand(playersTurn, tileName)) {
+                        if (validReplaceTile(requestedTile)) {
+                            validInput = true;
+                            replaceTile(playersTurn, requestedTile);
+                            endTurn = true;
+                        }
+                    }
+                    //Save Game
+                } else if (input.find("save") == 0) {
+                    std::string saveFileName;
+                    std::cout << "Input a name for your save file" << std::endl;
+                    std::cout << ">";
+                    std::cin >> saveFileName;
+                    save(saveFileName);
+                    validInput = true;
+                    //Quit Game
+                } else if (input.find("quit") == 0) {
+                    std::cout << "exiting game..." << std::endl;
+                    validInput = true;
+                    endTurn = true;
+                    quitGame = true;
+                }
+                if (!validInput) {
+                    std::cout << "Improper input, please use 'place', 'replace', 'save', or 'quit'. " << std::endl;
+                    input.clear();
+                }
+            } while (!validInput);
+        }
+        while (!endTurn);
+        if (playersTurn == PLAYER_ONE){ playersTurn = PLAYER_TWO; }
+        else { playersTurn = PLAYER_ONE; }
+    } while (!quitGame);
 };
 
 void Controller::displayScoreAndBoard(){
     std::cout << "Score for " << playerOne->getName() << ": " << playerOne->getScore() << std::endl
     << "Score for " << playerTwo->getName() << ": " << playerTwo->getScore() << std::endl
     << board->toString() << std::endl;
-}
-
-void Controller::playerChoice(){
-    //todo "place" "replace" input and validation, save & quit.
-    //todo figure out how to do this. enumerator?
-}
+};
 
 void Controller::save(std::string filename){
     std::ofstream saveFile;
@@ -99,6 +122,25 @@ void Controller::save(std::string filename){
     saveFile.close();
 }
 
+bool Controller::tileInHand(PlayerNum playerNum, std::string tileName){
+    bool foundTile = false;
+    if (playerNum == PLAYER_ONE) { //Checks against Player One's hand
+        if (playerOne->getHand()->searchTile(tileName) != -1) {
+            foundTile = true;
+        }
+        else{
+            std::cout << "That tile is not in your hand!" << std::endl;
+        }
+    } else { //Checks against Player Two's hand
+        if (playerTwo->getHand()->searchTile(tileName) != -1) {
+            foundTile = true;
+        }
+        else {
+            std::cout << "That tile is not in your hand!" << std::endl;
+        }
+    }
+    return foundTile;
+}
 
 bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     int row, column;
@@ -154,7 +196,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     }
 
     else
-        std::cout << "There is a tile already in that position";
+        std::cout << "There is a tile already in that position " << std::endl;
 
     return result;
 }
