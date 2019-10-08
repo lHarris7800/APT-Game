@@ -121,8 +121,6 @@ void MainMenu::LoadGame(){
     std::cout << ">";
     std::cin >> fileName; //input name of previously saved file
     std::ifstream saveFile (fileName);
-    //Reads file into the console
-    //TODO: read file into controller instead
     if (saveFile.is_open()){
         //Read data for player one and two
         for(int i = 0; i < 2; i++){
