@@ -8,7 +8,7 @@
 class Bag {
 public:
 
-   Bag();
+   Bag(int randSeed);
    Bag(Bag& original);
    Bag(LinkedList* bag);
 

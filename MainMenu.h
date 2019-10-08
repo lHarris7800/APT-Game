@@ -8,7 +8,6 @@
 #include "Bag.h"
 #include "Board.h"
 #include "Player.h"
-#include "Controller.h"
 #include <iostream>
 #include <fstream>
 #include <limits>
@@ -27,7 +26,7 @@ enum MenuOption {
 class MainMenu {
 
 public:
-    MainMenu();
+    MainMenu(int randSeed);
 
     ~MainMenu();
 
@@ -38,13 +37,14 @@ public:
 
 private:
     int menuChoice = 0;
+    int randSeed;
 
-    Bag *bag;
+    Bag *bag{};
 
-    Board *board;
+    Board *board{};
 
-    Player* playerOne;
-    Player* playerTwo;
+    Player* playerOne{};
+    Player* playerTwo{};
 
     void NewGame();
 

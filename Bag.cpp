@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h> 
 
-Bag::Bag(){
+Bag::Bag(int randSeed){
     LinkedList* tileSet = new LinkedList();
     bag = new LinkedList();
 
@@ -57,7 +57,7 @@ Bag::Bag(){
     }
     
     //Seeding random numbers
-    srand (time(NULL));
+    srand (randSeed);
     int tilesLeft;
     //Adding tiles to bag from set of tiles to bag in random order
     while ((tilesLeft = tileSet->getSize()) != 0)

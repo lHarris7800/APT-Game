@@ -2,8 +2,10 @@
 // Created by Koder on 20/09/2019.
 //
 #include "MainMenu.h"
+#include "Controller.h"
 
-MainMenu::MainMenu(){
+MainMenu::MainMenu(int randSeed){
+    this->randSeed = randSeed;
 }
 
 MainMenu::~MainMenu(){
@@ -82,7 +84,7 @@ void MainMenu::NewGame(){
     std::cout << "You have entered " + playerTwoName << std::endl;
     std::cout << "Let's Play!\n" << std::endl;
 
-    Bag* bag = new Bag();
+    Bag* bag = new Bag(this->randSeed);
 
     playerOne = new Player(playerOneName,bag);
     playerTwo = new Player(playerTwoName,bag);
