@@ -78,10 +78,7 @@ std::string Player::playerHand(){
 std::string Player::toString(){
     std::string build;
     build.append(playerName + "\n");
-    std::cout << "to"<< std::endl;
     build.append(std::to_string(score) + "\n");
-    std::cout << "to"<< std::endl;
     build.append(hand->toString());
-    std::cout << "to"<< std::endl;
     return build;
 }
