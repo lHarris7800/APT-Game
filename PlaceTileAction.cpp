@@ -1,9 +1,10 @@
 #include "PlaceTileAction.h"
 #include <sstream>
 
-PlaceTileAction::PlaceTileAction(Tile* playedTile, std::string boardLocation):Action(){
+PlaceTileAction::PlaceTileAction(Tile* playedTile, std::string boardLocation, int score):Action(){
     this->playedTile = playedTile;
     this->boardLocation = boardLocation;
+    this->score = score;
     newTile = nullptr;
 }
 
@@ -32,6 +33,9 @@ void PlaceTileAction::doAction(Bag* bag, Board* board,Player* player){
     player->removeTile(playedTile);
     board->placeTile(playedTile,boardLocation);
 
+    //Updating player score
+    player->addScore(score);
+
     //Getting new tile from bag and adding to players hand
     newTile = bag->getFront();
     player->addTile(new Tile(*newTile));
@@ -43,6 +47,9 @@ void PlaceTileAction::undoAction(Bag* bag, Board* board,Player* player){
     player->removeTile(newTile);
     bag->replaceFront(new Tile(*newTile));
 
+    //removing score
+    player->addScore(-score);
+
     //Removing tile from board and replacing into players hand
     board->removeTile(boardLocation);
     player->addTile(playedTile);
@@ -52,7 +59,8 @@ std::string PlaceTileAction::toString(){
     std::string build = "PlaceTile\n";
     build.append(playedTile->getTileName() + ",");
     build.append(boardLocation + ",");
-    build.append(newTile->getTileName());
+    build.append(newTile->getTileName() + ",");
+    build.append(std::to_string(score));
 
     return build;
 }

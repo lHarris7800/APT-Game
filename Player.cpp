@@ -46,7 +46,7 @@ LinkedList* Player::getHand(){
 }
 
 //Changes the score (sets the score)
-void Player::addScore(){
+void Player::addScore(int score){
     this->score += score;
 }
 

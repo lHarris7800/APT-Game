@@ -4,7 +4,7 @@
 class PlaceTileAction : public Action{
 public:
 
-    PlaceTileAction(Tile* playedTile, std::string boardLocation);
+    PlaceTileAction(Tile* playedTile, std::string boardLocation, int score);
     PlaceTileAction(std::string data);
 
     ~PlaceTileAction();
@@ -17,6 +17,7 @@ public:
 private:
     Tile* playedTile;
     Tile* newTile;
+    int score;
     std::string boardLocation;
 };
 

@@ -29,7 +29,7 @@ public:
 
     LinkedList* getHand();
 
-    void addScore();
+    void addScore(int score);
 
     bool addTile(Tile* tile);
 

@@ -61,8 +61,7 @@ void Controller::gameplay() {
                         //***********TODO*************** work out if this is the first move, and call with correct firstMove attribute
                         if (validPlaceTile(requestedTile, boardLocation,false)) {
                             validInput = true;
-                            calcScore(requestedTile, boardLocation);
-                            placeTile(playersTurn, requestedTile, boardLocation);
+                            placeTile(playersTurn, requestedTile, boardLocation, calcScore(requestedTile, boardLocation));
                             endTurn = true;
                         }
                     }
@@ -294,7 +293,7 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
             offsetCol=-1;
             offsetRow=1;
         }
-        else if(dir == UPLEFT){
+        else{
             offsetCol=-1;
             offsetRow=-1;
         }
@@ -354,8 +353,8 @@ bool Controller::validReplaceTile(Tile* replacedTile, int playerNum){
 //Updates bag, board, players with new move and add move to history
 //Validation to be implemented before calling this method
 
-void Controller::placeTile(PlayerNum playerNum, Tile* playedTile, std::string boardLocation){
-    Action* newAction = new PlaceTileAction(playedTile, boardLocation);
+void Controller::placeTile(PlayerNum playerNum, Tile* playedTile, std::string boardLocation,int score){
+    Action* newAction = new PlaceTileAction(playedTile, boardLocation,score);
     if(playerNum == PLAYER_ONE)
         newAction->doAction(bag,board,playerOne);
     else
