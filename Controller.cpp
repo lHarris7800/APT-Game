@@ -212,7 +212,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     }
 
     else
-        std::cout << "\n There is a tile already in that position";
+        std::cout << "\n There is a tile already in that position" << std::endl;
 
     return result;
 }
@@ -227,7 +227,7 @@ bool Controller::validReplaceTile(Tile* replacedTile){
     if(position != -1)
         result = true;
     else
-        std::cout << "The tile you want to replace doesn't exist in your hand.";
+        std::cout << "The tile you want to replace doesn't exist in your hand." << std::endl;
 
     return result;
 }
