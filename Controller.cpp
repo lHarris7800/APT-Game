@@ -161,42 +161,58 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     int newRow, newCol;
 
     //checks the surroundings of the tile
-    for(int dir = 1; dir <= 4; dir++){
+    for(int dir = 1; dir <= 6; dir++){
         newRow = row;
         newCol = column;
-        if(dir == UP)
+
+        //name variable is confusing, this should go down
+        if(dir == UPRIGHT){
             newCol++;
-        else if(dir == DOWN)
-            newCol--;
-        else if(dir == LEFT)
-            newRow--;
-        else
             newRow++;
+        }
+        else if(dir == UPLEFT){
+            newCol++;
+            newRow--;
+        }
+        //name variable is confusing, this should go up
+        else if(dir == DOWNRIGHT){
+            newCol--;
+            newRow++;
+        }
+        else if(dir == DOWNLEFT){
+            newCol--;
+            newRow--;
+        }
+        else if(dir == LEFT)
+            newRow -=2;
+        else
+            newRow +=2 ;
 
         //Looks at the size of the board
         if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
             //looks at all 4 sides to see if the position is empty. if true, then add 1 to blank neighbour
-            if(board->board[newCol][newRow].compare(EMPTY_TILE)==0)
+            if(board->board[newCol][newRow].compare(EMPTY_TILE) == 0)
                 blankNeighbour++;
-
             //This is to check if the tile has the same shape or colour as the tile that's already in the board
             else if(playedTile->getTileName()[0] == board->board[newCol][newRow][0] || playedTile->getTileName()[1] == board->board[newCol][newRow][1])
                 result = true;
+            else
+                std::cout << "\n You can place a tile if the tile has the same colour or shape." << std::endl;
         }
         else
             blankNeighbour++;
     }
 
     //if all four tile's neighbour is empty, then place the tile.
-    if(blankNeighbour == 4){
+    if(blankNeighbour == 6){
         if((row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0))
-            result= true;
+            result = true;
         else
             std::cout << "\n You can't place a tile there" << std::endl;
     }
 
     else
-        std::cout << "There is a tile already in that position " << std::endl;
+        std::cout << "\n There is a tile already in that position";
 
     return result;
 }

@@ -6,10 +6,12 @@
 #include "PlaceTileAction.h"
 #include <iostream>
 #include <fstream>
-#define UP 1
-#define DOWN 2
-#define LEFT 3
-#define RIGHT 4
+#define UPRIGHT 1
+#define UPLEFT 2
+#define DOWNRIGHT 3
+#define DOWNLEFT 4
+#define LEFT 5
+#define RIGHT 6
 
 
 class Controller {
