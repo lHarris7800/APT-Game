@@ -122,18 +122,22 @@ void MainMenu::LoadGame(){
     std::ifstream saveFile (fileName);
     if (saveFile.is_open()){
         //Read data for player one and two
-        for(int i = 0; i < 2; i++){
-            std::string playerName,playerScore,playerHand;
+        std::string playerName,playerScore,playerHand;
+        
+        //Read data for player one
+        getline(saveFile,playerName);
+        getline(saveFile,playerScore);
+        getline(saveFile,playerHand);
 
-            getline(saveFile,playerName);
-            getline(saveFile,playerScore);
-            getline(saveFile,playerHand);
+        playerOne = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
+        
+        //Read data for player two
+        getline(saveFile,playerName);
+        getline(saveFile,playerScore);
+        getline(saveFile,playerHand);
+        
+        playerTwo = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
     
-            if(i == 0)
-                playerOne = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
-            else
-                playerTwo = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
-        }
         
         //TODO implement read in for board
         std::string boardLine;
@@ -143,24 +147,24 @@ void MainMenu::LoadGame(){
         getline(saveFile,boardLine);
         getline(saveFile,boardLine);
         int offset = 0;
-        for(int i = 0; i < 26;i++){
-            
+        for(int i = 0; i < MAX_SIZE;i++){
+            //read one line of board
             getline(saveFile,boardLine);
             std::istringstream delimitedData (boardLine);
             std::string tileData;
             std::getline(delimitedData,tileData,'|');
 
-            for(int j = offset; j < 26; j+=2){
+            //iterate over places in one line of board
+            for(int j = offset; j < MAX_SIZE; j+=2){
                 std::getline(delimitedData,tileData,'|');
                 if(tileData.compare("    ")){
+                    //Added tile to board
                     std::string boardLocation = std::string(1,i+65) + std::to_string(j);
-                    
                     board->placeTile(new Tile(tileData.substr(1,2)),boardLocation);
                 }
-                    //board->placeTile(new Tile(tileData.substr(1,2)),);
-                
             }
 
+            //toggling board offset (each row starting at column 0 or 1)
             if(offset)
                 offset = 1;
             else
@@ -178,23 +182,29 @@ void MainMenu::LoadGame(){
         //read data for game history
         //read initial player data
         Player* iPlayer1,* iPlayer2;
-        for(int i = 0; i < 2; i++){
-            std::string playerName,playerScore,playerHand;
+        std::string iPlayerName,iPlayerScore,iPlayerHand;
+        
+        //Reading for initial player1
+        getline(saveFile,iPlayerName);
+        getline(saveFile,iPlayerScore);
+        getline(saveFile,iPlayerHand);
 
-            getline(saveFile,playerName);
-            getline(saveFile,playerScore);
-            getline(saveFile,playerHand);
+        iPlayer1 = new Player(iPlayerName,std::stoi(iPlayerScore),new LinkedList(iPlayerHand));
 
-            if(i == 0)
-                iPlayer1 = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
-            else
-                iPlayer2 = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
-        }
+        //Reading for initial player2
+        getline(saveFile,iPlayerName);
+        getline(saveFile,iPlayerScore);
+        getline(saveFile,iPlayerHand);
+
+        iPlayer2 = new Player(iPlayerName,std::stoi(iPlayerScore),new LinkedList(iPlayerHand));
+        
+
         //read initial bag
         std::string iBagData;
         getline(saveFile,iBagData);
         Bag* iBag = new Bag(new LinkedList(iBagData));
         
+        //creating game history with initial state of game
         GameHistory* history = new GameHistory(iBag,iPlayer1,iPlayer2);
 
         //read actions
@@ -214,7 +224,9 @@ void MainMenu::LoadGame(){
         }
         saveFile.close();
 
+        //Creating controller with objects from save file
         Controller* controller = new Controller(playerOne,playerTwo,bag,board,history);
+        controller->gameplay();
     }
     else std::cout << "File not found" << std::endl;
 }
