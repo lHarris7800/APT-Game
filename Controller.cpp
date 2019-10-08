@@ -13,7 +13,7 @@ Controller::Controller(Player* playerOne, Player* playerTwo,Bag* bag){
 
 Controller::Controller(Player* one, Player* two, Bag* bag,Board* board, GameHistory* history){
     playerOne = one;
-    layerTwo = two;
+    playerTwo = two;
     this->bag = bag;
     this->board = board;
     gameHistory = history;
