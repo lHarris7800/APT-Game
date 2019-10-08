@@ -11,11 +11,11 @@ Controller::Controller(Player* playerOne, Player* playerTwo,Bag* bag){
 }
 
 
-Controller::Controller(Player* one, Player* two, Bag* bag, GameHistory* history){
-    this->playerOne = playerOne;
-    this->playerTwo = playerTwo;
+Controller::Controller(Player* one, Player* two, Bag* bag,Board* board, GameHistory* history){
+    playerOne = one;
+    layerTwo = two;
     this->bag = bag;
-    board = new Board();
+    this->board = board;
     gameHistory = history;
 }
 

@@ -16,7 +16,7 @@ class Controller {
 public:
 
    Controller(Player* one, Player* two, Bag* bag);
-   Controller(Player* one, Player* two, Bag* bag, GameHistory* history);
+   Controller(Player* one, Player* two, Bag* bag, Board* board, GameHistory* history);
    ~Controller();
 
    bool validPlaceTile(Tile* playedTile, std::string boardLocation);
