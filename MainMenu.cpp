@@ -1,7 +1,6 @@
 //
 // Created by Koder on 20/09/2019.
 //
-
 #include "MainMenu.h"
 
 MainMenu::MainMenu(){
@@ -26,7 +25,7 @@ int UserInput(){
 };
 
 MenuOption MainMenu::MenuDisplay(){
-    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information(?)\n4. Quit\n" << std::endl;
+    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information\n4. Quit\n" << std::endl;
     menuChoice = UserInput();
     MenuOption menuOption = INVALID_OPTION;
     if (menuChoice == 1) {
@@ -218,40 +217,6 @@ void MainMenu::LoadGame(){
         Controller* controller = new Controller(playerOne,playerTwo,bag,board,history);
     }
     else std::cout << "File not found" << std::endl;
-}
-
-void MainMenu::saveGame(std::string filename) {
-
-    if (!filename.empty()) {
-        // Opens the file
-        std::ofstream out(filename);
-
-        if (out.is_open()) {
-
-            //TODO:saves player's toString
-            out << playerOne->toString() << std::endl;
-            out << playerTwo->toString() << std::endl;
-
-            //TODO:saves board's toString
-            out << this->board->toString() << std::endl;
-
-            //TODO:saves bag's toString
-            out << this->bag->toString() << std::endl;
-            
-            //TODO:saves current Player's name
-
-
-            // Closes the file
-            out.flush();
-            out.close();
-        }
-        std::cout << "Game successfully saved" << std::endl
-                  << std::endl;
-    }
-    else {
-        std::cout << "Error: Please enter a filename to save" << std::endl;
-    }
-
 }
 
 void MainMenu::StudentInfo(){

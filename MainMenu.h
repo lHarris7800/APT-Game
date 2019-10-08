@@ -14,6 +14,7 @@
 #include <limits>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 enum MenuOption {
     NEW_GAME,
@@ -49,13 +50,9 @@ private:
 
     void LoadGame();
 
-    void saveGame(std::string filename);
-
     void StudentInfo();
 
     std::string PlayerNameInput();
-
-    void GamePlay();
 };
 
 #endif //APT_A2_MAINMENU_H
