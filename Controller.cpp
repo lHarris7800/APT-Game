@@ -61,6 +61,7 @@ void Controller::gameplay() {
                         //***********TODO*************** work out if this is the first move, and call with correct firstMove attribute
                         if (validPlaceTile(requestedTile, boardLocation,false)) {
                             validInput = true;
+                            calcScore(requestedTile, boardLocation);
                             placeTile(playersTurn, requestedTile, boardLocation);
                             endTurn = true;
                         }
@@ -148,7 +149,7 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
     int row, column;
     bool result = false;
 
-    column = boardLocation[0]-65; // shows A,B,C,...
+    column = boardLocation[0]-65; // gets from A,B,C,...
 
     //Converting Strings to Integers
     row = stoi(boardLocation.substr(1));  //shows 1,2,3,...
@@ -172,20 +173,20 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
             newCol = column;
 
             //name variable is confusing, this should go down
-            if(dir == UPRIGHT){
+            if(dir == DOWNRIGHT){
                 newCol++;
                 newRow++;
             }
-            else if(dir == UPLEFT){
+            else if(dir == UPRIGHT){
                 newCol++;
                 newRow--;
             }
             //name variable is confusing, this should go up
-            else if(dir == DOWNRIGHT){
+            else if(dir == DOWNLEFT){
                 newCol--;
                 newRow++;
             }
-            else if(dir == DOWNLEFT){
+            else if(dir == UPLEFT){
                 newCol--;
                 newRow--;
             }
@@ -265,7 +266,69 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
 }
 
 int Controller::calcScore(Tile* playedTile, std::string boardLocation){
+    int returnScore = 0;
 
+    int row, col;
+    col = boardLocation[0]-65; // gets from A,B,C,...
+    //Converting Strings to Integers
+    row = stoi(boardLocation.substr(1));
+
+
+    //number of tiles in \ diagonal
+    int numTilesBackDiagonal = 0;
+    //number of tiles in / diagonal
+    int numTilesForwardDiagonal = 0;
+
+    int offsetRow, offsetCol;
+    for(int dir = 1; dir <= 4; dir++){
+
+        if(dir == DOWNRIGHT){
+            offsetCol=1;
+            offsetRow=1;
+        }
+        else if(dir == UPRIGHT){
+            offsetCol=1;
+            offsetRow=-1;
+        }
+        else if(dir == DOWNLEFT){
+            offsetCol=-1;
+            offsetRow=1;
+        }
+        else if(dir == UPLEFT){
+            offsetCol=-1;
+            offsetRow=-1;
+        }
+
+        int newRow = row+offsetRow;
+        int newCol = col+offsetCol;
+
+        while(newRow >= 0 && newRow < MAX_SIZE && 
+                    newCol >= 0 && newCol < MAX_SIZE &&
+                    board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
+            returnScore++;
+            if(dir == UPLEFT || dir == DOWNRIGHT)
+                numTilesBackDiagonal++;
+            else 
+                numTilesForwardDiagonal++;
+            
+            newRow+=offsetRow;
+            newCol+=offsetCol;
+        } 
+    }
+
+    //Adding extra point for the tile currently being placed
+    if(numTilesForwardDiagonal>0)
+        returnScore++;
+    if(numTilesBackDiagonal>0)
+        returnScore++;
+    
+    //Adding bonus 6 points if a qwirkle is score in either direction
+    if(numTilesForwardDiagonal==5)
+        returnScore+=6;
+    if(numTilesBackDiagonal==5)
+        returnScore+=6;
+    std::cout << "Score: " << returnScore <<std::endl;
+    return returnScore;
 }
 
 bool Controller::validReplaceTile(Tile* replacedTile, int playerNum){
