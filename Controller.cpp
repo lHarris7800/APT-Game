@@ -122,16 +122,12 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
     for(int dir = 1; dir <= 4; dir++){
         newRow = row;
         newCol = column;
-
         if(dir == UP)
             newCol++;
-
         else if(dir == DOWN)
             newCol--;
-
         else if(dir == LEFT)
             newRow--;
-
         else
             newRow++;
 
@@ -145,6 +141,8 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation){
             else if(playedTile->getTileName()[0] == board->board[newCol][newRow][0] || playedTile->getTileName()[1] == board->board[newCol][newRow][1])
                 result = true;
         }
+        else
+            blankNeighbour++;
     }
 
     //if all four tile's neighbour is empty, then place the tile.
