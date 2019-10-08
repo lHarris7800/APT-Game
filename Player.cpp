@@ -1,7 +1,7 @@
 //
 // Created by Shahrzad Rafezi on 16/9/19.
 //
-
+#include <iostream>
 #include "Player.h"
 #define HAND_SIZE   7
 

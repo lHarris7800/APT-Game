@@ -26,7 +26,7 @@ int UserInput(){
 };
 
 MenuOption MainMenu::MenuDisplay(){
-    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information\n4. Quit\n" << std::endl;
+    std::cout << "Menu\n----\n1. New Game\n2. Load Game\n3. Show student information(?)\n4. Quit\n" << std::endl;
     menuChoice = UserInput();
     MenuOption menuOption = INVALID_OPTION;
     if (menuChoice == 1) {
@@ -129,19 +129,48 @@ void MainMenu::LoadGame(){
             getline(saveFile,playerName);
             getline(saveFile,playerScore);
             getline(saveFile,playerHand);
-
+    
             if(i == 0)
                 playerOne = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
             else
                 playerTwo = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
         }
-
+        
         //TODO implement read in for board
-        for(int i = 0; i < 30;i++){
-            std::string string;
-            getline(saveFile,string);
-        }
+        std::string boardLine;
+        board = new Board(); 
+        
 
+        getline(saveFile,boardLine);
+        getline(saveFile,boardLine);
+        int offset = 0;
+        for(int i = 0; i < 26;i++){
+            
+            getline(saveFile,boardLine);
+            std::istringstream delimitedData (boardLine);
+            std::string tileData;
+            std::getline(delimitedData,tileData,'|');
+
+            for(int j = offset; j < 26; j+=2){
+                std::getline(delimitedData,tileData,'|');
+                if(tileData.compare("    ")){
+                    std::string boardLocation = std::string(1,i+65) + std::to_string(j);
+                    
+                    board->placeTile(new Tile(tileData.substr(1,2)),boardLocation);
+                }
+                    //board->placeTile(new Tile(tileData.substr(1,2)),);
+                
+            }
+
+            if(offset)
+                offset = 1;
+            else
+                offset = 0;
+        }
+        getline(saveFile,boardLine);
+        getline(saveFile,boardLine);
+
+        
         //read data for bag
         std::string bagData;
         getline(saveFile,bagData);
@@ -162,13 +191,11 @@ void MainMenu::LoadGame(){
             else
                 iPlayer2 = new Player(playerName,std::stoi(playerScore),new LinkedList(playerHand));
         }
-
         //read initial bag
         std::string iBagData;
         getline(saveFile,iBagData);
         Bag* iBag = new Bag(new LinkedList(iBagData));
         
-
         GameHistory* history = new GameHistory(iBag,iPlayer1,iPlayer2);
 
         //read actions
@@ -179,14 +206,16 @@ void MainMenu::LoadGame(){
             getline(saveFile,actionType);
             getline(saveFile,actionData);
 
-            if(actionType.compare("PlaceTile"))
-                history->addAction(new PlaceTileAction(actionData),std::stoi(playerNum));
-            else 
-                history->addAction(new ReplaceTileAction(actionData),std::stoi(playerNum));
+            if(!saveFile.eof()){
+                if(!actionType.compare("PlaceTile"))
+                    history->addAction(new PlaceTileAction(actionData),std::stoi(playerNum));
+                else 
+                    history->addAction(new ReplaceTileAction(actionData),std::stoi(playerNum));
+            }
         }
         saveFile.close();
 
-        Controller* controller = new Controller(playerOne,playerTwo,bag,history);
+        Controller* controller = new Controller(playerOne,playerTwo,bag,board,history);
     }
     else std::cout << "File not found" << std::endl;
 }
