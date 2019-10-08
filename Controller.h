@@ -20,7 +20,9 @@ public:
 
    bool validPlaceTile(Tile* playedTile, std::string boardLocation, bool firstTile);
 
-   bool validReplaceTile(Tile* replacedTile);
+   int calcScore(Tile* playedTile, std::string boardLocation);
+
+   bool validReplaceTile(Tile* replacedTile, int playerNum);
 
    void gameplay();
 

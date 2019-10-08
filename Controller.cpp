@@ -58,7 +58,7 @@ void Controller::gameplay() {
                     Tile *requestedTile = new Tile(tileName);
                     if (tileInHand(playersTurn, tileName)) {
 
-                        //TODO work out if this is the first move, and call with correct firstMove attribute
+                        //***********TODO*************** work out if this is the first move, and call with correct firstMove attribute
                         if (validPlaceTile(requestedTile, boardLocation,false)) {
                             validInput = true;
                             placeTile(playersTurn, requestedTile, boardLocation);
@@ -71,7 +71,7 @@ void Controller::gameplay() {
                     std::cout << "User wants to replace " << tileName << std::endl;
                     Tile *requestedTile = new Tile(tileName);
                     if (tileInHand(playersTurn, tileName)) {
-                        if (validReplaceTile(requestedTile)) {
+                        if (validReplaceTile(requestedTile,playersTurn)) {
                             validInput = true;
                             replaceTile(playersTurn, requestedTile);
                             endTurn = true;
@@ -194,10 +194,56 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
             if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
                 //looks at all 4 sides to see if the position is empty. 
                 if(board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
-                    //This is to check if the tile has the same shape or colour as the tile that's already in the board
-                    if(playedTile->getTileName()[0] == board->board[newCol][newRow][0] || 
-                            playedTile->getTileName()[1] == board->board[newCol][newRow][1])
+                    //This is to check if the tile has the same colour as the tile that's already in the board
+                    if(playedTile->getTileName()[0] == board->board[newCol][newRow][0]){
+                        int offsetRow = newRow - row;
+                        int offsetCol = newCol - column;
+
+                        newRow+=offsetRow;
+                        newCol+=offsetCol;
+                        //Goes through line of tiles insuring they all share the same colour
+                        while(newRow >= 0 && newRow < MAX_SIZE && 
+                                    newCol >= 0 && newCol < MAX_SIZE &&
+                                    board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
+
+                            if(playedTile->getTileName()[0] != board->board[newCol][newRow][0]){
+                                badNeighbour = true;
+                                std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
+                            }
+
+                            newRow+=offsetRow;
+                            newCol+=offsetCol;
+
+                        } 
+                            
                         goodNeighbour = true;
+                    }
+
+                    //This is to check if the tile has the same shape as the tile that's already in the board
+                    else if(playedTile->getTileName()[1] == board->board[newCol][newRow][1]){
+                        int offsetRow = newRow - row;
+                        int offsetCol = newCol - column;
+
+                        newRow+=offsetRow;
+                        newCol+=offsetCol;
+                        
+                        //Goes through line of tiles insuring they all share the same shape
+                        while(newRow >= 0 && newRow < MAX_SIZE && 
+                                    newCol >= 0 && newCol < MAX_SIZE &&
+                                    board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
+                           
+                            if(playedTile->getTileName()[1] != board->board[newCol][newRow][1]){
+                                badNeighbour = true;
+                                std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
+                            }
+
+                            newRow+=offsetRow;
+                            newCol+=offsetCol;
+
+                        } 
+
+                        goodNeighbour = true;
+                    }
                     else{
                         std::cout << "\n You can only place a tile if it has the same colour or shape as adjacent tiles." << std::endl;
                         badNeighbour = true;
@@ -218,11 +264,20 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
     return result;
 }
 
-bool Controller::validReplaceTile(Tile* replacedTile){
+int Controller::calcScore(Tile* playedTile, std::string boardLocation){
+
+}
+
+bool Controller::validReplaceTile(Tile* replacedTile, int playerNum){
     bool result = false;
+    int position;
 
     //searches the position of the tile in player's hand
-    int position = playerOne->getHand()->searchTile(replacedTile->getTileName());
+    if(playerNum == PLAYER_ONE)
+        position = playerOne->getHand()->searchTile(replacedTile->getTileName());
+    else 
+        position = playerTwo->getHand()->searchTile(replacedTile->getTileName());
+    
 
     //checks to see if that tile exist in player's hand
     if(position != -1)
