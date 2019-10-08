@@ -326,7 +326,7 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
         returnScore+=6;
     if(numTilesBackDiagonal==5)
         returnScore+=6;
-    std::cout << "Score: " << returnScore <<std::endl;
+
     return returnScore;
 }
 
