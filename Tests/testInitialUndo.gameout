@@ -9,16 +9,16 @@ Menu
 
 >Selected Load Game
 Enter the filename from which to load a game
->AMY, it's your turn
-Score for TOM: 2
+>TOM, it's your turn
+Score for TOM: 0
 Score for AMY: 0
       0    2    4    6    8    10   12   14   16   18   20   22   24   
     ---------------------------------------------------------------------
 A   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
 B      |    |    |    |    |    |    |    |    |    |    |    |    |    |
 C   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
-D      |    | P1 |    |    |    |    |    |    |    |    |    |    |    |
-E   |    | P3 |    |    |    |    |    |    |    |    |    |    |    |   
+D      |    |    |    |    |    |    |    |    |    |    |    |    |    |
+E   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
 F      |    |    |    |    |    |    |    |    |    |    |    |    |    |
 G   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
 H      |    |    |    |    |    |    |    |    |    |    |    |    |    |
@@ -43,19 +43,19 @@ Z      |    |    |    |    |    |    |    |    |    |    |    |    |    |
     ---------------------------------------------------------------------
           1    3    5    7    9    11   13   15   17   19   21   23   25   
 Your hand is
-Y3,O2,R5,B3,B5,O6
+Y6,P1,B2,P3,P5,P3,Y2
 What would you like to do?
->User wants to replace B3.
+>TOM, you have 1 undo actions left.
 TOM, it's your turn
-Score for TOM: 2
+Score for TOM: 0
 Score for AMY: 0
       0    2    4    6    8    10   12   14   16   18   20   22   24   
     ---------------------------------------------------------------------
 A   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
 B      |    |    |    |    |    |    |    |    |    |    |    |    |    |
 C   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
-D      |    | P1 |    |    |    |    |    |    |    |    |    |    |    |
-E   |    | P3 |    |    |    |    |    |    |    |    |    |    |    |   
+D      |    |    |    |    |    |    |    |    |    |    |    |    |    |
+E   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
 F      |    |    |    |    |    |    |    |    |    |    |    |    |    |
 G   |    |    |    |    |    |    |    |    |    |    |    |    |    |   
 H      |    |    |    |    |    |    |    |    |    |    |    |    |    |
@@ -80,11 +80,8 @@ Z      |    |    |    |    |    |    |    |    |    |    |    |    |    |
     ---------------------------------------------------------------------
           1    3    5    7    9    11   13   15   17   19   21   23   25   
 Your hand is
-Y6,B2,P5,P3,Y2,O4
+Y6,P1,B2,P3,P5,P3,Y2
 What would you like to do?
->
- You can not place the same tile twice in a line.
-Improper input, please use 'place', 'replace', 'undo', 'save', or 'quit'.
 >exiting game...
 Menu
 ----
