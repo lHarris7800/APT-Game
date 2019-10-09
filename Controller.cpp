@@ -3,12 +3,12 @@
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
 
-Controller::Controller(Player* playerOne, Player* playerTwo,Bag* bag){
+Controller::Controller(Player* playerOne, Player* playerTwo, Bag* bag){
     this->playerOne = playerOne;
     this->playerTwo = playerTwo;
     this->bag = bag;
     board = new Board();
-    gameHistory = new GameHistory(bag,playerOne,playerTwo);
+    gameHistory = new GameHistory(bag, playerOne, playerTwo);
 }
 
 
@@ -385,12 +385,12 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
             offsetRow = -1;
         }
         else if(dir == DOWNLEFT){
-            offsetCol =- 1;
+            offsetCol = -1;
             offsetRow = 1;
         }
         else {
-            offsetCol=-1;
-            offsetRow=-1;
+            offsetCol = -1;
+            offsetRow = -1;
         }
 
         int newRow = row + offsetRow;
