@@ -52,6 +52,19 @@ void Board::removeTile(std::string pos){
   board[column][row] = EMPTY_TILE;
 }
 
+bool Board::boardEmpty(){
+    bool boardEmpty = true;
+
+    for (int column = 0; column < MAX_SIZE && boardEmpty; column++) {
+        for (int row = 0; row < MAX_SIZE && boardEmpty; row++) {
+            if(board[column][row] != EMPTY_TILE)
+                boardEmpty = false;
+        }
+    }
+
+    return boardEmpty;
+}
+
 std::string Board::toString(){
     std::string build = "      ";
 

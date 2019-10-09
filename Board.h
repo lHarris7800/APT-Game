@@ -17,6 +17,8 @@ public:
 
     void removeTile(std::string pos);
 
+    bool boardEmpty();
+
     std::string toString();
 
     bool canPieceBePlaced(Tile* piece, std::string pos);
