@@ -2,7 +2,7 @@
 
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
-#define UNDO_TURNS  2
+#define UNDO_TURNS  1
 
 GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
     head = nullptr;
