@@ -80,7 +80,7 @@ void Controller::gameplay() {
                     }
                     //Undo
                 } else if (input.find("undo") == 0) {
-                    //ToDo complete
+                    //ToDo move p1 & p2 undo count to GameHistory
                     if (playersTurn == PLAYER_ONE && p1UndoCount != 0) {
                         gameHistory->undo(bag, board, playerOne, playerTwo);
                         p1UndoCount--;
@@ -107,7 +107,7 @@ void Controller::gameplay() {
                     std::cout << "Input a name for your save file" << std::endl;
                     std::cout << ">";
                     std::cin >> saveFileName;
-                    save(saveFileName);
+                    save(saveFileName + ".save");
                     validInput = true;
                     //Quit Game
                 } else if (input.find("quit") == 0) {
