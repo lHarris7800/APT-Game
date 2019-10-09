@@ -60,7 +60,7 @@ void Controller::gameplay() {
                     std::string boardLocation = input.substr(12, 3);
                     Tile *requestedTile = new Tile(tileName);
                     if (tileInHand(playersTurn, tileName)) {
-                        if (validPlaceTile(requestedTile, boardLocation, true)) {
+                        if (validPlaceTile(requestedTile, boardLocation, board->boardEmpty())) {
                             validInput = true;
                             placeTile(playersTurn, requestedTile, boardLocation, calcScore(requestedTile, boardLocation));
                             endTurn = true;
@@ -218,52 +218,72 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
             if(newRow >= 0 && newRow < MAX_SIZE && newCol >= 0 && newCol < MAX_SIZE){
                 //looks at all 4 sides to see if the position is empty. 
                 if(board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
-                    //This is to check if the tile has the same colour as the tile that's already in the board
-                    if(playedTile->getTileName()[0] == board->board[newCol][newRow][0]){
-                        int offsetRow = newRow - row;
-                        int offsetCol = newCol - column;
+                    if(board->board[newCol][newRow].compare(playedTile->getTileName()) != 0){
+                        //This is to check if the tile has the same colour as the tile that's already in the board
+                        if(playedTile->getTileName()[0] == board->board[newCol][newRow][0]){
+                            int offsetRow = newRow - row;
+                            int offsetCol = newCol - column;
 
-                        newRow+=offsetRow;
-                        newCol+=offsetCol;
-                        //Goes through line of tiles insuring they all share the same colour
-                        while(newRow >= 0 && newRow < MAX_SIZE && 
-                                    newCol >= 0 && newCol < MAX_SIZE &&
-                                    board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
+                            newRow+=offsetRow;
+                            newCol+=offsetCol;
+                            //Goes through line of tiles insuring they all share the same colour
+                            while(newRow >= 0 && newRow < MAX_SIZE && 
+                                        newCol >= 0 && newCol < MAX_SIZE &&
+                                        board->board[newCol][newRow].compare(EMPTY_TILE) != 0 &&
+                                        !badNeighbour){
 
-                            if(playedTile->getTileName()[0] != board->board[newCol][newRow][0]){
-                                badNeighbour = true;
-                                std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
+                                //Checking if the same tile is already in the line
+                                if(playedTile->getTileName().compare(board->board[newCol][newRow]) == 0){
+                                    std::cout << "\n You can not place the same tile twice in a line." << std::endl;
+                                    badNeighbour = true;
+                                }
+                                else if(playedTile->getTileName()[0] != board->board[newCol][newRow][0]){
+                                    badNeighbour = true;
+                                    std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
+                                }
+
+                                newRow += offsetRow;
+                                newCol += offsetCol;
                             }
+                            goodNeighbour = true;
+                        }
+
+                        //This is to check if the tile has the same shape as the tile that's already in the board
+                        else if(playedTile->getTileName()[1] == board->board[newCol][newRow][1]){
+                            int offsetRow = newRow - row;
+                            int offsetCol = newCol - column;
+
                             newRow += offsetRow;
                             newCol += offsetCol;
-                        }
-                        goodNeighbour = true;
-                    }
+                            
+                            //Goes through line of tiles insuring they all share the same shape
+                            while(newRow >= 0 && newRow < MAX_SIZE && 
+                                        newCol >= 0 && newCol < MAX_SIZE &&
+                                        board->board[newCol][newRow].compare(EMPTY_TILE) != 0 &&
+                                        !badNeighbour){
+                                //Checking if the same tile is already in the line
+                                if(playedTile->getTileName().compare(board->board[newCol][newRow]) == 0){
+                                    std::cout << "\n You can not place the same tile twice in a line." << std::endl;
+                                    badNeighbour = true;
+                                }
+                                else if(playedTile->getTileName()[1] != board->board[newCol][newRow][1]){
+                                    badNeighbour = true;
+                                    std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
+                                }
 
-                    //This is to check if the tile has the same shape as the tile that's already in the board
-                    else if(playedTile->getTileName()[1] == board->board[newCol][newRow][1]){
-                        int offsetRow = newRow - row;
-                        int offsetCol = newCol - column;
+                                
 
-                        newRow += offsetRow;
-                        newCol += offsetCol;
-                        
-                        //Goes through line of tiles insuring they all share the same shape
-                        while(newRow >= 0 && newRow < MAX_SIZE && 
-                                    newCol >= 0 && newCol < MAX_SIZE &&
-                                    board->board[newCol][newRow].compare(EMPTY_TILE) != 0){
-                           
-                            if(playedTile->getTileName()[1] != board->board[newCol][newRow][1]){
-                                badNeighbour = true;
-                                std::cout << "\n Each diagonal must share a common shape or colour." << std::endl;
+                                newRow += offsetRow;
+                                newCol += offsetCol;
                             }
-                            newRow += offsetRow;
-                            newCol += offsetCol;
+                            goodNeighbour = true;
                         }
-                        goodNeighbour = true;
-                    }
-                    else{
-                        std::cout << "\n You can only place a tile if it has the same colour or shape as adjacent tiles." << std::endl;
+                        else{
+                            std::cout << "\n You can only place a tile if it has the same colour or shape as adjacent tiles." << std::endl;
+                            badNeighbour = true;
+                        }
+                    }else{
+                        std::cout << "\n You can not place the same tile twice in a line." << std::endl;
                         badNeighbour = true;
                     }
                 }
@@ -337,10 +357,14 @@ int Controller::calcScore(Tile* playedTile, std::string boardLocation){
         returnScore++;
     
     //Adding bonus 6 points if a qwirkle is score in either direction
-    if(numTilesForwardDiagonal == 5)
+    if(numTilesForwardDiagonal == 5){
         returnScore += 6;
-    if(numTilesBackDiagonal == 5)
+        std::cout << "Qwirkle!" << std::endl;
+    }
+    if(numTilesBackDiagonal == 5){
         returnScore += 6;
+        std::cout << "Qwirkle!" << std::endl;
+    }
 
     return returnScore;
 }
