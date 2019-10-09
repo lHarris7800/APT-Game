@@ -21,8 +21,6 @@ public:
 
     std::string toString();
 
-    bool canPieceBePlaced(Tile* piece, std::string pos);
-
     std::string board[MAX_SIZE][MAX_SIZE];
 };
 

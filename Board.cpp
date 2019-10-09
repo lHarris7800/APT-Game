@@ -11,30 +11,6 @@ Board::Board(){
 Board::~Board() {
 }
 
-bool Board::canPieceBePlaced(Tile* piece, std::string pos){
-    bool result = false;
-
-    int row = pos[0]-65; //Looks into A,B,C,...
-
-    //Converting Strings to Integers
-    int column = stoi(pos.substr(1)); // Looks into 1,2,3,...
-
-    if(row >= MAX_SIZE || column >= MAX_SIZE){
-      std::cout << "There are no more than 25 rows, therefore you cannot add the tile in this position" << std::endl;
-      result = false;
-    }
-    else if(board[column][row].compare(EMPTY_TILE) == 0){
-        if((row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0))
-            result= true;
-        else
-            std::cout << "\n You can't place a tile there" << std::endl;
-    }
-
-    else
-      std::cout << "\n There is a tile already in that position" << std::endl;
-
-    return result;
-}
 
 void Board::placeTile(Tile* piece, std::string pos){
   //Parsing pos to row and column
