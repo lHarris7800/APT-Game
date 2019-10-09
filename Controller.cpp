@@ -24,9 +24,11 @@ Controller::~Controller(){
 }
 
 void Controller::gameplay() {
+
     int playersTurn = PLAYER_ONE;
     bool quitGame = false;
-    bool firstMove = true;
+    int p1UndoCount = 2, p2UndoCount = 2;
+
     do { //while 'quit' is not selected
         bool endTurn = false;
         do { //while still player's turn
@@ -45,7 +47,7 @@ void Controller::gameplay() {
             std::string input; //For user input
             bool validInput = false; //Ensures user won't exit the loop until a valid input is registered
             std::smatch match;
-            std::regex placeInputValid("(place [ROYGBP][1-6] at [A-Z](\\d\\d|\\d))");
+            std::regex placeInputValid("place [ROYGBP][1-6] at [A-Z](\\d\\d|\\d)");
             std::regex replaceInputValid("replace [ROYGBP][1-6]");
             std::regex saveFileNameValid("\\w{1,}");
             do { //while input is valid
@@ -58,25 +60,47 @@ void Controller::gameplay() {
                     std::string boardLocation = input.substr(12, 3);
                     Tile *requestedTile = new Tile(tileName);
                     if (tileInHand(playersTurn, tileName)) {
-                        if (validPlaceTile(requestedTile, boardLocation, firstMove)) {
+                        if (validPlaceTile(requestedTile, boardLocation, true)) {
                             validInput = true;
                             placeTile(playersTurn, requestedTile, boardLocation, calcScore(requestedTile, boardLocation));
-                            firstMove = false;
                             endTurn = true;
                         }
                     }
                     //Replace Tile
                 } else if (std::regex_match(input, match, replaceInputValid)) {
-                    std::string tileName = input.substr(8,2);
-                    std::cout << "User wants to replace " << tileName << std::endl;
+                    std::string tileName = input.substr(8, 2);
+                    std::cout << "User wants to replace " << tileName << "." << std::endl;
                     Tile *requestedTile = new Tile(tileName);
                     if (tileInHand(playersTurn, tileName)) {
-                        if (validReplaceTile(requestedTile,playersTurn)) {
+                        if (validReplaceTile(requestedTile, playersTurn)) {
                             validInput = true;
                             replaceTile(playersTurn, requestedTile);
                             endTurn = true;
                         }
                     }
+                    //Undo
+                } else if (input.find("undo") == 0) {
+                    //ToDo complete
+                    if (playersTurn == PLAYER_ONE && p1UndoCount != 0) {
+                        gameHistory->undo(bag, board, playerOne, playerTwo);
+                        p1UndoCount--;
+                        std::cout << playerOne->getName() << ", you have "
+                                  << p1UndoCount << " undo actions left." << std::endl;
+                    }
+                    else if (playersTurn == PLAYER_TWO && p2UndoCount != 0){
+                        gameHistory->undo(bag, board, playerOne, playerTwo);
+                        p2UndoCount--;
+                        std::cout << playerTwo->getName() << ", you have "
+                        << p2UndoCount << " undo actions left." << std::endl;
+                    }
+                    else {
+                        std::cout << "You have ran out of Undo actions!" << std::endl;
+                    }
+                    validInput = true;
+                    //Replay
+                } else if (input.find("replay") == 0) {
+                    gameHistory->replay();
+                    validInput = true;
                     //Save Game
                 } else if (input.find("save") == 0) {
                     std::string saveFileName;
@@ -93,7 +117,7 @@ void Controller::gameplay() {
                     quitGame = true;
                 }
                 if (!validInput) {
-                    std::cout << "Improper input, please use 'place', 'replace', 'save', or 'quit'. " << std::endl;
+                    std::cout << "Improper input, please use 'place', 'replace', 'undo', 'replay', 'save', or 'quit'." << std::endl;
                     input.clear();
                 }
             } while (!validInput);
