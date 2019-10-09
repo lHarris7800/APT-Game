@@ -26,18 +26,26 @@ Controller::~Controller(){
 void Controller::gameplay() {
 
     int playersTurn = PLAYER_ONE;
-    bool quitGame = false;
-    int p1UndoCount = 2, p2UndoCount = 2;
+    bool lastTurnLeft = false, gameOver = false, quitGame = false;
 
     do { //while 'quit' is not selected
         bool endTurn = false;
+        if (bagEmpty()) {
+            if (!lastTurnLeft) {
+                std::cout << "The bag is empty! This will be your last turn" << std::endl;
+                lastTurnLeft = true;
+            }
+            else {
+                gameOver = true;
+            }
+        }
+
         do { //while still player's turn
             if (playersTurn == PLAYER_ONE) {
                 std::cout << playerOne->getName() << ", it's your turn" << std::endl;
                 displayScoreAndBoard();
                 std::cout << "Your hand is\n" << playerOne->playerHand() << std::endl;
-            }
-            else {
+            } else {
                 std::cout << playerTwo->getName() << ", it's your turn" << std::endl;
                 displayScoreAndBoard();
                 std::cout << "Your hand is\n" << playerTwo->playerHand() << std::endl;
@@ -50,7 +58,7 @@ void Controller::gameplay() {
             std::regex placeInputValid("place [ROYGBP][1-6] at [A-Z](\\d\\d|\\d)");
             std::regex replaceInputValid("replace [ROYGBP][1-6]");
             std::regex saveFileNameValid("\\w{1,}");
-            do { //while input is valid
+            do { //while input is not valid
                 std::cout << ">";
                 std::cin >> std::ws;
                 getline(std::cin, input);
@@ -62,7 +70,8 @@ void Controller::gameplay() {
                     if (tileInHand(playersTurn, tileName)) {
                         if (validPlaceTile(requestedTile, boardLocation, board->boardEmpty())) {
                             validInput = true;
-                            placeTile(playersTurn, requestedTile, boardLocation, calcScore(requestedTile, boardLocation));
+                            placeTile(playersTurn, requestedTile, boardLocation,
+                                      calcScore(requestedTile, boardLocation));
                             endTurn = true;
                         }
                     }
@@ -81,25 +90,19 @@ void Controller::gameplay() {
                     //Undo
                 } else if (input.find("undo") == 0) {
                     //ToDo move p1 & p2 undo count to GameHistory
-                    if (playersTurn == PLAYER_ONE && p1UndoCount != 0) {
+                    if (playersTurn == PLAYER_ONE && gameHistory->getPlayerOneUndos() != 0) {
                         gameHistory->undo(bag, board, playerOne, playerTwo);
-                        p1UndoCount--;
+                        gameHistory->setPlayerOneUndos(gameHistory->getPlayerOneUndos() - 1);
                         std::cout << playerOne->getName() << ", you have "
-                                  << p1UndoCount << " undo actions left." << std::endl;
-                    }
-                    else if (playersTurn == PLAYER_TWO && p2UndoCount != 0){
+                                  << gameHistory->getPlayerOneUndos() << " undo actions left." << std::endl;
+                    } else if (playersTurn == PLAYER_TWO && gameHistory->getPlayerTwoUndos() != 0) {
                         gameHistory->undo(bag, board, playerOne, playerTwo);
-                        p2UndoCount--;
+                        gameHistory->setPlayerTwoUndos(gameHistory->getPlayerTwoUndos() - 1);
                         std::cout << playerTwo->getName() << ", you have "
-                        << p2UndoCount << " undo actions left." << std::endl;
-                    }
-                    else {
+                                  << gameHistory->getPlayerTwoUndos() << " undo actions left." << std::endl;
+                    } else {
                         std::cout << "You have ran out of Undo actions!" << std::endl;
                     }
-                    validInput = true;
-                    //Replay
-                } else if (input.find("replay") == 0) {
-                    gameHistory->replay();
                     validInput = true;
                     //Save Game
                 } else if (input.find("save") == 0) {
@@ -117,14 +120,49 @@ void Controller::gameplay() {
                     quitGame = true;
                 }
                 if (!validInput) {
-                    std::cout << "Improper input, please use 'place', 'replace', 'undo', 'replay', 'save', or 'quit'." << std::endl;
+                    std::cout << "Improper input, please use 'place', 'replace', 'undo', 'save', or 'quit'."
+                              << std::endl;
                     input.clear();
                 }
             } while (!validInput);
         }
         while (!endTurn);
-        if (playersTurn == PLAYER_ONE){ playersTurn = PLAYER_TWO; }
-        else { playersTurn = PLAYER_ONE; }
+        //Turn is over
+        playersTurn == PLAYER_ONE ? playersTurn = PLAYER_TWO : playersTurn = PLAYER_ONE; //Alternates player turns.
+        if (gameOver) {
+            std::string winnerName;
+            int winnerScore;
+            if (playerOne->getScore() > playerTwo->getScore()){
+                winnerName = playerOne->getName();
+                winnerScore = playerOne->getScore();
+            }
+            else if (playerTwo->getScore() > playerOne->getScore()){
+                winnerName = playerTwo->getName();
+                winnerScore = playerTwo->getScore();
+            }
+            else {
+                winnerName = "... It's tie! You both";
+                winnerScore = playerOne->getScore();
+            }
+            std::cout << "Congratulations " << winnerName << " won with a score of: " << winnerScore << std::endl;
+            std::cout << "Would you like to see a 'replay' of this match, or would you like to 'quit'?" << std::endl;
+            std::string input; //For user input
+            bool validEndInput = false; //Ensures user won't exit the loop until a valid input is registered
+            do { //while input is valid
+                std::cout << ">";
+                std::cin >> std::ws;
+                getline(std::cin, input);
+                if (input.find("replay") == 0) {
+                    gameHistory->replay();
+                    validEndInput = true;
+                    quitGame = true;
+                }
+                else if (input.find("quit") == 0){
+                    validEndInput = true;
+                    quitGame = true;
+                }
+            } while (!validEndInput);
+        }
     } while (!quitGame);
 };
 
@@ -134,6 +172,15 @@ void Controller::displayScoreAndBoard(){
     << board->toString() << std::endl;
 };
 
+//Checks amount of tiles left in bag. Once no tiles are left each player is allowed one turn
+bool Controller::bagEmpty(){
+    bool isBagEmpty = false;
+    if (bag->getBag()->getSize() == 0){
+        isBagEmpty = true;
+    }
+    return isBagEmpty;
+}
+//Saves the game! 💾
 void Controller::save(std::string filename){
     std::ofstream saveFile;
 

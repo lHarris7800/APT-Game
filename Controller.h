@@ -41,4 +41,6 @@ private:
     void replaceTile(PlayerNum playerNum, Tile* replacedTile);
     bool tileInHand(PlayerNum playerNum, std::string tileName);
     void displayScoreAndBoard();
+
+    bool bagEmpty();
 };
