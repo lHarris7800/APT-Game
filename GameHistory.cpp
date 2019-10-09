@@ -3,6 +3,7 @@
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
 #define UNDO_TURNS  1
+#define UNDO_ACTIONS   2
 
 GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
     head = nullptr;
@@ -13,8 +14,8 @@ GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
     iPlayerOne = new Player(*p1);
     iPlayerTwo = new Player(*p2);
 
-    playerOneUndos = UNDO_TURNS;
-    playerTwoUndos = UNDO_TURNS;
+    playerOneUndos = UNDO_ACTIONS;
+    playerTwoUndos = UNDO_ACTIONS;
 }
 
 GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2, int player1Undos, int player2Undos){
