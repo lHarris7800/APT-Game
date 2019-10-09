@@ -25,9 +25,9 @@ public:
 
    bool validReplaceTile(Tile* replacedTile, int playerNum);
 
-   void gameplay();
+   void gameplay(int playerNextTurn);
 
-   void save(std::string filename);
+   void save(std::string filename,int playersTurn);
 
 private:
     GameHistory* gameHistory;

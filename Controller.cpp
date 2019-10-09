@@ -28,9 +28,9 @@ Controller::~Controller(){
     delete gameHistory;
 }
 
-void Controller::gameplay() {
+void Controller::gameplay(int playersNextTurn) {
 
-    int playersTurn = PLAYER_ONE;
+    int playersTurn = playersNextTurn;
     bool lastTurnLeft = false, gameOver = false, quitGame = false;
 
     do { //while 'quit' is not selected
@@ -115,7 +115,7 @@ void Controller::gameplay() {
                     std::cout << "Input a name for your save file" << std::endl;
                     std::cout << ">";
                     std::cin >> saveFileName;
-                    save(saveFileName + ".save");
+                    save(saveFileName + ".save",playersTurn);
                     validInput = true;
                     //Quit Game
                 } else if (input.find("quit") == 0) {
@@ -185,16 +185,24 @@ bool Controller::bagEmpty(){
     }
     return isBagEmpty;
 }
+
 //Saves the game! 💾
-void Controller::save(std::string filename){
+void Controller::save(std::string filename, int playersTurn){
     std::ofstream saveFile;
 
     saveFile.open(filename);
-
+    //saving players,bag and board
     saveFile << playerOne->toString() << std::endl;
     saveFile << playerTwo->toString() << std::endl;
     saveFile << board->toString() << std::endl;
     saveFile << bag->toString() << std::endl;
+    //Saving whos turn it is next
+    if(playersTurn == PLAYER_ONE)
+        saveFile << playerOne->getName() << std::endl;
+    else
+        saveFile << playerTwo->getName() << std::endl;
+
+    //saving game history
     saveFile << gameHistory->toString() << std::endl;
 
     saveFile.close();

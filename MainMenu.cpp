@@ -3,6 +3,8 @@
 //
 #include "MainMenu.h"
 #include "Controller.h"
+#define PLAYER_ONE  1
+#define PLAYER_TWO  2
 
 MainMenu::MainMenu(int randSeed){
     this->randSeed = randSeed;
@@ -93,7 +95,7 @@ void MainMenu::NewGame(){
 
     //Begin playing
     Controller * controller = new Controller(playerOne, playerTwo,bag);
-    controller->gameplay();
+    controller->gameplay(PLAYER_ONE);
     delete controller;
     //END Game
 }
@@ -184,6 +186,14 @@ void MainMenu::LoadGame(){
         getline(saveFile,bagData);
         bag = new Bag(new LinkedList(bagData));
 
+        std::string playersTurn;
+        int playersTurnNum;
+        getline(saveFile,playersTurn);
+        if(playersTurn.compare(playerOne->getName())==0)
+            playersTurnNum = PLAYER_ONE;
+        else 
+            playersTurnNum = PLAYER_TWO;
+
         //read data for game history
         //read initial player data
         Player* iPlayer1,* iPlayer2;
@@ -233,7 +243,7 @@ void MainMenu::LoadGame(){
 
         //Creating controller with objects from save file
         Controller* controller = new Controller(playerOne,playerTwo,bag,board,history);
-        controller->gameplay();
+        controller->gameplay(playersTurnNum);
         delete controller;
     }
     else std::cout << "File not found" << std::endl;
