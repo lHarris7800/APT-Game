@@ -2,7 +2,7 @@
 
 #define PLAYER_ONE  1
 #define PLAYER_TWO  2
-#define UNDO_TURNS  3
+#define UNDO_TURNS  2
 
 GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
     head = nullptr;
@@ -13,8 +13,21 @@ GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
     iPlayerOne = new Player(*p1);
     iPlayerTwo = new Player(*p2);
 
-    playerOneUndos = 2;
-    playerTwoUndos = 2;
+    playerOneUndos = UNDO_TURNS;
+    playerTwoUndos = UNDO_TURNS;
+}
+
+GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2, int player1Undos, int player2Undos){
+    head = nullptr;
+    tail = nullptr;
+    size = 0;
+
+    iBag = new Bag(*bag);
+    iPlayerOne = new Player(*p1);
+    iPlayerTwo = new Player(*p2);
+
+    playerOneUndos = player1Undos;
+    playerTwoUndos = player2Undos;
 }
 
 GameHistory::~GameHistory(){
@@ -116,7 +129,9 @@ void GameHistory::setPlayerTwoUndos(int undos){
 std::string GameHistory::toString(){
     std::string build;
     build.append(iPlayerOne->toString() + "\n");
+    build.append(playerOneUndos + "\n");
     build.append(iPlayerTwo->toString() + "\n");
+    build.append(playerTwoUndos + "\n");
     build.append(iBag->toString() + "\n");
 
     ActionNode* currAction = head;

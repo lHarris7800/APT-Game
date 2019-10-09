@@ -6,6 +6,7 @@
 class GameHistory{
 public:
     GameHistory(Bag* bag, Player* p1, Player* p2);
+    GameHistory(Bag* bag, Player* p1, Player* p2, int player1Undos, int player2Undos);
     ~GameHistory();
 
     void clear();

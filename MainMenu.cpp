@@ -185,6 +185,7 @@ void MainMenu::LoadGame(){
         //read initial player data
         Player* iPlayer1,* iPlayer2;
         std::string iPlayerName,iPlayerScore,iPlayerHand;
+        std::string playerOneUndos, playerTwoUndos;
         
         //Reading for initial player1
         getline(saveFile,iPlayerName);
@@ -192,6 +193,7 @@ void MainMenu::LoadGame(){
         getline(saveFile,iPlayerHand);
 
         iPlayer1 = new Player(iPlayerName,std::stoi(iPlayerScore),new LinkedList(iPlayerHand));
+        getline(saveFile,playerOneUndos);
 
         //Reading for initial player2
         getline(saveFile,iPlayerName);
@@ -199,7 +201,7 @@ void MainMenu::LoadGame(){
         getline(saveFile,iPlayerHand);
 
         iPlayer2 = new Player(iPlayerName,std::stoi(iPlayerScore),new LinkedList(iPlayerHand));
-        
+        getline(saveFile,playerTwoUndos);
 
         //read initial bag
         std::string iBagData;
@@ -207,7 +209,7 @@ void MainMenu::LoadGame(){
         Bag* iBag = new Bag(new LinkedList(iBagData));
         
         //creating game history with initial state of game
-        GameHistory* history = new GameHistory(iBag,iPlayer1,iPlayer2);
+        GameHistory* history = new GameHistory(iBag,iPlayer1,iPlayer2,stoi(playerOneUndos),stoi(playerTwoUndos));
 
         //read actions
         while(!saveFile.eof()){
