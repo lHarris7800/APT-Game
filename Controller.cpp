@@ -21,6 +21,11 @@ Controller::Controller(Player* one, Player* two, Bag* bag,Board* board, GameHist
 }
 
 Controller::~Controller(){
+    delete playerOne;
+    delete playerTwo;
+    delete bag;
+    delete board;
+    delete gameHistory;
 }
 
 void Controller::gameplay() {

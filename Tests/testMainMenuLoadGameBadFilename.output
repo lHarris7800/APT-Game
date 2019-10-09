@@ -1,0 +1,20 @@
+Welcome to Qwirkle!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Show student information
+4. Quit
+
+>Selected Load Game
+Enter the filename from which to load a game
+>File not found
+Menu
+----
+1. New Game
+2. Load Game
+3. Show student information
+4. Quit
+
+>Goodbye

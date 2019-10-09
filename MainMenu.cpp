@@ -21,6 +21,8 @@ int UserInput(){
         std::cin.ignore();
         std::cout << "Invalid input, please try again" << std::endl;
         std::cout << ">";
+        std::string badString;
+        std::getline(std::cin,badString);
         std::cin >> selection;
     }
     return selection;
@@ -92,6 +94,7 @@ void MainMenu::NewGame(){
     //Begin playing
     Controller * controller = new Controller(playerOne, playerTwo,bag);
     controller->gameplay();
+    delete controller;
     //END Game
 }
 
@@ -231,6 +234,7 @@ void MainMenu::LoadGame(){
         //Creating controller with objects from save file
         Controller* controller = new Controller(playerOne,playerTwo,bag,board,history);
         controller->gameplay();
+        delete controller;
     }
     else std::cout << "File not found" << std::endl;
 }
