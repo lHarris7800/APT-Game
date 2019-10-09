@@ -160,7 +160,9 @@ bool Controller::validPlaceTile(Tile* playedTile, std::string boardLocation, boo
         std::cout << "\n You can't place a tile there" << std::endl;
     else if(board->board[column][row].compare(EMPTY_TILE) != 0)
         std::cout << "\n There is a tile already in that position" << std::endl;
-    else if(!firstTile){
+    else if(firstTile){
+        result = true;
+    }else{
         int newRow, newCol;
 
         bool badNeighbour = false;
