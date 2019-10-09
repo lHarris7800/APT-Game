@@ -45,7 +45,7 @@ void Controller::gameplay() {
             std::string input; //For user input
             bool validInput = false; //Ensures user won't exit the loop until a valid input is registered
             std::smatch match;
-            std::regex placeInputValid(R"(place [ROYGBP][1-6] at [A-Z](\d\d|\d))");
+            std::regex placeInputValid("(place [ROYGBP][1-6] at [A-Z](\\d\\d|\\d))");
             std::regex replaceInputValid("replace [ROYGBP][1-6]");
             std::regex saveFileNameValid("\\w{1,}");
             do { //while input is valid

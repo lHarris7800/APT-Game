@@ -10,7 +10,7 @@
 int main(int argc, char *argv[]) {
     int randSeed = time(NULL);
     if (argc > 1){
-        sscanf_s(argv[1], "%d", &randSeed);
+        sscanf(argv[1], "%d", &randSeed);
     }
 
     std::cout << "Welcome to Qwirkle!\n-------------------" << std::endl;
