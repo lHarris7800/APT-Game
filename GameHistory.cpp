@@ -133,9 +133,9 @@ void GameHistory::setPlayerTwoUndos(int undos){
 std::string GameHistory::toString(){
     std::string build;
     build.append(iPlayerOne->toString() + "\n");
-    build.append(playerOneUndos + "\n");
+    build.append(std::to_string(playerOneUndos) + "\n");
     build.append(iPlayerTwo->toString() + "\n");
-    build.append(playerTwoUndos + "\n");
+    build.append(std::to_string(playerTwoUndos) + "\n");
     build.append(iBag->toString() + "\n");
 
     ActionNode* currAction = head;
