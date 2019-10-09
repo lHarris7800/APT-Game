@@ -12,6 +12,9 @@ GameHistory::GameHistory(Bag* bag, Player* p1, Player* p2){
     iBag = new Bag(*bag);
     iPlayerOne = new Player(*p1);
     iPlayerTwo = new Player(*p2);
+
+    playerOneUndos = 2;
+    playerTwoUndos = 2;
 }
 
 GameHistory::~GameHistory(){
@@ -92,6 +95,22 @@ void GameHistory::undo(Bag* bag, Board* board, Player* playerOne, Player* player
             head = nullptr;
         }
     }
+}
+
+int GameHistory::getPlayerOneUndos(){
+    return playerOneUndos;
+}
+
+int GameHistory::getPlayerTwoUndos(){
+    return playerTwoUndos;
+}
+    
+void GameHistory::setPlayerOneUndos(int undos){
+    playerOneUndos = undos;
+}
+
+void GameHistory::setPlayerTwoUndos(int undos){
+    playerTwoUndos = undos;
 }
 
 std::string GameHistory::toString(){

@@ -15,6 +15,11 @@ public:
     void replay();
     void undo(Bag* bag, Board* board, Player* playerOne, Player* playerTwo);
 
+    int getPlayerOneUndos();
+    int getPlayerTwoUndos();
+    
+    void setPlayerOneUndos(int Undos);
+    void setPlayerTwoUndos(int Undos);
 
     std::string toString();
 
@@ -22,6 +27,9 @@ private:
     ActionNode* head;
     ActionNode* tail;
     int size;
+
+    int playerOneUndos;
+    int playerTwoUndos;
 
     Bag* iBag;
     Player* iPlayerOne;
