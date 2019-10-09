@@ -121,7 +121,7 @@ void MainMenu::LoadGame(){
     std::cout << "Enter the filename from which to load a game" << std::endl;
     std::cout << ">";
     std::cin >> fileName; //input name of previously saved file
-    std::ifstream saveFile (fileName);
+    std::ifstream saveFile (fileName + ".save");
     if (saveFile.is_open()){
         //Read data for player one and two
         std::string playerName,playerScore,playerHand;
