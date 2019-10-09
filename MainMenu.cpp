@@ -172,7 +172,7 @@ void MainMenu::LoadGame(){
             }
 
             //toggling board offset (each row starting at column 0 or 1)
-            if(offset)
+            if(offset==0)
                 offset = 1;
             else
                 offset = 0;
