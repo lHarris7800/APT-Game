@@ -86,6 +86,9 @@ void GameHistory::replay(){
         }
         currAction = currAction->next;
         std::cout << board->toString() << std::endl;
+        std::cout << "Score for " << playerOne->getName() << ": " << playerOne->getScore() << std::endl
+            << "Score for " << playerTwo->getName() << ": " << playerTwo->getScore() << std::endl << std::endl << std::endl;
+
     }
 
     delete playerOne;
